@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bsty.icode.dao.UserDao">
+    <select id="findUserByName" resultType="com.bsty.icode.bean.User">
+        SELECT * FROM user WHERE name = #{name}
+    </select>
+
+    <insert id="insertUser" parameterType="com.bsty.icode.bean.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (name,age,money) values (#{user.name,jdbcType=VARCHAR},#{user.age,jdbcType=INTEGER},#{user.money,jdbcType=DOUBLE})
+    </insert>
+</mapper>
