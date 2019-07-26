@@ -4,6 +4,8 @@ import com.bsty.icode.ResponseData;
 import com.bsty.icode.bean.User;
 import com.bsty.icode.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -28,7 +30,6 @@ public class UserController {
         ResponseData responseData = new ResponseData();
         responseData.setData(userService.selectUserByName(name));
         responseData.setSuccess();
-        log.debug(request.getRequestURL().toString());
         return responseData;
     }
 
@@ -36,7 +37,7 @@ public class UserController {
     public ResponseData add(@RequestBody User user) {
         ResponseData responseData = new ResponseData();
         userService.addUser(user);
-        responseData.setSuccess();
+        responseData.setError();
         return responseData;
     }
 
