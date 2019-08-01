@@ -1,14 +1,15 @@
 # 创建用户表
 CREATE TABLE IF NOT EXISTS `user`
 (
-    `user_id`         int UNIQUE AUTO_INCREMENT,
-    `user_name`       VARCHAR(100) NOT NULL,
-    `user_phone`      VARCHAR(11)  NOT NULL,
+    `id`              INT UNIQUE AUTO_INCREMENT,
+    `name`            VARCHAR(100) NOT NULL,
+    `password`        VARCHAR(100) NOT NULL,
+    `role`            INT          NOT NULL,
+    `phone`           VARCHAR(11),
     `submission_date` DATE,
-    PRIMARY KEY (`user_id`)
+    PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
-
 
 # 学员家长表
 CREATE TABLE IF NOT EXISTS `genearch`
