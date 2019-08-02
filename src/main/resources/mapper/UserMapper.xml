@@ -4,12 +4,7 @@
     <select id="findUserByName" resultType="com.bsty.icode.bean.User">
         SELECT *
         FROM user
-        WHERE name = #{name}
-        limit 1
+        WHERE username= #{username}
     </select>
 
-    <insert id="insertUser" parameterType="com.bsty.icode.bean.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (name, password, role)
-        values (#{user.name,jdbcType=VARCHAR}, #{user.password,jdbcType=VARCHAR}, #{user.role,jdbcType=INTEGER})
-    </insert>
 </mapper>

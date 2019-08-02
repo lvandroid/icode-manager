@@ -1,29 +1,81 @@
+drop table permission;
+
+drop table role;
+
+drop table role_permission;
+
+drop table student_course;
+
+drop table course;
+
+drop table student;
+
+drop table genearch;
+
+drop table teacher;
+
+drop table user;
+
+drop table user_role;
+
+#=====================================create table start====================================================================
 # 创建用户表
 CREATE TABLE IF NOT EXISTS `user`
 (
-    `id`              INT UNIQUE AUTO_INCREMENT,
-    `name`            VARCHAR(100) NOT NULL,
-    `password`        VARCHAR(100) NOT NULL,
-    `role`            INT          NOT NULL,
-    `phone`           VARCHAR(11),
-    `submission_date` DATE,
+    `id`       BIGINT(11) UNIQUE AUTO_INCREMENT,
+    `username` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+CREATE TABLE IF NOT EXISTS `role`
+(
+    `id`   BIGINT(11)   NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
+CREATE TABLE IF NOT EXISTS `user_role`
+(
+    `user_id` BIGINT(11) NOT NULL,
+    `role_id` BIGINT(11) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE IF NOT EXISTS `role_permission`
+(
+    `role_id`       BIGINT(11) NOT NULL,
+    `permission_id` BIGINT(11) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE IF NOT EXISTS `permission`
+(
+    `id`          BIGINT(11)   NOT NULL AUTO_INCREMENT,
+    `url`         VARCHAR(255) NOT NULL,
+    `name`        VARCHAR(255) NOT NULL,
+    `description` VARCHAR(255) NULL,
+    `pid`         BIGINT(11)   NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 # 学员家长表
 CREATE TABLE IF NOT EXISTS `genearch`
 (
-    `id`         INT AUTO_INCREMENT,
-    `name`       VARCHAR(30) NOT NULL, # 家长姓名
-    `sex`        INT         NOT NULL, # 家长性别
-    `profession` VARCHAR(30),          # 家长职业
-    `phone`      VARCHAR(11) NOT NULL, # 家长电话号码
-    `wechat`     VARCHAR(50),          # 家长微信号
-    `qq`         VARCHAR(20),          # 家长qq号码
-    `email`      VARCHAR(50),          # 家长邮箱
-    `mark`       VARCHAR(100),         # 备注
-    PRIMARY KEY (`id`)
+    `id`         BIGINT(11) AUTO_INCREMENT,
+    `name`       VARCHAR(255) NOT NULL, # 家长姓名
+    `sex`        INT          NOT NULL, # 家长性别
+    `profession` VARCHAR(255),          # 家长职业
+    `phone`      VARCHAR(255) NOT NULL, # 家长电话号码
+    `wechat`     VARCHAR(255),          # 家长微信号
+    `qq`         VARCHAR(255),          # 家长qq号码
+    `email`      VARCHAR(255),          # 家长邮箱
+    `mark`       VARCHAR(255),          # 备注
+    PRIMARY KEY
+        (
+         `id`
+            )
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -31,8 +83,8 @@ CREATE TABLE IF NOT EXISTS `genearch`
 # 老师
 CREATE TABLE IF NOT EXISTS `teacher`
 (
-    `id`   INT UNIQUE AUTO_INCREMENT,
-    `name` VARCHAR(30),  # 教师名称
+    `id`   BIGINT(11) UNIQUE AUTO_INCREMENT,
+    `name` VARCHAR(255), # 教师名称
     `sex`  INT NOT NULL, # 教师性别
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
@@ -42,13 +94,13 @@ CREATE TABLE IF NOT EXISTS `teacher`
 
 CREATE TABLE IF NOT EXISTS `student`
 (
-    `id`                INT UNIQUE AUTO_INCREMENT,
-    `name`              VARCHAR(30) NOT NULL, # 学员姓名
-    `sex`               INT         NOT NULL, # 学员性别
-    `class`             VARCHAR(10) NOT NULL, # 学员年级
-    `genearch_id`       INT         NOT NULL, # 学员家长姓名
-    `genearch_relation` VARCHAR(20),          # 学员和家长关系
-    `mark`              VARCHAR(100),         # 备注
+    `id`                BIGINT(11) UNIQUE AUTO_INCREMENT,
+    `name`              VARCHAR(255) NOT NULL, # 学员姓名
+    `sex`               INT          NOT NULL, # 学员性别
+    `class`             VARCHAR(255) NOT NULL, # 学员年级
+    `genearch_id`       BIGINT(11)   NOT NULL, # 学员家长姓名
+    `genearch_relation` VARCHAR(255),          # 学员和家长关系
+    `mark`              VARCHAR(255),          # 备注
     PRIMARY KEY (id),
     FOREIGN KEY (genearch_id) REFERENCES genearch (id)
 
@@ -58,21 +110,21 @@ CREATE TABLE IF NOT EXISTS `student`
 # 课程
 CREATE TABLE IF NOT EXISTS `course`
 (
-    `id`              INT UNIQUE AUTO_INCREMENT,
-    `name`            VARCHAR(60) NOT NULL, # 课程名称
-    `date`            DATE        NOT NULL, # 开课日期
-    `teacher_id`      INT         NOT NULL, # 任课老师
-    `course_sum`      INT         NOT NULL, # 课时数
-    `total_price`     DOUBLE      NOT NULL, # 课程原总价
-    `unit_price`      DOUBLE      NOT NULL, # 课程原单价
-    `act_course_sum`  INT,                  # 活动课时数
-    `act_total_price` DOUBLE,               # 活动总价
-    `act_unit_price`  DOUBLE,               # 活动单价
-    `act_name`        VARCHAR(30),          # 活动名称
-    `course_remain`   INT,                  # 剩余课时数
-    `remain_price`    DOUBLE,               # 剩余余额
-    `class_ref`       INT,                  # 课程参考年级
-    `mark`            VARCHAR(100),         # 备注
+    `id`              BIGINT(11) UNIQUE AUTO_INCREMENT,
+    `name`            VARCHAR(255) NOT NULL, # 课程名称
+    `date`            DATE         NOT NULL, # 开课日期
+    `teacher_id`      BIGINT(11)   NOT NULL, # 任课老师
+    `course_sum`      INT          NOT NULL, # 课时数
+    `total_price`     DOUBLE       NOT NULL, # 课程原总价
+    `unit_price`      DOUBLE       NOT NULL, # 课程原单价
+    `act_course_sum`  INT,                   # 活动课时数
+    `act_total_price` DOUBLE,                # 活动总价
+    `act_unit_price`  DOUBLE,                # 活动单价
+    `act_name`        VARCHAR(255),          # 活动名称
+    `course_remain`   INT,                   # 剩余课时数
+    `remain_price`    DOUBLE,                # 剩余余额
+    `class_ref`       INT,                   # 课程参考年级
+    `mark`            VARCHAR(255),          # 备注
     PRIMARY KEY (id),
     FOREIGN KEY (teacher_id) REFERENCES teacher (id)
 ) ENGINE = InnoDB
@@ -82,9 +134,42 @@ CREATE TABLE IF NOT EXISTS `course`
 
 CREATE TABLE IF NOT EXISTS `student_course`
 (
-    `student_id` INT, # 学员ID
-    `course_id`  INT, # 课程ID
+    `student_id` BIGINT(11), # 学员ID
+    `course_id`  BIGINT(11), # 课程ID
     FOREIGN KEY (student_id) REFERENCES student (id),
     FOREIGN KEY (course_id) REFERENCES course (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+#*************************************create table end**************************************************************************************
+
+#=====================================insert data start====================================================================
+INSERT INTO user (id, username, password)
+VALUES (1, 'user', 'e10adc3949ba59abbe56e057f20f883e');
+INSERT INTO user (id, username, password)
+VALUES (2, 'admin', 'e10adc3949ba59abbe56e057f20f883e');
+
+INSERT INTO role (id, name)
+VALUES (1, 'USER');
+
+INSERT INTO role (id, name)
+VALUES (2, 'ADMIN');
+
+INSERT INTO permission (id, url, name, pid)
+VALUES (1, '/user/hi', '', 0);
+
+INSERT INTO permission (id, url, name, pid)
+VALUES (2, '/admin/hi', '', 0);
+
+INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO user_role (user_id, role_id) VALUES (2, 1);
+INSERT INTO user_role (user_id, role_id) VALUES (2, 2);
+
+INSERT INTO role_permission (role_id, permission_id)
+VALUES (1, 1);
+INSERT INTO role_permission (role_id, permission_id)
+VALUES (2, 1);
+INSERT INTO role_permission (role_id, permission_id)
+VALUES (2, 2);
+
+#*************************************insert data end**************************************************************************************=

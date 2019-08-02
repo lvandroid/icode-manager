@@ -1,44 +1,32 @@
-package com.bsty.icode.controller;
-
-import com.bsty.icode.ResponseData;
-import com.bsty.icode.bean.User;
-import com.bsty.icode.service.UserService;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-
-import static com.bsty.icode.ResponseData.CODE_SUCCESS;
-import static com.bsty.icode.ResponseData.MSG_SUCCESS;
-
-@RestController
-@RequestMapping("/user")
-@Slf4j
-public class UserController {
-    @Autowired
-    private UserService userService;
-
-    @RequestMapping("/query")
-    public ResponseData<List<User>> testQuery(HttpServletRequest request, String name) {
-        ResponseData responseData = new ResponseData();
-        responseData.setData(userService.selectUserByName(name));
-        responseData.setSuccess();
-        return responseData;
-    }
-
-    @RequestMapping("/add")
-    public ResponseData add(@RequestBody User user) {
-        ResponseData responseData = new ResponseData();
-        userService.addUser(user);
-        responseData.setError();
-        return responseData;
-    }
-
-}
+//package com.bsty.icode.controller;
+//
+//import com.bsty.icode.ResponseData;
+//import com.bsty.icode.bean.User;
+//import com.bsty.icode.service.UserService;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//import javax.servlet.http.HttpServletRequest;
+//
+//@RestController
+//@Slf4j
+//public class UserController {
+//    @Autowired
+//    private UserService userService;
+//
+//    @RequestMapping("/login")
+//    public ResponseData<String> login(HttpServletRequest request, String name) {
+//        ResponseData responseData = new ResponseData();
+//        User user = userService.selectUserByName(name);
+//        if (user == null) {
+//            responseData.setErrCode(ResponseData.CODE_ERROR);
+//            responseData.setErrMsg("用户不存在");
+//        } else {
+//            responseData.setData(userService.selectUserByName(name));
+//            responseData.setSuccess();
+//        }
+//        return responseData;
+//    }
+//}

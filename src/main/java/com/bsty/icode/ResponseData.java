@@ -22,6 +22,9 @@ public class ResponseData<T> {
         errCode = CODE_SUCCESS;
         errMsg = MSG_SUCCESS;
     }
+    public static ResponseData newInstance(){
+        return new ResponseData();
+    }
 
     public void setError() {
         errCode = CODE_ERROR;

@@ -5,50 +5,53 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Data
-public class User implements UserDetails {
-    private Integer id;
+public class User implements UserDetails, Serializable {
+    private Long id;
 
-    private String name;
+    private String username;
 
     private String password;
 
-    private String phone;
-
-    private int role;
+    private List<Role> authorities;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> auths = new ArrayList<>();
-        auths.add(new SimpleGrantedAuthority("ADMIN"));
-        auths.add(new SimpleGrantedAuthority("USER"));
-        return auths;
+    public List<Role> getAuthorities() {
+        return authorities;
     }
 
-    @Override
-    public String getUsername() {
-        return name;
-    }
-
+    /**
+     * 用户账号是否过期
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    /**
+     * 用户账号是否被锁定
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    /**
+     * 用户密码是否过期
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    /**
+     * 用户是否可用
+     */
     @Override
     public boolean isEnabled() {
         return true;
