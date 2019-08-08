@@ -54,4 +54,13 @@ public class ResponseData<T> {
     public void setErrMsg(String errMsg) {
         this.errMsg = errMsg;
     }
+
+    @Override
+    public String toString() {
+        return "ResponseData{" +
+                "data=" + data +
+                ", errCode=" + errCode +
+                ", errMsg='" + errMsg + '\'' +
+                '}';
+    }
 }

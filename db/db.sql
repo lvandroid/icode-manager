@@ -156,14 +156,17 @@ INSERT INTO role (id, name)
 VALUES (2, 'ADMIN');
 
 INSERT INTO permission (id, url, name, pid)
-VALUES (1, '/user/hi', '', 0);
+VALUES (1, '/**', '', 0);
 
 INSERT INTO permission (id, url, name, pid)
-VALUES (2, '/admin/hi', '', 0);
+VALUES (2, '/**', '', 0);
 
-INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
-INSERT INTO user_role (user_id, role_id) VALUES (2, 1);
-INSERT INTO user_role (user_id, role_id) VALUES (2, 2);
+INSERT INTO user_role (user_id, role_id)
+VALUES (1, 1);
+INSERT INTO user_role (user_id, role_id)
+VALUES (2, 1);
+INSERT INTO user_role (user_id, role_id)
+VALUES (2, 2);
 
 INSERT INTO role_permission (role_id, permission_id)
 VALUES (1, 1);
@@ -172,4 +175,20 @@ VALUES (2, 1);
 INSERT INTO role_permission (role_id, permission_id)
 VALUES (2, 2);
 
+DELETE FROM teacher;
+INSERT INTO teacher (name, sex)
+values ('海马', 2);
+INSERT INTO teacher (name, sex)
+values ('布丁', 1);
+INSERT INTO teacher (name, sex)
+values ('丸子', 1);
+INSERT INTO teacher (name, sex)
+values ('月亮', 1);
+INSERT INTO teacher (name, sex)
+values ('樱桃', 1);
+INSERT INTO teacher (name, sex)
+values ('太阳', 1);
+INSERT INTO teacher (name, sex)
+values ('小熊', 1);
 #*************************************insert data end**************************************************************************************=
+

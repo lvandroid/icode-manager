@@ -6,18 +6,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.DigestInputStream;
 
 @Configuration
@@ -55,9 +60,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //OPTIONS请求全部放行
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 //登录接口放行
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/api/user/login").permitAll()
                 //其他接口全部接受验证
-                .anyRequest().authenticated();
+                .anyRequest().authenticated().and()
+                .logout().logoutUrl("/api/user/logout")
+                .addLogoutHandler(new LogoutHandler() {
+                    @Override
+                    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+
+                    }
+                });
 
         //解决中文乱码问题
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
