@@ -1,22 +1,22 @@
-drop table permission;
+# drop table permission;
 
-drop table role;
+# drop table role;
 
-drop table role_permission;
-
-drop table student_course;
-
-drop table course;
-
-drop table student;
-
-drop table genearch;
-
-drop table teacher;
-
-drop table user;
-
-drop table user_role;
+# drop table role_permission;
+#
+# drop table student_course;
+#
+# drop table course;
+#
+# drop table student;
+#
+# drop table genearch;
+#
+# drop table teacher;
+#
+# drop table user;
+#
+# drop table user_role;
 
 #=====================================create table start====================================================================
 # 创建用户表
@@ -110,21 +110,22 @@ CREATE TABLE IF NOT EXISTS `student`
 # 课程
 CREATE TABLE IF NOT EXISTS `course`
 (
-    `id`              BIGINT(11) UNIQUE AUTO_INCREMENT,
-    `name`            VARCHAR(255) NOT NULL, # 课程名称
-    `date`            DATE         NOT NULL, # 开课日期
-    `teacher_id`      BIGINT(11)   NOT NULL, # 任课老师
-    `course_sum`      INT          NOT NULL, # 课时数
-    `total_price`     DOUBLE       NOT NULL, # 课程原总价
-    `unit_price`      DOUBLE       NOT NULL, # 课程原单价
-    `act_course_sum`  INT,                   # 活动课时数
-    `act_total_price` DOUBLE,                # 活动总价
-    `act_unit_price`  DOUBLE,                # 活动单价
-    `act_name`        VARCHAR(255),          # 活动名称
-    `course_remain`   INT,                   # 剩余课时数
-    `remain_price`    DOUBLE,                # 剩余余额
-    `class_ref`       INT,                   # 课程参考年级
-    `mark`            VARCHAR(255),          # 备注
+    `id`              BIGINT UNIQUE AUTO_INCREMENT,
+    `name`            VARCHAR(255) NOT NULL COMMENT '课程名称',
+    `start_date`      DATE         NOT NULL COMMENT '开课日期',
+    `end_date`        DATE         NOT NULL COMMENT '结课日期',
+    `teacher_id`      BIGINT       NOT NULL COMMENT '任课老师',
+    `course_sum`      INT          NOT NULL COMMENT '课时数',
+    `total_price`     DOUBLE       NOT NULL COMMENT '课程原总价',
+    `unit_price`      DOUBLE       NOT NULL COMMENT '课程原单价',
+    `act_course_sum`  INT COMMENT '活动课时数',
+    `act_total_price` DOUBLE COMMENT '活动总价',
+    `act_unit_price`  DOUBLE COMMENT '活动单价',
+    `act_name`        VARCHAR(255) COMMENT '活动名称',
+    `course_remain`   INT COMMENT '剩余课时数',
+    `remain_price`    DOUBLE COMMENT '剩余余额',
+    `class_ref`       INT COMMENT '课程参考年级',
+    `mark`            VARCHAR(255) COMMENT '备注',
     PRIMARY KEY (id),
     FOREIGN KEY (teacher_id) REFERENCES teacher (id)
 ) ENGINE = InnoDB
@@ -134,8 +135,10 @@ CREATE TABLE IF NOT EXISTS `course`
 
 CREATE TABLE IF NOT EXISTS `student_course`
 (
-    `student_id` BIGINT(11), # 学员ID
-    `course_id`  BIGINT(11), # 课程ID
+    `student_id`    BIGINT(11) COMMENT '学员ID',
+    `course_id`     BIGINT(11) COMMENT '课程ID',
+    `course_remain` DOUBLE COMMENT '剩余课程数',
+    `remain_price`  DOUBLE COMMENT '剩余余额',
     FOREIGN KEY (student_id) REFERENCES student (id),
     FOREIGN KEY (course_id) REFERENCES course (id)
 ) ENGINE = InnoDB
@@ -175,7 +178,8 @@ VALUES (2, 1);
 INSERT INTO role_permission (role_id, permission_id)
 VALUES (2, 2);
 
-DELETE FROM teacher;
+DELETE
+FROM teacher;
 INSERT INTO teacher (name, sex)
 values ('海马', 2);
 INSERT INTO teacher (name, sex)
