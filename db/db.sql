@@ -122,8 +122,6 @@ CREATE TABLE IF NOT EXISTS `course`
     `act_total_price` DOUBLE COMMENT '活动总价',
     `act_unit_price`  DOUBLE COMMENT '活动单价',
     `act_name`        VARCHAR(255) COMMENT '活动名称',
-    `course_remain`   INT COMMENT '剩余课时数',
-    `remain_price`    DOUBLE COMMENT '剩余余额',
     `class_ref`       INT COMMENT '课程参考年级',
     `mark`            VARCHAR(255) COMMENT '备注',
     PRIMARY KEY (id),

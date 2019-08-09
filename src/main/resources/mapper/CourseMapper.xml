@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bsty.icode.dao.CourseDao">
+    <insert id="insertCourse" parameterType="com.bsty.icode.bean.Course" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO course(name, start_date, end_date, course_sum, total_price, unit_price, act_course_sum,
+                           act_total_price, act_unit_price, act_name, class_ref, mark)
+        VALUES (#{name}, #{startDate}, #{endDate}, #{courseSum}, #{totalPrice}, #{unitPrice}, #{actCourseSum},
+                #{actTotalPrice}, #{actUnitPrice}, #{actName}, #{classRef}, #{mark})
+    </insert>
+    <select id="selectAllCourses" resultType="com.bsty.icode.bean.Course">
+        SELECT *
+        FROM course
+    </select>
+</mapper>
