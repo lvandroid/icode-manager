@@ -4,6 +4,7 @@ public class ResponseData<T> {
     private T data;
     private int errCode;
     private String errMsg;
+    private long total;
 
     public static final int CODE_SUCCESS = 0;
     public static final int CODE_ERROR = -1;
@@ -53,6 +54,14 @@ public class ResponseData<T> {
 
     public void setErrMsg(String errMsg) {
         this.errMsg = errMsg;
+    }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
     }
 
     @Override

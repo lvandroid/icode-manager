@@ -3,6 +3,9 @@ package com.bsty.icode.bean;
 import com.bsty.icode.request.CourseDTO;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
 @Data
 public class Course {
     private long id; //课程ID
@@ -17,7 +20,7 @@ public class Course {
     private int actCourseSum; //活动课时数
     private double actTotalPrice; //活动总价
     private double actUnitPrice; //活动单价
-    private int classRef;//课程参考年级
+    private String classRef;//课程参考年级
     private String mark;//备注
 
     public Course(CourseDTO dto) {

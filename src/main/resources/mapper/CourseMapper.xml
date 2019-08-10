@@ -8,7 +8,8 @@
                 #{actTotalPrice}, #{actUnitPrice}, #{actName}, #{classRef}, #{mark})
     </insert>
     <select id="selectAllCourses" resultType="com.bsty.icode.bean.Course">
-        SELECT *
+        SELECT name,start_date,end_date,course_sum,total_price,unit_price,act_name,act_course_sum,act_total_price,act_unit_price,class_ref,mark
         FROM course
+        ORDER BY id DESC
     </select>
 </mapper>

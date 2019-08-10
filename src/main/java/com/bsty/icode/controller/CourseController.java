@@ -3,6 +3,8 @@ package com.bsty.icode.controller;
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.request.CourseDTO;
 import com.bsty.icode.service.CourseService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,21 @@ public class CourseController {
         try {
             responseData.setData(courseService.findAllCourse());
             responseData.setSuccess();
+        } catch (Exception e) {
+            responseData.setError();
+            log.error(e.getMessage());
+        }
+        return responseData;
+    }
+
+    @GetMapping(value = "/course/getCourseList")
+    public ResponseData<List<CourseDTO>> getCourseList(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "5") int pageSize) {
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        ResponseData responseData = ResponseData.newInstance();
+        try {
+            responseData.setData(courseService.findAllCourse());
+            responseData.setSuccess();
+            responseData.setTotal(page.getTotal());
         } catch (Exception e) {
             responseData.setError();
             log.error(e.getMessage());

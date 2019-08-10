@@ -15,7 +15,7 @@ public class CourseDTO {
     private int actCourseSum; //活动课时数
     private double actTotalPrice; //活动总价
     private double actUnitPrice; //活动单价
-    private int classRef;//课程参考年级
+    private String classRef;//课程参考年级
     private String mark;//备注
 
     public CourseDTO(Course course) {
