@@ -23,14 +23,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseDTO> findAllCourse() {
+    public List<Course> findAllCourse() {
         List<Course> courses = courseDao.selectAllCourses();
-        List<CourseDTO> courseDTOS = new ArrayList<>();
-        if (courses != null && !courses.isEmpty()) {
-            for (Course course : courses) {
-                courseDTOS.add(new CourseDTO(course));
-            }
-        }
-        return courseDTOS;
+//        List<CourseDTO> courseDTOS = new ArrayList<>();
+//        if (courses != null && !courses.isEmpty()) {
+//            for (Course course : courses) {
+//                courseDTOS.add(new CourseDTO(course));
+//            }
+//        }
+        return courses;
     }
 }
