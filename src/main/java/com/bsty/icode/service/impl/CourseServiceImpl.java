@@ -2,12 +2,12 @@ package com.bsty.icode.service.impl;
 
 import com.bsty.icode.bean.Course;
 import com.bsty.icode.dao.CourseDao;
-import com.bsty.icode.request.CourseDTO;
+import com.bsty.icode.dto.CourseParamDTO;
+import com.bsty.icode.request.CourseVO;
 import com.bsty.icode.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,9 +16,9 @@ public class CourseServiceImpl implements CourseService {
     private CourseDao courseDao;
 
     @Override
-    public void addCourse(CourseDTO courseDTO) {
-        if (courseDTO != null) {
-            courseDao.insertCourse(new Course(courseDTO));
+    public void addCourse(CourseVO courseVO) {
+        if (courseVO != null) {
+            courseDao.insertCourse(new Course(courseVO));
         }
     }
 
@@ -31,6 +31,12 @@ public class CourseServiceImpl implements CourseService {
 //                courseDTOS.add(new CourseDTO(course));
 //            }
 //        }
+        return courses;
+    }
+
+    @Override
+    public List<Course> findCourseByParams(CourseParamDTO params) {
+        List<Course> courses = courseDao.selectCourseByParams(params);
         return courses;
     }
 }

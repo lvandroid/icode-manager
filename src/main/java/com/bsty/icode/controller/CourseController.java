@@ -3,18 +3,18 @@ package com.bsty.icode.controller;
 import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.bean.Course;
-import com.bsty.icode.request.CourseDTO;
+import com.bsty.icode.dto.CourseParamDTO;
+import com.bsty.icode.request.CourseVO;
 import com.bsty.icode.service.CourseService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Slf4j
@@ -24,17 +24,17 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping(value = "/course/add")
-    public ResponseData addCourse(@RequestBody CourseDTO courseDTO) {
+    public ResponseData addCourse(@RequestBody CourseVO courseVO) {
         ResponseData responseData = ResponseData.newInstance();
-        if (courseDTO != null) {
-            courseService.addCourse(courseDTO);
+        if (courseVO != null) {
+            courseService.addCourse(courseVO);
             responseData.setSuccess();
         }
         return responseData;
     }
 
     @GetMapping(value = "/course/list")
-    public ResponseData<List<CourseDTO>> findAllCourse() {
+    public ResponseData<List<CourseVO>> findAllCourse() {
         ResponseData responseData = ResponseData.newInstance();
         try {
             responseData.setData(courseService.findAllCourse());
@@ -46,20 +46,21 @@ public class CourseController {
         return responseData;
     }
 
-    @GetMapping(value = "/course/getCourseList")
-    public ResponseData<ListResultData<CourseDTO>> getCourseList(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "5") int pageSize, Map<String,String> params) {
-        Page page = PageHelper.startPage(pageNum, pageSize);
+    @PostMapping(value = "/course/getCourseList")
+    public ResponseData<ListResultData<CourseVO>> getCourseList(@RequestBody @NotNull CourseParamDTO params) {
+        Page page = PageHelper.startPage(params.getPageNum(), params.getPageSize());
         ResponseData responseData = ResponseData.newInstance();
         try {
-            List<Course> courses = courseService.findAllCourse();
-            List<CourseDTO> courseDTOS = new ArrayList<>();
-            ListResultData<CourseDTO> result = new ListResultData();
+            params.initSortMap();
+            List<Course> courses = courseService.findCourseByParams(params);
+            List<CourseVO> courseVOS = new ArrayList<>();
+            ListResultData<CourseVO> result = new ListResultData();
 
             if (courses != null && !courses.isEmpty()) {
                 for (Course course : courses) {
-                    courseDTOS.add(new CourseDTO(course));
+                    courseVOS.add(new CourseVO(course));
                 }
-                result.setList(courseDTOS);
+                result.setList(courseVOS);
             }
             result.setPageNum(page.getPageNum());
             result.setPageSize(page.getPageSize());

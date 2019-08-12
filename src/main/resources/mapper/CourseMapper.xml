@@ -8,8 +8,25 @@
                 #{actTotalPrice}, #{actUnitPrice}, #{actName}, #{classRef}, #{mark})
     </insert>
     <select id="selectAllCourses" resultType="com.bsty.icode.bean.Course">
-        SELECT name,start_date,end_date,course_sum,total_price,unit_price,act_name,act_course_sum,act_total_price,act_unit_price,class_ref,mark
+        SELECT *
         FROM course
         ORDER BY id DESC
+    </select>
+
+    <select id="selectCourseByParams" resultType="com.bsty.icode.bean.Course"
+            parameterType="com.bsty.icode.dto.CourseParamDTO">
+        SELECT *
+        FROM course
+        <where>
+            1=1
+            <if test="name != null and name !=''">
+                AND name LIKE concat('%',#{name},'%')
+            </if>
+        </where>
+        ORDER BY
+        <foreach item="value" index="key" collection="sortMap.entrySet()" separator=",">
+            ${key} ${value}
+        </foreach>
+
     </select>
 </mapper>

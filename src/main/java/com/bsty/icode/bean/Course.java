@@ -1,10 +1,7 @@
 package com.bsty.icode.bean;
 
-import com.bsty.icode.request.CourseDTO;
+import com.bsty.icode.request.CourseVO;
 import lombok.Data;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
 @Data
 public class Course {
@@ -23,7 +20,7 @@ public class Course {
     private String classRef;//课程参考年级
     private String mark;//备注
 
-    public Course(CourseDTO dto) {
+    public Course(CourseVO dto) {
         if (dto == null) return;
         this.name = dto.getName();
         this.startDate = dto.getStartDate();

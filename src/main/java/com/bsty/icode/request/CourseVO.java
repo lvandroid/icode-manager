@@ -4,7 +4,7 @@ import com.bsty.icode.bean.Course;
 import lombok.Data;
 
 @Data
-public class CourseDTO {
+public class CourseVO {
     private String name; //课程名称
     private long startDate; //开课日期
     private long endDate; //结课日期
@@ -18,7 +18,7 @@ public class CourseDTO {
     private String classRef;//课程参考年级
     private String mark;//备注
 
-    public CourseDTO(Course course) {
+    public CourseVO(Course course) {
         if (course == null) return;
         this.name = course.getName();
         this.startDate = course.getStartDate();
@@ -34,6 +34,6 @@ public class CourseDTO {
         this.mark = course.getMark();
     }
 
-    public CourseDTO() {
+    public CourseVO() {
     }
 }
