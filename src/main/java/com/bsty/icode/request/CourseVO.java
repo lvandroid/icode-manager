@@ -7,7 +7,9 @@ import lombok.Data;
 public class CourseVO {
     private String name; //课程名称
     private long startDate; //开课日期
+    private String courseTypeName; //课程类型
     private long endDate; //结课日期
+    private long courseTypeId;//课程类型id
     private int courseSum; //课时数
     private double totalPrice; //总价
     private double unitPrice; //单价
@@ -24,6 +26,7 @@ public class CourseVO {
         this.startDate = course.getStartDate();
         this.endDate = course.getEndDate();
         this.courseSum = course.getCourseSum();
+        this.courseTypeId = course.getCourseTypeId();
         this.totalPrice = course.getTotalPrice();
         this.unitPrice = course.getUnitPrice();
         this.actName = course.getActName();

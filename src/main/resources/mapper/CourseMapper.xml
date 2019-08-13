@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.CourseDao">
     <insert id="insertCourse" parameterType="com.bsty.icode.bean.Course" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO course(name, start_date, end_date, course_sum, total_price, unit_price, act_course_sum,
+        INSERT INTO course(name,course_type_id, start_date, end_date, course_sum, total_price, unit_price, act_course_sum,
                            act_total_price, act_unit_price, act_name, class_ref, mark)
-        VALUES (#{name}, #{startDate}, #{endDate}, #{courseSum}, #{totalPrice}, #{unitPrice}, #{actCourseSum},
+        VALUES (#{name}, #{courseTypeId}, #{startDate}, #{endDate}, #{courseSum}, #{totalPrice}, #{unitPrice}, #{actCourseSum},
                 #{actTotalPrice}, #{actUnitPrice}, #{actName}, #{classRef}, #{mark})
     </insert>
-    <select id="selectAllCourses" resultType="com.bsty.icode.bean.Course">
-        SELECT *
-        FROM course
+    <select id="selectAllCourses" resultType="com.bsty.icode.request.CourseVO">
+        SELECT c.*, ct.name AS course_type
+        FROM course AS c LEFT JOIN course_type ct on c.course_type_id = ct.id
         ORDER BY id DESC
     </select>
 
-    <select id="selectCourseByParams" resultType="com.bsty.icode.bean.Course"
+    <select id="selectCourseByParams" resultType="com.bsty.icode.request.CourseVO"
             parameterType="com.bsty.icode.dto.CourseParamDTO">
-        SELECT *
-        FROM course
+        SELECT c.*, ct.name AS course_type_name
+        FROM course AS c LEFT JOIN course_type ct on c.course_type_id = ct.id
         <where>
             1=1
             <if test="name != null and name !=''">

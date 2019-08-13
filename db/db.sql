@@ -229,3 +229,8 @@ ALTER TABLE course
 ADD COLUMN course_type_id BIGINT;
 ALTER TABLE course
 ADD FOREIGN KEY (course_type_id) REFERENCES course_type(id);
+
+
+# SELECT c.*, ct.name AS course_type
+# FROM course AS c LEFT JOIN course_type ct on c.course_type_id = ct.id
+# ORDER BY id DESC;

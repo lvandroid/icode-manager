@@ -13,4 +13,5 @@ public interface CourseTypeService {
     List<CourseTypeDTO> findByName(String name) throws Exception;
 
     CourseTypeDTO findByType(int type) throws Exception;
+
 }

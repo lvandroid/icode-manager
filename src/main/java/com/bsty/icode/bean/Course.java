@@ -11,6 +11,7 @@ public class Course {
     private long endDate; //结课日期
     private long teacherId; //老师ID
     private int courseSum; //课时数
+    private long courseTypeId;//课程类型id
     private double totalPrice; //总价
     private double unitPrice; //单价
     private String actName; //活动名称
@@ -28,6 +29,7 @@ public class Course {
         this.courseSum = dto.getCourseSum();
         this.totalPrice = dto.getTotalPrice();
         this.unitPrice = dto.getUnitPrice();
+        this.courseTypeId = dto.getCourseTypeId();
         this.actName = dto.getActName();
         this.actCourseSum = dto.getActCourseSum();
         this.actTotalPrice = dto.getActTotalPrice();

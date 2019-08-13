@@ -23,8 +23,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findAllCourse() {
-        List<Course> courses = courseDao.selectAllCourses();
+    public List<CourseVO> findAllCourse() {
+        List<CourseVO> courses = courseDao.selectAllCourses();
 //        List<CourseDTO> courseDTOS = new ArrayList<>();
 //        if (courses != null && !courses.isEmpty()) {
 //            for (Course course : courses) {
@@ -35,8 +35,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findCourseByParams(CourseParamDTO params) {
-        List<Course> courses = courseDao.selectCourseByParams(params);
+    public List<CourseVO> findCourseByParams(CourseParamDTO params) {
+        List<CourseVO> courses = courseDao.selectCourseByParams(params);
         return courses;
     }
 }

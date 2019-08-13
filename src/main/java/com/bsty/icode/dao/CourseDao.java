@@ -2,6 +2,7 @@ package com.bsty.icode.dao;
 
 import com.bsty.icode.bean.Course;
 import com.bsty.icode.dto.CourseParamDTO;
+import com.bsty.icode.request.CourseVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface CourseDao {
     void insertCourse(Course course);
 
-    List<Course> selectAllCourses();
+    List<CourseVO> selectAllCourses();
 
-    List<Course> selectCourseByParams(CourseParamDTO params);
+    List<CourseVO> selectCourseByParams(CourseParamDTO params);
 }
