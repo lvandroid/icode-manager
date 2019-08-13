@@ -23,8 +23,23 @@ public class ResponseData<T> {
         errCode = CODE_SUCCESS;
         errMsg = MSG_SUCCESS;
     }
-    public static ResponseData newInstance(){
+
+    public static ResponseData newInstance() {
         return new ResponseData();
+    }
+
+    public static <K> ResponseData successInstance(K k) {
+        ResponseData success = new ResponseData();
+        success.setSuccess();
+        success.setData(k);
+        return success;
+    }
+
+    public static <K> ResponseData errorInstance(K k) {
+        ResponseData error = new ResponseData();
+        error.setError();
+        error.setData(k);
+        return error;
     }
 
     public void setError() {

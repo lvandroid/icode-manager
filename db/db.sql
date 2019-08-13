@@ -129,11 +129,14 @@ CREATE TABLE IF NOT EXISTS `course`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-ALTER TABLE course MODIFY COLUMN start_date BIGINT;
-ALTER TABLE course MODIFY COLUMN end_date BIGINT;
-ALTER TABLE course MODIFY COLUMN teacher_id BIGINT NULL;
-ALTER TABLE course MODIFY COLUMN class_ref VARCHAR(16);
-# 学生课程
+ALTER TABLE course
+    MODIFY COLUMN start_date BIGINT;
+ALTER TABLE course
+    MODIFY COLUMN end_date BIGINT;
+ALTER TABLE course
+    MODIFY COLUMN teacher_id BIGINT NULL;
+ALTER TABLE course
+    MODIFY COLUMN class_ref VARCHAR(16);
 
 CREATE TABLE IF NOT EXISTS `student_course`
 (
@@ -196,5 +199,33 @@ INSERT INTO teacher (name, sex)
 values ('太阳', 1);
 INSERT INTO teacher (name, sex)
 values ('小熊', 1);
+
 #*************************************insert data end**************************************************************************************=
 
+
+# 学生课程
+CREATE TABLE IF NOT EXISTS `course_type`
+(
+    `id`   BIGINT UNIQUE AUTO_INCREMENT COMMENT '课程类型id',
+    `name` VARCHAR(128) COMMENT '课程名称',
+    `type` INT COMMENT '课程类型',
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+    COMMENT '课程类型';
+
+INSERT INTO course_type(name, type)
+VALUES ('结构搭建', 1);
+INSERT INTO course_type(name, type)
+VALUES ('Scratch', 2);
+INSERT INTO course_type(name, type)
+VALUES ('App Inventor', 3);
+INSERT INTO course_type(name, type)
+VALUES ('Python', 4);
+INSERT INTO course_type(name, type)
+VALUES ('C++', 5);
+
+ALTER TABLE course
+ADD COLUMN course_type_id BIGINT;
+ALTER TABLE course
+ADD FOREIGN KEY (course_type_id) REFERENCES course_type(id);

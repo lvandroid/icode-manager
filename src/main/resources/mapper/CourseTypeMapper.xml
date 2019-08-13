@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bsty.icode.dao.CourseTypeDao">
+    <insert id="insert" parameterType="com.bsty.icode.bean.CourseType">
+        INSERT INTO course_type(name, type)
+        VALUES (#{name}, #{type})
+    </insert>
+    <select id="findByType" parameterType="java.lang.Integer" resultType="com.bsty.icode.bean.CourseType">
+        SELECT * FROM course_type
+        <where>
+            type = #{type}
+        </where>
+        LIMIT 1
+    </select>
+    <select id="findByName" parameterType="java.lang.String" resultType="com.bsty.icode.bean.CourseType">
+        SELECT * FROM course_type
+        <where>
+            name LIKE concat('%',#{name},'%') OR name = #{name}
+        </where>
+    </select>
+    <select id="findAll" resultType="com.bsty.icode.bean.CourseType">
+        SELECT *
+        FROM course_type
+    </select>
+</mapper>

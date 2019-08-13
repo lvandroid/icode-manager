@@ -21,8 +21,33 @@ public class ParamDTO {
         String[] keys = getOrderKey().split(COMMA);
         String[] types = getOrderType().split(COMMA);
         for (int i = 0; i < keys.length; i++) {
-            sortMap.put(keys[i], types[i]);
+            sortMap.put(humpToLine(keys[i]), types[i]);
         }
+    }
+
+
+    /**
+     * 驼峰转下划线
+     *
+     * @param hump
+     * @return
+     */
+    private String humpToLine(String hump) {
+        if (hump == null) {
+            return null;
+        }
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+        while (i < hump.length()) {
+            char chr = hump.charAt(i);
+            if (Character.isUpperCase(chr)) {
+                sb.append('_').append(Character.toLowerCase(chr));
+            } else {
+                sb.append(chr);
+            }
+            i++;
+        }
+        return sb.toString();
     }
 
 }
