@@ -1,6 +1,8 @@
 package com.bsty.icode.service;
 
 import com.bsty.icode.bean.Teacher;
+import com.bsty.icode.dto.TeacherDTO;
+import com.bsty.icode.dto.TeacherParamDTO;
 
 import java.util.List;
 
@@ -10,4 +12,6 @@ public interface TeacherService {
     void addTeacherCourseType(long teacherId, List<Long> courseTypeIds) throws Exception;
 
     List<Teacher> findAllTeachers() throws Exception;
+
+    List<TeacherDTO> findByParams(TeacherParamDTO paramDTO) throws Exception;
 }

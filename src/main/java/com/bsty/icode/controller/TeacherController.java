@@ -3,6 +3,7 @@ package com.bsty.icode.controller;
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.bean.Teacher;
 import com.bsty.icode.dto.TeacherDTO;
+import com.bsty.icode.dto.TeacherParamDTO;
 import com.bsty.icode.request.AddTeacherRequest;
 import com.bsty.icode.service.TeacherService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,11 +41,11 @@ public class TeacherController {
         return responseData;
     }
 
-    @GetMapping(value = "/teacher/list")
-    public ResponseData<List<Teacher>> findAllTeachers() {
+    @PostMapping(value = "/teacher/list")
+    public ResponseData<List<TeacherDTO>> findAllTeachers(@RequestBody TeacherParamDTO paramDTO) {
         ResponseData responseData = ResponseData.newInstance();
         try {
-            responseData.setData(teacherService.findAllTeachers());
+            responseData.setData(teacherService.findByParams(paramDTO));
             responseData.setSuccess();
         } catch (Exception e) {
             log.error(e.getMessage());

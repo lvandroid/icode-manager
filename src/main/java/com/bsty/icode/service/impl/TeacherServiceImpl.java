@@ -2,6 +2,8 @@ package com.bsty.icode.service.impl;
 
 import com.bsty.icode.bean.Teacher;
 import com.bsty.icode.dao.TeacherDao;
+import com.bsty.icode.dto.TeacherDTO;
+import com.bsty.icode.dto.TeacherParamDTO;
 import com.bsty.icode.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,4 +37,10 @@ public class TeacherServiceImpl implements TeacherService {
         teachers.addAll(teacherDao.selectAllTeachers());
         return teachers;
     }
+
+    @Override
+    public List<TeacherDTO> findByParams(TeacherParamDTO paramDTO) throws Exception {
+        return  teacherDao.selectCourseByParams(paramDTO);
+    }
+
 }
