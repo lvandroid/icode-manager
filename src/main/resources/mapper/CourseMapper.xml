@@ -8,19 +8,19 @@
                 #{actTotalPrice}, #{actUnitPrice}, #{actName}, #{classRef}, #{mark})
     </insert>
     <select id="selectAllCourses" resultType="com.bsty.icode.request.CourseVO">
-        SELECT c.*, ct.name AS course_type
-        FROM course AS c LEFT JOIN course_type ct on c.course_type_id = ct.id
+        SELECT c.*, ct.name AS course_type_name
+        FROM course AS c LEFT JOIN course_type AS ct ON c.course_type_id = ct.id
         ORDER BY id DESC
     </select>
 
     <select id="selectCourseByParams" resultType="com.bsty.icode.request.CourseVO"
             parameterType="com.bsty.icode.dto.CourseParamDTO">
         SELECT c.*, ct.name AS course_type_name
-        FROM course AS c LEFT JOIN course_type ct on c.course_type_id = ct.id
+        FROM course AS c LEFT JOIN course_type AS ct ON c.course_type_id = ct.id
         <where>
             1=1
             <if test="name != null and name !=''">
-                AND name LIKE concat('%',#{name},'%')
+                AND c.name LIKE concat('%',#{name},'%')
             </if>
         </where>
         ORDER BY

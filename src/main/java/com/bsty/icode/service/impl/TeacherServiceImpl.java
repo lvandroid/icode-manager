@@ -15,10 +15,18 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherDao teacherDao;
 
     @Override
-    public void addTeacher(Teacher teacher) {
+    public long addTeacher(Teacher teacher) {
+        long id = 0;
         if (teacher != null) {
             teacherDao.insertTeacher(teacher);
+            id = teacher.getId();
         }
+        return id;
+    }
+
+    @Override
+    public void addTeacherCourseType(long teacherId, List<Long> courseTypeIds) {
+        teacherDao.insertTeacherCourseType(teacherId,courseTypeIds);
     }
 
     @Override

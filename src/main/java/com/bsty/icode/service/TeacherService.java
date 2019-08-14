@@ -5,6 +5,9 @@ import com.bsty.icode.bean.Teacher;
 import java.util.List;
 
 public interface TeacherService {
-    void addTeacher(Teacher teacher);
-    List<Teacher> findAllTeachers();
+    long addTeacher(Teacher teacher) throws Exception;
+
+    void addTeacherCourseType(long teacherId, List<Long> courseTypeIds) throws Exception;
+
+    List<Teacher> findAllTeachers() throws Exception;
 }

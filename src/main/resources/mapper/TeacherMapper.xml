@@ -2,12 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.TeacherDao">
     <insert id="insertTeacher" parameterType="com.bsty.icode.bean.Teacher" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO teacher(name, sex)
-        VALUES (#{name}, #{sex})
+        INSERT INTO teacher(name, sex, entry_date, mark)
+        VALUES (#{name}, #{sex}, #{entryDate}, #{mark})
     </insert>
+    <insert id="insertTeacherCourseType">
+        INSERT INTO teacher_course_type(teacher_id, course_type_id) VALUES
+        <foreach collection="courseTypeIds" item="id" index="index" separator=",">
+            (#{teacherId},#{id})
+        </foreach>
 
+    </insert>
     <select id="selectAllTeachers" resultType="com.bsty.icode.bean.Teacher">
         SELECT *
         FROM teacher
+    </select>
+
+    <select id="selectCourseByParams" resultType="com.bsty.icode.dto.TeacherDTO"
+            parameterType="com.bsty.icode.dto.TeacherParamDTO">
+        select t.*,
+        <if test="courseTypeId==null or courseTypeId==''">
+            GROUP_CONCAT(ct.name SEPARATOR ' ') AS course_type_names
+        </if>
+        from teacher t
+        left join teacher_course_type tct on t.id = tct.teacher_id
+        left join course_type ct on tct.course_type_id = ct.id
+        <where>
+            1=1
+            <if test="name!=null and name!=''">
+                AND t.name LIKE concat('%',#{name},'%')
+            </if>
+            <if test="sex!=null and sex!=''">
+                AND t.sex = ${sex}
+            </if>
+            <if test="courseTypeNames!=null and courseTypeNames!=''">
+                AND course_type_names like concat('%',#{courseName}, '%')
+            </if>
+            <if test="courseTypeId!=null and courseTypeId!=''">
+                AND
+            </if>
+        </where>
+        <if test="courseTypeId==null or courseTypeId==''">
+            GROUP BY t.id
+        </if>
+        ORDER BY
+        <foreach collection="sortMap.entrySet()" separator="," index="key" item="value">
+            ${key} ${value}
+        </foreach>
     </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.bsty.icode.controller;
 
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.bean.Teacher;
+import com.bsty.icode.dto.TeacherDTO;
 import com.bsty.icode.request.AddTeacherRequest;
 import com.bsty.icode.service.TeacherService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +19,24 @@ public class TeacherController {
     private TeacherService teacherService;
 
     @PostMapping(value = "/teacher/add")
-    public ResponseData addTeacher(@RequestBody AddTeacherRequest addTeacherRequest) {
+    public ResponseData addTeacher(@RequestBody TeacherDTO dto) {
         ResponseData responseData = ResponseData.newInstance();
-        if (addTeacherRequest != null) {
-            Teacher teacher = new Teacher();
-            teacher.setName(addTeacherRequest.getName());
-            teacher.setSex(addTeacherRequest.getSex());
-            teacherService.addTeacher(teacher);
-            responseData.setSuccess();
+        try {
+            if (dto != null) {
+                Teacher teacher = new Teacher();
+                teacher.setName(dto.getName());
+                teacher.setSex(dto.getSex());
+                teacher.setMark(dto.getMark());
+                teacher.setEntryDate(dto.getEntryDate());
+                long teacherId = teacherService.addTeacher(teacher);
+                teacherService.addTeacherCourseType(teacherId, dto.getCourseTypeIds());
+                responseData.setSuccess();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setError();
         }
+
         return responseData;
     }
 
@@ -38,6 +48,7 @@ public class TeacherController {
             responseData.setSuccess();
         } catch (Exception e) {
             log.error(e.getMessage());
+            responseData.setError();
         }
         return responseData;
     }

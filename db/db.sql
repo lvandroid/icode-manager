@@ -226,11 +226,37 @@ INSERT INTO course_type(name, type)
 VALUES ('C++', 5);
 
 ALTER TABLE course
-ADD COLUMN course_type_id BIGINT;
+    ADD COLUMN course_type_id BIGINT;
 ALTER TABLE course
-ADD FOREIGN KEY (course_type_id) REFERENCES course_type(id);
+    ADD FOREIGN KEY (course_type_id) REFERENCES course_type (id);
 
 
+# 2019-08-14
+
+ALTER TABLE teacher
+    ADD COLUMN entry_date BIGINT;
+ALTER TABLE teacher
+    ADD COLUMN mark VARCHAR(128);
+
+
+
+CREATE TABLE IF NOT EXISTS `teacher_course_type`
+(
+    `teacher_id`     BIGINT NOT NULL,
+    `course_type_id` BIGINT NOT NULL,
+    FOREIGN KEY (teacher_id) REFERENCES teacher (id),
+    FOREIGN KEY (course_type_id) REFERENCES course_type (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+    COMMENT '教师课程类型对应表';
 # SELECT c.*, ct.name AS course_type
 # FROM course AS c LEFT JOIN course_type ct on c.course_type_id = ct.id
 # ORDER BY id DESC;
+
+/**
+  查询教师课程关联
+ */
+select t.*, GROUP_CONCAT(ct.name SEPARATOR ' ') AS course_type_names
+from teacher t
+         left join teacher_course_type tct on t.id = tct.teacher_id
+         left join course_type ct on tct.course_type_id = ct.id GROUP BY t.id;
