@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.GenearchDao">
     <insert id="insert" parameterType="com.bsty.icode.bean.Genearch">
-        INSERT INTO genearch(id, name, sex, profession, phone, wechat, qq, email, mark)
-        VALUES (#{id}, #{name}, #{sex}, #{profession}, #{phone}, #{wechat}, #{qq}, #{email}, #{mark})
+        INSERT INTO genearch(id, name, sex,update_date, profession, phone, wechat, qq, email, mark)
+        VALUES (#{id}, #{name}, #{sex},#{updateDate}, #{profession}, #{phone}, #{wechat}, #{qq}, #{email}, #{mark})
     </insert>
     <select id="selectCount" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT COUNT(*)

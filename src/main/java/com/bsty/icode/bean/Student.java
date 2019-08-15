@@ -9,6 +9,7 @@ public class Student {
     private String phone;
     private String name;
     private int sex;
+    private long updateDate;
     private String grade;
     private String genearchId; //家长id
     private String mark;
@@ -24,6 +25,7 @@ public class Student {
             this.phone = dto.getPhone();
             this.name = dto.getName();
             this.sex = dto.getSex();
+            this.updateDate = dto.getUpdateDate();
             this.grade = dto.getGrade();
             this.genearchId = dto.getGenearchId();
             this.mark = dto.getMark();

@@ -34,9 +34,7 @@ alter table genearch
 
 create table if not exists permission
 (
-    id          bigint(11) auto_increment
-        constraint `PRIMARY`
-        primary key,
+    id          bigint(11) auto_increment primary key,
     url         varchar(255) not null,
     name        varchar(255) not null,
     description varchar(255) null,
@@ -47,7 +45,6 @@ create table if not exists permission
 create table if not exists role
 (
     id   bigint(11) auto_increment
-        constraint `PRIMARY`
         primary key,
     name varchar(255) not null
 )

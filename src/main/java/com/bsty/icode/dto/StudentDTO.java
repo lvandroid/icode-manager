@@ -10,6 +10,7 @@ public class StudentDTO {
     private String phone;
     private String name;
     private int sex;
+    private long updateDate;
     private String grade;
     private String genearchId; //家长id
     private String genearchName; //家长姓名

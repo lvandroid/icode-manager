@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface StudentDao {
-    void insertStudent(Student student);
+    void insert(Student student);
 
     int selectCount(String id);
 

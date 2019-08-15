@@ -19,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
     public void addStudent(Student student) throws Exception {
         if (student != null) {
             student.setId(student.getPhone());
-            studentDao.insertStudent(student);
+            studentDao.insert(student);
         }
     }
 

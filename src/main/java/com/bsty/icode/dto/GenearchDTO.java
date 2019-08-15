@@ -7,6 +7,7 @@ public class GenearchDTO {
     private String id; //11位手机号码
     private String name;
     private int sex;
+    private long updateDate;
     private String profession; //职业
     private String phone;
     private String wechat;
