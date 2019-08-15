@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.TeacherDao">
     <insert id="insertTeacher" parameterType="com.bsty.icode.bean.Teacher" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO teacher(name, sex, entry_date, mark)
-        VALUES (#{name}, #{sex}, #{entryDate}, #{mark})
+        INSERT INTO teacher(name, sex, phone,entry_date, mark)
+        VALUES (#{name}, #{sex},#{phone}, #{entryDate}, #{mark})
     </insert>
     <insert id="insertTeacherCourseType">
         INSERT INTO teacher_course_type(teacher_id, course_type_id) VALUES
@@ -19,9 +19,9 @@
 
     <select id="selectCourseByParams" resultType="com.bsty.icode.dto.TeacherDTO"
             parameterType="com.bsty.icode.dto.TeacherParamDTO">
-        select t.*,
+        select t.*
         <if test="courseTypeId==null or courseTypeId==''">
-            GROUP_CONCAT(ct.name SEPARATOR ' ') AS course_type_names
+            ,GROUP_CONCAT(ct.name SEPARATOR ' ') AS course_type_names
         </if>
         from teacher t
         left join teacher_course_type tct on t.id = tct.teacher_id
@@ -44,9 +44,12 @@
         <if test="courseTypeId==null or courseTypeId==''">
             GROUP BY t.id
         </if>
-        ORDER BY
-        <foreach collection="sortMap.entrySet()" separator="," index="key" item="value">
-            ${key} ${value}
-        </foreach>
+        <if test="sortMap!=null">
+            ORDER BY
+            <foreach collection="sortMap.entrySet()" separator="," index="key" item="value">
+                ${key} ${value}
+            </foreach>
+        </if>
+
     </select>
 </mapper>

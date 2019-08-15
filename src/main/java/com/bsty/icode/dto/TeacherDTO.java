@@ -15,4 +15,5 @@ public class TeacherDTO {
     private long courseId; //精确查找
     private String courseName;
     private String mark;
+    private String phone;
 }

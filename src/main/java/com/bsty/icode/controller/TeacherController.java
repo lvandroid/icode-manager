@@ -1,11 +1,13 @@
 package com.bsty.icode.controller;
 
+import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.bean.Teacher;
 import com.bsty.icode.dto.TeacherDTO;
 import com.bsty.icode.dto.TeacherParamDTO;
-import com.bsty.icode.request.AddTeacherRequest;
 import com.bsty.icode.service.TeacherService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,7 @@ public class TeacherController {
                 teacher.setName(dto.getName());
                 teacher.setSex(dto.getSex());
                 teacher.setMark(dto.getMark());
+                teacher.setPhone(dto.getPhone());
                 teacher.setEntryDate(dto.getEntryDate());
                 long teacherId = teacherService.addTeacher(teacher);
                 teacherService.addTeacherCourseType(teacherId, dto.getCourseTypeIds());
@@ -42,10 +45,19 @@ public class TeacherController {
     }
 
     @PostMapping(value = "/teacher/list")
-    public ResponseData<List<TeacherDTO>> findAllTeachers(@RequestBody TeacherParamDTO paramDTO) {
+    public ResponseData<List<TeacherDTO>> findAllTeachers(@RequestBody TeacherParamDTO params) {
+        Page page = PageHelper.startPage(params.getPageNum(), params.getPageSize());
         ResponseData responseData = ResponseData.newInstance();
         try {
-            responseData.setData(teacherService.findByParams(paramDTO));
+            params.initSortMap();
+            List<TeacherDTO> teacherDTOS = teacherService.findByParams(params);
+            ListResultData<TeacherDTO> result = new ListResultData<>();
+            if (teacherDTOS != null && !teacherDTOS.isEmpty()) {
+                result.setList(teacherDTOS);
+            }
+            result.setPage(page);
+            responseData.setData(result);
+            responseData.setTotal(page.getTotal());
             responseData.setSuccess();
         } catch (Exception e) {
             log.error(e.getMessage());

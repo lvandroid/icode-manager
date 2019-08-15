@@ -256,7 +256,18 @@ CREATE TABLE IF NOT EXISTS `teacher_course_type`
 /**
   查询教师课程关联
  */
-select t.*, GROUP_CONCAT(ct.name SEPARATOR ' ') AS course_type_names
-from teacher t
-         left join teacher_course_type tct on t.id = tct.teacher_id
-         left join course_type ct on tct.course_type_id = ct.id GROUP BY t.id;
+# select t.*, GROUP_CONCAT(ct.name SEPARATOR ' ') AS course_type_names
+# from teacher t
+#          left join teacher_course_type tct on t.id = tct.teacher_id
+#          left join course_type ct on tct.course_type_id = ct.id GROUP BY t.id;
+
+ALTER TABLE teacher
+ADD COLUMN phone VARCHAR(11) NOT NULL ;
+
+SELECT * FROM teacher where teacher.phone='';
+
+DELETE FROM teacher_course_type WHERE teacher_id IN (SELECT teacher.id from teacher where teacher.phone='');
+DELETE FROM teacher WHERE phone = '';
+
+ALTER TABLE teacher
+    MODIFY COLUMN phone VARCHAR(11) NOT NULL UNIQUE ;
