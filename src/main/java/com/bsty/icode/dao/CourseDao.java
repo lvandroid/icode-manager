@@ -1,7 +1,7 @@
 package com.bsty.icode.dao;
 
 import com.bsty.icode.bean.Course;
-import com.bsty.icode.dto.CourseParamDTO;
+import com.bsty.icode.reqparams.CourseParamDTO;
 import com.bsty.icode.request.CourseVO;
 import org.apache.ibatis.annotations.Mapper;
 

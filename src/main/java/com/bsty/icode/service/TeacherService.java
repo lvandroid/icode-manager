@@ -2,7 +2,7 @@ package com.bsty.icode.service;
 
 import com.bsty.icode.bean.Teacher;
 import com.bsty.icode.dto.TeacherDTO;
-import com.bsty.icode.dto.TeacherParamDTO;
+import com.bsty.icode.reqparams.TeacherParamDTO;
 
 import java.util.List;
 

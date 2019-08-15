@@ -183,22 +183,20 @@ VALUES (2, 1);
 INSERT INTO role_permission (role_id, permission_id)
 VALUES (2, 2);
 
-DELETE
-FROM teacher;
-INSERT INTO teacher (name, sex)
-values ('海马', 2);
-INSERT INTO teacher (name, sex)
-values ('布丁', 1);
-INSERT INTO teacher (name, sex)
-values ('丸子', 1);
-INSERT INTO teacher (name, sex)
-values ('月亮', 1);
-INSERT INTO teacher (name, sex)
-values ('樱桃', 1);
-INSERT INTO teacher (name, sex)
-values ('太阳', 1);
-INSERT INTO teacher (name, sex)
-values ('小熊', 1);
+# INSERT INTO teacher (name, sex)
+# values ('海马', 2);
+# INSERT INTO teacher (name, sex)
+# values ('布丁', 1);
+# INSERT INTO teacher (name, sex)
+# values ('丸子', 1);
+# INSERT INTO teacher (name, sex)
+# values ('月亮', 1);
+# INSERT INTO teacher (name, sex)
+# values ('樱桃', 1);
+# INSERT INTO teacher (name, sex)
+# values ('太阳', 1);
+# INSERT INTO teacher (name, sex)
+# values ('小熊', 1);
 
 #*************************************insert data end**************************************************************************************=
 
@@ -261,13 +259,85 @@ CREATE TABLE IF NOT EXISTS `teacher_course_type`
 #          left join teacher_course_type tct on t.id = tct.teacher_id
 #          left join course_type ct on tct.course_type_id = ct.id GROUP BY t.id;
 
+# 20190815
 ALTER TABLE teacher
-ADD COLUMN phone VARCHAR(11) NOT NULL ;
+    ADD COLUMN phone VARCHAR(11) NOT NULL;
 
-SELECT * FROM teacher where teacher.phone='';
+SELECT *
+FROM teacher
+where teacher.phone = '';
 
-DELETE FROM teacher_course_type WHERE teacher_id IN (SELECT teacher.id from teacher where teacher.phone='');
-DELETE FROM teacher WHERE phone = '';
+DELETE
+FROM teacher_course_type
+WHERE teacher_id IN (SELECT teacher.id from teacher where teacher.phone = '');
+DELETE
+FROM teacher
+WHERE phone = '';
 
 ALTER TABLE teacher
-    MODIFY COLUMN phone VARCHAR(11) NOT NULL UNIQUE ;
+    MODIFY COLUMN phone VARCHAR(11) NOT NULL UNIQUE;
+
+# 修改学生课程表，涉及到销课
+ALTER TABLE student_course
+    ADD COLUMN unitPrice DOUBLE COMMENT '单价';
+ALTER TABLE student_course
+    ADD COLUMN updateDate BIGINT COMMENT '上次更新时间';
+ALTER TABLE student_course
+    ADD COLUMN enable BOOL COMMENT '是否可以被销课';
+
+# 修改 student主键为手机号码
+ALTER TABLE student
+    DROP PRIMARY KEY;
+ALTER TABLE student
+    ADD COLUMN phone VARCHAR(11) PRIMARY KEY;
+#删除原来的id外键
+# ALTER TABLE student
+#     DROP foreign key student_ibfk_1;
+
+# 修改 student id类型
+ALTER TABLE student_course
+#     DROP FOREIGN KEY student_course_ibfk_1;
+MODIFY student_id VARCHAR(11) NOT NULL ;
+ALTER TABLE student_course
+    ADD FOREIGN KEY (student_id) REFERENCES student(id);
+ALTER TABLE student
+    ADD PRIMARY KEY (id);
+
+# course添加是否有活动字段
+ALTER TABLE course
+ADD COLUMN hasAct BOOL DEFAULT FALSE;
+# student添加是否激活状态和推荐人字段，报名成功才算激活
+ALTER TABLE student
+ADD COLUMN enable BOOL DEFAULT FALSE COMMENT '是否激活';
+ALTER TABLE student
+ADD COLUMN referId VARCHAR(11) COMMENT '推荐人ID';
+#修改家长id类型
+ALTER TABLE genearch
+    DROP PRIMARY KEY;
+ALTER TABLE genearch
+    MODIFY COLUMN id VARCHAR(11) UNIQUE;
+ALTER TABLE genearch
+    ADD PRIMARY KEY (id);
+ALTER TABLE student
+ADD FOREIGN KEY (refer_id) REFERENCES genearch(id);
+ALTER TABLE student
+MODIFY COLUMN genearch_id VARCHAR(11);
+ALTER TABLE student
+change class grade VARCHAR(16);
+
+#新增学员家长关系表
+CREATE TABLE IF NOT EXISTS `student_genearch`
+(
+    `student_id` VARCHAR(11) NOT NULL ,
+    `genearch_id` VARCHAR(11) NOT NULL ,
+    `relation` VARCHAR(128) COMMENT '学员家长之间的关系',
+    FOREIGN KEY (student_id) REFERENCES student(id),
+    FOREIGN KEY (genearch_id) REFERENCES genearch(id)
+)
+ENGINE = InnoDB
+DEFAULT CHARSET =utf8;
+
+#删除student genearch_relation字段
+ALTER TABLE student
+DROP COLUMN genearch_relation;
+

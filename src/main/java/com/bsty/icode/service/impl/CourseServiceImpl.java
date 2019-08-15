@@ -2,7 +2,7 @@ package com.bsty.icode.service.impl;
 
 import com.bsty.icode.bean.Course;
 import com.bsty.icode.dao.CourseDao;
-import com.bsty.icode.dto.CourseParamDTO;
+import com.bsty.icode.reqparams.CourseParamDTO;
 import com.bsty.icode.request.CourseVO;
 import com.bsty.icode.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;

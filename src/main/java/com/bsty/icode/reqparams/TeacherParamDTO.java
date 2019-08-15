@@ -1,7 +1,7 @@
-package com.bsty.icode.dto;
+package com.bsty.icode.reqparams;
 
+import com.bsty.icode.dto.ParamDTO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
 public class TeacherParamDTO extends ParamDTO {

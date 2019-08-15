@@ -14,7 +14,7 @@
     </select>
 
     <select id="selectCourseByParams" resultType="com.bsty.icode.request.CourseVO"
-            parameterType="com.bsty.icode.dto.CourseParamDTO">
+            parameterType="com.bsty.icode.reqparams.CourseParamDTO">
         SELECT c.*, ct.name AS course_type_name
         FROM course AS c LEFT JOIN course_type AS ct ON c.course_type_id = ct.id
         <where>

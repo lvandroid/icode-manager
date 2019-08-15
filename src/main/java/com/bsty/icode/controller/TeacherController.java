@@ -4,7 +4,7 @@ import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.bean.Teacher;
 import com.bsty.icode.dto.TeacherDTO;
-import com.bsty.icode.dto.TeacherParamDTO;
+import com.bsty.icode.reqparams.TeacherParamDTO;
 import com.bsty.icode.service.TeacherService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;

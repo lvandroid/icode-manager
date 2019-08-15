@@ -1,9 +1,8 @@
-package com.bsty.icode.dto;
+package com.bsty.icode.reqparams;
 
+import com.bsty.icode.dto.ParamDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

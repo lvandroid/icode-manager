@@ -18,7 +18,7 @@
     </select>
 
     <select id="selectCourseByParams" resultType="com.bsty.icode.dto.TeacherDTO"
-            parameterType="com.bsty.icode.dto.TeacherParamDTO">
+            parameterType="com.bsty.icode.reqparams.TeacherParamDTO">
         select t.*
         <if test="courseTypeId==null or courseTypeId==''">
             ,GROUP_CONCAT(ct.name SEPARATOR ' ') AS course_type_names
@@ -36,9 +36,6 @@
             </if>
             <if test="courseTypeNames!=null and courseTypeNames!=''">
                 AND course_type_names like concat('%',#{courseName}, '%')
-            </if>
-            <if test="courseTypeId!=null and courseTypeId!=''">
-                AND
             </if>
         </where>
         <if test="courseTypeId==null or courseTypeId==''">

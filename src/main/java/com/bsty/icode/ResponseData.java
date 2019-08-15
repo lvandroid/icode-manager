@@ -24,6 +24,11 @@ public class ResponseData<T> {
         errMsg = MSG_SUCCESS;
     }
 
+    public void setSuccess(T data, long total) {
+        this.data = data;
+        this.total = total;
+    }
+
     public static ResponseData newInstance() {
         return new ResponseData();
     }
@@ -45,6 +50,11 @@ public class ResponseData<T> {
     public void setError() {
         errCode = CODE_ERROR;
         errMsg = MSG_ERROR;
+    }
+
+    public void setError(String msg) {
+        errCode = CODE_ERROR;
+        errMsg = msg;
     }
 
     public T getData() {

@@ -1,6 +1,6 @@
 package com.bsty.icode.service;
 
-import com.bsty.icode.dto.CourseParamDTO;
+import com.bsty.icode.reqparams.CourseParamDTO;
 import com.bsty.icode.request.CourseVO;
 
 import java.util.List;

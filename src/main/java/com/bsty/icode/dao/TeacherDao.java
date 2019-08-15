@@ -2,7 +2,7 @@ package com.bsty.icode.dao;
 
 import com.bsty.icode.bean.Teacher;
 import com.bsty.icode.dto.TeacherDTO;
-import com.bsty.icode.dto.TeacherParamDTO;
+import com.bsty.icode.reqparams.TeacherParamDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

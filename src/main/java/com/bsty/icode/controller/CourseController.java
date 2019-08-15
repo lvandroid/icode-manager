@@ -2,9 +2,7 @@ package com.bsty.icode.controller;
 
 import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
-import com.bsty.icode.bean.Course;
-import com.bsty.icode.dto.CourseParamDTO;
-import com.bsty.icode.dto.CourseTypeDTO;
+import com.bsty.icode.reqparams.CourseParamDTO;
 import com.bsty.icode.request.CourseVO;
 import com.bsty.icode.service.CourseService;
 import com.bsty.icode.service.CourseTypeService;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

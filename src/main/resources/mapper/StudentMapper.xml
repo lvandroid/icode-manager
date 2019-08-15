@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bsty.icode.dao.StudentDao">
+    <insert id="insert" parameterType="com.bsty.icode.bean.Student">
+        INSERT INTO student(id, name, sex, grade, mark, phone, refer_id)
+        VALUES (#{id}, #{name}, #{sex}, #{grade}, #{mark}, #{phone}, #{referId})
+    </insert>
+    <select id="selectCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM student
+        WHERE id = #{id}
+    </select>
+    <select id="selectByParams" resultType="com.bsty.icode.dto.StudentDTO"
+            parameterType="com.bsty.icode.reqparams.StudentParamDTO">
+        SELECT s.*, g.name AS genearch_name, g.phone as genearch_phone ,sg.relation AS genearch_relation,
+        GROUP_CONCAT(c.name SEPARATOR ' ') AS course_names
+        FROM student AS s
+        LEFT JOIN genearch AS g on s.refer_id = g.id
+        LEFT JOIN student_genearch sg on g.id = sg.genearch_id
+        LEFT JOIN student_course sc on s.id = sc.student_id
+        LEFT JOIN course c on sc.course_id = c.id
+        <where>
+            1=1
+            <if test="id!=null and id!=''">
+                AND g.id = #{id}
+            </if>
+            <if test="phone!=null and phone!=''">
+                AND g.phone = #{phone}
+            </if>
+            <if test="name!=null and name!=''">
+                AND g.name LIKE concat('%',#{name},'%')
+            </if>
+            <if test="sex!=null and sex!=''">
+                AND g.sex = #{sex}
+            </if>
+            <if test="grade!=null and grade!=''">
+                AND g.grade = #{grade}
+            </if>
+            <if test="genearchId!=null and genearchId!=''">
+                AND g.genearch_id = #{genearchId}
+            </if>
+            <if test="genearchName!=null and genearchName!=''">
+                AND genearch_name = #{genearchName}
+            </if>
+            <if test="genearchPhone!=null and genearchPhone!=''">
+                AND genearch_phone = #{genearchPhone}
+            </if>
+            <if test="genearchRelation!=null and genearchRelation!=''">
+                AND genearch_relation = #{genearchRelation}
+            </if>
+            <if test="enable!=null and enable!=''">
+                AND g.enable = #{enable}
+            </if>
+            <if test="referId!=null and referId!=''">
+                AND g.refer_id = #{referId}
+            </if>
+        </where>
+        GROUP BY s.id
+        <if test="sortMap!=null">
+            ORDER BY
+            <foreach collection="sortMap.entrySet()" separator="," index="key" item="value">
+                ${key} ${value}
+            </foreach>
+        </if>
+    </select>
+</mapper>
