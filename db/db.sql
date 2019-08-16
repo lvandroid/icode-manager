@@ -241,18 +241,18 @@ WHERE role_id = 2;
 #*************************************insert data end**************************************************************************************=
 
 
-ALTER TABLE course
-    ADD COLUMN course_type_id BIGINT;
+# ALTER TABLE course
+#     ADD COLUMN course_type_id BIGINT;
 ALTER TABLE course
     ADD FOREIGN KEY (course_type_id) REFERENCES course_type (id);
 
 
 # 2019-08-14
 
-ALTER TABLE teacher
-    ADD COLUMN entry_date BIGINT;
-ALTER TABLE teacher
-    ADD COLUMN mark VARCHAR(128);
+# ALTER TABLE teacher
+#     ADD COLUMN entry_date BIGINT;
+# ALTER TABLE teacher
+#     ADD COLUMN mark VARCHAR(128);
 
 
 
@@ -317,8 +317,8 @@ where teacher.phone = '';
 #     ADD PRIMARY KEY (id);
 # ALTER TABLE student
 #     ADD FOREIGN KEY (refer_id) REFERENCES genearch (id);
-ALTER TABLE student
-    MODIFY COLUMN genearch_id VARCHAR(11);
+# ALTER TABLE student
+#     MODIFY COLUMN genearch_id VARCHAR(11);
 # ALTER TABLE student
 #     change class grade VARCHAR(16);
 
