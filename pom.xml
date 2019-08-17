@@ -37,6 +37,12 @@
         </dependency>
 
         <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
@@ -100,14 +106,14 @@
                 <configuration>
                     <source>1.8</source> <!-- depending on your project -->
                     <target>1.8</target> <!-- depending on your project -->
-                    <!--                    <annotationProcessorPaths>-->
-                    <!--                        <path>-->
-                    <!--                            <groupId>org.mapstruct</groupId>-->
-                    <!--                            <artifactId>mapstruct-processor</artifactId>-->
-                    <!--                            <version>${org.mapstruct.version}</version>-->
-                    <!--                        </path>-->
-                    <!--                        &lt;!&ndash; other annotation processors &ndash;&gt;-->
-                    <!--                    </annotationProcessorPaths>-->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                        <!-- other annotation processors -->
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>

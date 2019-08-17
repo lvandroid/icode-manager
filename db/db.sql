@@ -143,7 +143,9 @@ CREATE TABLE IF NOT EXISTS `course_type`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
     COMMENT '课程类型';
-delete from course_type where id!='';
+delete
+from course_type
+where id != '';
 
 INSERT INTO course_type(name, type)
 VALUES ('结构搭建', 1);
@@ -255,7 +257,6 @@ ALTER TABLE course
 #     ADD COLUMN mark VARCHAR(128);
 
 
-
 # SELECT c.*, ct.name AS course_type
 # FROM course AS c LEFT JOIN course_type ct on c.course_type_id = ct.id
 # ORDER BY id DESC;
@@ -344,8 +345,46 @@ ALTER TABLE student
 ALTER TABLE genearch
     ADD COLUMN update_date BIGINT;
 
-delete
-from student
-where id = '';
+# 员工表
+CREATE TABLE IF NOT EXISTS `staff`
+(
+    `id`                  BIGINT AUTO_INCREMENT COMMENT '员工ID',
+    `user_id`             BIGINT COMMENT '登录系统的ID',
+    `name`                VARCHAR(16)  NOT NULL COMMENT '姓名',
+    `nick_name`           VARCHAR(32) COMMENT '花名',
+    `name_en`             VARCHAR(128) COMMENT '英文名',
+    `phone`               VARCHAR(11) COMMENT '本人联系方式',
+    `phone_company`       VARCHAR(11) COMMENT '公司分配的手机号',
+    `sex`                 INTEGER      NOT NULL DEFAULT 1 COMMENT '性别',
+    `department_id`       LONG COMMENT '部门ID',
+    `post`                VARCHAR(32) COMMENT '岗位',
+    `id_card_no`          VARCHAR(18)  NOT NULL COMMENT '身份证号码',
+    `id_card_address`     VARCHAR(256) NOT NULL COMMENT '身份证地址',
+    `birthday`            LONG COMMENT '生日',
+    `email`               VARCHAR(128) COMMENT '邮箱',
+    `address_now`         VARCHAR(256) COMMENT '现住地址',
+    `famous_family`       VARCHAR(32) COMMENT '名族',
+    `political_status`    VARCHAR(16) COMMENT '政治面貌',
+    `married`             BOOLEAN COMMENT '婚姻',
+    `graduated_school`    VARCHAR(128) COMMENT '毕业学校',
+    `profession`          VARCHAR(32) COMMENT '专业',
+    `education`           VARCHAR(32) COMMENT '学历',
+    `train_experience`    VARCHAR(128) COMMENT '培训经历',
+    `entry_date`          LONG COMMENT '入职时间',
+    `turn_positive_date`  LONG COMMENT '转正时间',
+    `payroll_card`        VARCHAR(32) COMMENT '工资卡号',
+    `pay_roll_card_bank`  VARCHAR(128) COMMENT '开户行',
+    `emergency_one_name`  VARCHAR(16) COMMENT '紧急联系人一',
+    `emergency_one_phone` VARCHAR(11) COMMENT '紧急联系人一号码',
+    `emergency_two_name`  VARCHAR(16) COMMENT '紧急联系人二',
+    `emergency_two_phone` VARCHAR(11) COMMENT '紧急联系人二号码',
+    `parent_name`         VARCHAR(32) COMMENT '父母亲姓名',
+    `parent_id_card`      VARCHAR(18) COMMENT '父母亲身份证号码',
+    `parent_card_no`      VARCHAR(32) COMMENT '父母亲银行卡号',
+    `parent_card_blank`   VARCHAR(128) COMMENT '父母亲银行卡开户行',
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user (id)
 
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT '员工';
 

@@ -1,0 +1,73 @@
+[33m2019-08-17 11:35:42[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mStartupInfoLogger.java:50[0;39m | [36mStarting IcodeManagerApplication on zhaolu-Mbook.lan with PID 19490 (/Users/bsty/MySpace/GitHub/icode/icode-manager/target/classes started by bsty in /Users/bsty/MySpace/GitHub/icode/icode-manager)
+[0;39m[33m2019-08-17 11:35:42[0;39m | [39mDEBUG[0;39m | [34mmain[0;39m | [32mStartupInfoLogger.java:53[0;39m | [36mRunning with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
+[0;39m[33m2019-08-17 11:35:42[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mSpringApplication.java:646[0;39m | [36mNo active profile set, falling back to default profiles: default
+[0;39m[33m2019-08-17 11:35:44[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mInitializing ProtocolHandler ["http-nio-8899"]
+[0;39m[33m2019-08-17 11:35:44[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mStarting service [Tomcat]
+[0;39m[33m2019-08-17 11:35:44[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mStarting Servlet engine: [Apache Tomcat/9.0.21]
+[0;39m[33m2019-08-17 11:35:44[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mInitializing Spring embedded WebApplicationContext
+[0;39m[33m2019-08-17 11:35:45[0;39m | [39mDEBUG[0;39m | [34mmain[0;39m | [32mGenericFilterBean.java:241[0;39m | [36mFilter 'authenticationTokenFilterBean' configured for use
+[0;39m[33m2019-08-17 11:35:45[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mStarting ProtocolHandler ["http-nio-8899"]
+[0;39m[33m2019-08-17 11:35:45[0;39m | [1;31mERROR[0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:175[0;39m | [36mFailed to start component [Connector[HTTP/1.1-8899]]
+[0;39morg.apache.catalina.LifecycleException: Protocol handler start failed
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1008)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardService.addConnector(StandardService.java:227)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.addPreviouslyRemovedConnectors(TomcatWebServer.java:263)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:195)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.startWebServer(ServletWebServerApplicationContext.java:296)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.finishRefresh(ServletWebServerApplicationContext.java:162)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:552)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:742)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:389)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202)
+	at com.bsty.icode.IcodeManagerApplication.main(IcodeManagerApplication.java:12)
+Caused by: java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:433)
+	at sun.nio.ch.Net.bind(Net.java:425)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.apache.tomcat.util.net.NioEndpoint.initServerSocket(NioEndpoint.java:230)
+	at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:213)
+	at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1124)
+	at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:1210)
+	at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:585)
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1005)
+	... 14 common frames omitted
+[33m2019-08-17 11:35:45[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mPausing ProtocolHandler ["http-nio-8899"]
+[0;39m[33m2019-08-17 11:35:45[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mStopping service [Tomcat]
+[0;39m[33m2019-08-17 11:35:45[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mThe stop() method was called on component [StandardServer[-1]] after stop() had already been called. The second call will be ignored.
+[0;39m[33m2019-08-17 11:35:45[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mStopping ProtocolHandler ["http-nio-8899"]
+[0;39m[33m2019-08-17 11:35:45[0;39m | [34mINFO [0;39m | [34mmain[0;39m | [32mDirectJDKLog.java:173[0;39m | [36mDestroying ProtocolHandler ["http-nio-8899"]
+[0;39m[33m2019-08-17 11:35:45[0;39m | [1;31mERROR[0;39m | [34mmain[0;39m | [32mLoggingFailureAnalysisReporter.java:40[0;39m | [36m
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The Tomcat connector configured to listen on port 8899 failed to start. The port may already be in use or the connector may be misconfigured.
+
+Action:
+
+Verify the connector's configuration, identify and stop any process that's listening on port 8899, or configure this application to listen on another port.
+
+[0;39m[33m2019-08-17 11:35:45[0;39m | [1;31mERROR[0;39m | [34mmain[0;39m | [32mLoggingFailureAnalysisReporter.java:40[0;39m | [36m
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The Tomcat connector configured to listen on port 8899 failed to start. The port may already be in use or the connector may be misconfigured.
+
+Action:
+
+Verify the connector's configuration, identify and stop any process that's listening on port 8899, or configure this application to listen on another port.
+
+[0;39m
