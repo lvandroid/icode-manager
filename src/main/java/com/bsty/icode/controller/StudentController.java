@@ -6,6 +6,7 @@ import com.bsty.icode.bean.Student;
 import com.bsty.icode.dto.StudentDTO;
 import com.bsty.icode.reqparams.StudentParamDTO;
 import com.bsty.icode.service.StudentService;
+import com.bsty.icode.smapper.StudentMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,8 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private StudentMapper studentMapper;
 
     @PostMapping(value = "/add")
     public ResponseData addStudent(@RequestBody StudentDTO dto) {
@@ -27,7 +30,7 @@ public class StudentController {
         if (dto == null) {
             responseData.setErrMsg("传入参数有误");
         }
-        Student student = new Student(dto);
+        Student student =studentMapper.from(dto);
         try {
             if (studentService.isExist(dto.getId())) {
                 responseData.setError("手机号已经存在");

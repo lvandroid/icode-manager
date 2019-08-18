@@ -1,10 +1,9 @@
-package com.bsty.icode.bean;
+package com.bsty.icode.dto;
 
-import com.bsty.icode.request.CourseVO;
 import lombok.Data;
 
 @Data
-public class Course {
+public class CourseDTO {
     private long id; //课程ID
     private String name; //课程名称
     private long startDate; //开课日期
@@ -20,5 +19,4 @@ public class Course {
     private double actUnitPrice; //活动单价
     private String classRef;//课程参考年级
     private String mark;//备注
-
 }

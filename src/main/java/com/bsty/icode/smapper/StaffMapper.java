@@ -2,6 +2,7 @@ package com.bsty.icode.smapper;
 
 import com.bsty.icode.bean.Staff;
 import com.bsty.icode.dto.StaffDTO;
+import com.bsty.icode.reqparams.StaffParamsDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -14,6 +15,8 @@ public interface StaffMapper {
     StaffDTO from(Staff staff);
 
     Staff from(StaffDTO dto);
+
+    Staff from(StaffParamsDTO spdto);
 
     List<StaffDTO> from(List<Staff> staff);
 

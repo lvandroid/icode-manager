@@ -1,9 +1,10 @@
-package com.bsty.icode.dto;
+package com.bsty.icode.reqparams;
 
+import com.bsty.icode.dto.ParamDTO;
 import lombok.Data;
 
 @Data
-public class StaffDTO {
+public class StaffParamsDTO extends ParamDTO {
     private long id;
     private long userId;
     private String name;
@@ -37,4 +38,9 @@ public class StaffDTO {
     private String parentCardNo;
     private String parentCardBank;
     private String mark;
+
+    @Override
+    public void initSortMap() throws Exception {
+        super.initSortMap();
+    }
 }

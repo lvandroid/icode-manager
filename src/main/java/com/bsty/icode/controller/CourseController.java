@@ -2,10 +2,12 @@ package com.bsty.icode.controller;
 
 import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
+import com.bsty.icode.dto.CourseDTO;
 import com.bsty.icode.reqparams.CourseParamDTO;
 import com.bsty.icode.request.CourseVO;
 import com.bsty.icode.service.CourseService;
 import com.bsty.icode.service.CourseTypeService;
+import com.bsty.icode.smapper.CourseMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +27,10 @@ public class CourseController {
     private CourseTypeService courseTypeService;
 
     @PostMapping(value = "/course/add")
-    public ResponseData addCourse(@RequestBody CourseVO courseVO) {
+    public ResponseData addCourse(@RequestBody CourseDTO dto) {
         ResponseData responseData = ResponseData.newInstance();
-        if (courseVO != null) {
-            courseService.addCourse(courseVO);
+        if (dto != null) {
+            courseService.addCourse(dto);
             responseData.setSuccess();
         }
         return responseData;

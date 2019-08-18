@@ -355,9 +355,8 @@ CREATE TABLE IF NOT EXISTS `staff`
     `name_en`             VARCHAR(128) COMMENT '英文名',
     `phone`               VARCHAR(11) COMMENT '本人联系方式',
     `phone_company`       VARCHAR(11) COMMENT '公司分配的手机号',
-    `sex`                 INTEGER      NOT NULL DEFAULT 1 COMMENT '性别',
-    `department_id`       LONG COMMENT '部门ID',
-    `post`                VARCHAR(32) COMMENT '岗位',
+    `sex`                 INT COMMENT '性别',
+    `department_id`       BIGINT COMMENT '部门ID',
     `id_card_no`          VARCHAR(18)  NOT NULL COMMENT '身份证号码',
     `id_card_address`     VARCHAR(256) NOT NULL COMMENT '身份证地址',
     `birthday`            LONG COMMENT '生日',
@@ -365,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `staff`
     `address_now`         VARCHAR(256) COMMENT '现住地址',
     `famous_family`       VARCHAR(32) COMMENT '名族',
     `political_status`    VARCHAR(16) COMMENT '政治面貌',
-    `married`             BOOLEAN COMMENT '婚姻',
+    `married`             INT COMMENT '婚姻',
     `graduated_school`    VARCHAR(128) COMMENT '毕业学校',
     `profession`          VARCHAR(32) COMMENT '专业',
     `education`           VARCHAR(32) COMMENT '学历',
@@ -381,10 +380,51 @@ CREATE TABLE IF NOT EXISTS `staff`
     `parent_name`         VARCHAR(32) COMMENT '父母亲姓名',
     `parent_id_card`      VARCHAR(18) COMMENT '父母亲身份证号码',
     `parent_card_no`      VARCHAR(32) COMMENT '父母亲银行卡号',
-    `parent_card_blank`   VARCHAR(128) COMMENT '父母亲银行卡开户行',
+    `parent_card_bank`    VARCHAR(128) COMMENT '父母亲银行卡开户行',
+    `mark`                VARCHAR(256) COMMENT '备注',
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user (id)
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT '员工';
 
+# 岗位表
+
+CREATE TABLE IF NOT EXISTS `post`
+(
+    `id`   BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(64) COMMENT '岗位名称'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+    COMMENT '岗位';
+
+#员工岗位关联表 多对对
+CREATE TABLE IF NOT EXISTS `staff_post`
+(
+    `id`       BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `staff_id` BIGINT,
+    `post_id`  BIGINT,
+    FOREIGN KEY (staff_id) REFERENCES staff (id),
+    FOREIGN KEY (post_id) REFERENCES post (id)
+
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+    COMMENT '员工岗位表';
+
+CREATE TABLE IF NOT EXISTS `personnel_status`
+(
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(32) COMMENT '人事状态'
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8 COMMENT '人事状态表';
+
+CREATE TABLE IF NOT EXISTS `staff_personnel_status`
+(
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY ,
+    `staff_id` BIGINT,
+    `personnel_status_id` BIGINT,
+    FOREIGN KEY (staff_id) REFERENCES staff(id),
+    FOREIGN KEY (personnel_status_id) REFERENCES personnel_status(id)
+)ENGINE = InnoDB
+DEFAULT CHARSET = utf8;

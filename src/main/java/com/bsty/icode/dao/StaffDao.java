@@ -9,4 +9,5 @@ import java.util.List;
 
 @Mapper
 public interface StaffDao extends TkMapper<Staff> {
+    List<Staff> orderById();
 }
