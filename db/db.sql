@@ -413,18 +413,36 @@ CREATE TABLE IF NOT EXISTS `staff_post`
 
 CREATE TABLE IF NOT EXISTS `personnel_status`
 (
-    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `id`   BIGINT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(32) COMMENT '人事状态'
 )
-ENGINE = InnoDB
-DEFAULT CHARSET = utf8 COMMENT '人事状态表';
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8 COMMENT '人事状态表';
 
 CREATE TABLE IF NOT EXISTS `staff_personnel_status`
 (
-    `id` BIGINT AUTO_INCREMENT PRIMARY KEY ,
-    `staff_id` BIGINT,
+    `id`                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `staff_id`            BIGINT,
     `personnel_status_id` BIGINT,
-    FOREIGN KEY (staff_id) REFERENCES staff(id),
-    FOREIGN KEY (personnel_status_id) REFERENCES personnel_status(id)
-)ENGINE = InnoDB
-DEFAULT CHARSET = utf8;
+    FOREIGN KEY (staff_id) REFERENCES staff (id),
+    FOREIGN KEY (personnel_status_id) REFERENCES personnel_status (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+# 路由数据表
+
+CREATE TABLE IF NOT EXISTS `router`
+(
+    `id`        BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '路由编号',
+    `parent_id` BIGINT       NOT NULL COMMENT '路由父节点编号',
+    `name`      VARCHAR(32)  NOT NULL COMMENT '路由名称',
+    `id_path`   VARCHAR(128) NOT NULL COMMENT '全路径，每级使用 , 分割',
+    `path`      VARCHAR(128) NOT NULL COMMENT '路由path',
+    `component` VARCHAR(128) NOT NULL COMMENT '路由组件',
+    `redirect`  VARCHAR(128) COMMENT '重定向路径',
+    `meta`      VARCHAR(128) COMMENT '路由元信息',
+    `level`     INT COMMENT '路由层级'
+
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COMMENT '路由表';
