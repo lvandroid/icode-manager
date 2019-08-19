@@ -435,14 +435,124 @@ CREATE TABLE IF NOT EXISTS `router`
 (
     `id`        BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '路由编号',
     `parent_id` BIGINT       NOT NULL COMMENT '路由父节点编号',
-    `name`      VARCHAR(32)  NOT NULL COMMENT '路由名称',
-    `id_path`   VARCHAR(128) NOT NULL COMMENT '全路径，每级使用 , 分割',
-    `path`      VARCHAR(128) NOT NULL COMMENT '路由path',
+    `name`      VARCHAR(32) COMMENT '路由名称',
+    `id_path`   VARCHAR(128) COMMENT '全路径，每级使用 , 分割',
+    `path`      VARCHAR(128) COMMENT '路由path',
     `component` VARCHAR(128) NOT NULL COMMENT '路由组件',
     `redirect`  VARCHAR(128) COMMENT '重定向路径',
+    `hidden`    BOOL,
     `meta`      VARCHAR(128) COMMENT '路由元信息',
-    `level`     INT COMMENT '路由层级'
+    `level`     INT COMMENT '路由层级',
+    `type`      INT COMMENT '类型'
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
-  COMMENT '路由表';
+    COMMENT '路由表';
+
+select *
+from router;
+
+INSERT INTO router(parent_id, path, component, hidden)
+VALUES (0, '/redirect', 'layout/Layout', true);
+
+INSERT INTO router(parent_id, path, component)
+VALUES (1, '/redirect/:path*', 'views/redirect/index');
+
+INSERT INTO router(parent_id, path, component, hidden)
+values (0, '/login', 'views/login/index', true);
+
+INSERT INTO router(parent_id, path, component, hidden)
+values (0, '/auth-redirect', 'views/login/auth-redirect', true);
+
+INSERT INTO router(parent_id, path, component, hidden)
+values (0, '/404', 'views/error-page/404', true);
+
+INSERT INTO router(parent_id, path, component, hidden)
+values (0, '/401', 'views/error-page/401', true);
+
+INSERT INTO router(parent_id, component, redirect)
+values (0, 'layout/Layout', 'dashboard');
+
+INSERT INTO router(parent_id, path, component, name, meta)
+values (7, 'dashboard', 'views/dashboard/index', 'Dashboard',
+        '{ title: ''Dashboard'', icon: ''dashboard'', affix: true }');
+
+INSERT INTO router(parent_id, path, component)
+values (0, '/documentation', 'layout/Layout');
+
+INSERT INTO router(parent_id, path, component, name, meta)
+values (9, 'index', 'views/documentation/index', 'Documentation',
+        '{ title: ''Documentation'', icon: ''documentation'', affix: true }');
+
+INSERT INTO router(parent_id, path, component, redirect)
+values (0, '/guide', 'layout/Layout', '/guide/index');
+
+INSERT INTO router(parent_id, path, component, name, meta)
+values (11, 'index', 'views/guide/index', 'Guide', '{ title: ''Guide'', icon: ''guide'', noCache: true }');
+
+
+INSERT INTO router(parent_id, name, path, component, redirect, meta, type)
+VALUES (0, 'Student', '/student', 'layout/Layout', '/student/list', '{ title: ''学员'', icon: ''example'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (13, 'StudentList', 'list', 'views/student/index', '{ title: ''学员列表'', icon: ''table'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (13, 'AddStudent', 'add', 'views/student/add', '{ title: ''新增学员'', icon: ''form'' }', 2);
+
+
+INSERT INTO router(parent_id, name, path, component, redirect, meta, type)
+VALUES (0, 'Staff', '/staff', 'layout/Layout', '/staff/list', '{ title: ''员工'', icon: ''example'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (16, 'StaffList', 'list', 'views/staff/index', '{ title: ''员工列表'', icon: ''table'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (16, 'AddStaff', 'add', 'views/staff/add', '{ title: ''新增员工'', icon: ''form'' }', 2);
+
+
+INSERT INTO router(parent_id, name, path, component, redirect, meta, type)
+VALUES (0, 'Teacher', '/teacher', 'layout/Layout', '/teacher/list', '{ title: ''教师'', icon: ''example'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (19, 'TeacherList', 'list', 'views/teacher/index', '{ title: ''教师列表'', icon: ''table'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (19, 'AddTeacher', 'add', 'views/teacher/add', '{ title: ''新增教师'', icon: ''form'' }', 2);
+
+
+INSERT INTO router(parent_id, name, path, component, redirect, meta, type)
+VALUES (0, 'Course', '/course', 'layout/Layout', '/course/list', '{ title: ''课程'', icon: ''example'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (23, 'CourseList', 'list', 'views/course/index', '{ title: ''课程列表'', icon: ''table'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (23, 'AddCourse', 'add', 'views/course/add', '{ title: ''新增课程'', icon: ''form'' }', 2);
+
+
+INSERT INTO router(parent_id, name, path, component, redirect, meta, type)
+VALUES (0, 'Account', '/accout', 'layout/Layout', '/account/role', '{ title: ''账号'', icon: ''example'' }', 2);
+
+INSERT INTO router(parent_id, name, path, component, meta, type)
+VALUES (26, 'AccountList', 'list', 'views/account/role', '{ title: ''角色管理'', icon: ''table'' }', 2);
+
+create function getChildrenRouter(routerId bigint)
+    returns varchar(10000)
+begin
+    declare oTemp varchar(10000);
+    declare oTempChild varchar(10000);
+
+    set oTemp = '';
+    set oTempChild = cast(routerId as char);
+
+    while oTempChild is not null
+    do
+    set oTemp = concat(oTemp, ',', oTempChild);
+    select group_concat(id) into oTempChild from router where find_in_set(parent_id, oTempChild) > 0;
+    end while;
+    return otemp;
+end;
+
+select *
+from router where find_in_set(id,getChildrenRouter(23));
