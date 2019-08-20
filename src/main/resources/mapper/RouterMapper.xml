@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bsty.icode.dao.RouterDao">
+    <select id="findByType" resultType="com.bsty.icode.bean.Router">
+        select *
+        from router r
+        where r.type = #{type};
+    </select>
+    <select id="findAsync" resultType="com.bsty.icode.bean.Router">
+        select *
+        from router r
+        where r.type = 2;
+    </select>
+    <select id="findByRoleId" resultType="com.bsty.icode.bean.Router" parameterType="java.lang.Long">
+        select r.*
+        from role_router rr
+                 left join router r on rr.router_id = r.id
+        where rr.role_id = #{roleId};
+    </select>
+</mapper>

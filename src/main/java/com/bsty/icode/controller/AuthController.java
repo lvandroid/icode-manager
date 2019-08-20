@@ -1,6 +1,7 @@
 package com.bsty.icode.controller;
 
 import com.bsty.icode.ResponseData;
+import com.bsty.icode.bean.Role;
 import com.bsty.icode.bean.User;
 import com.bsty.icode.request.LoginRequest;
 import com.bsty.icode.request.LogoutRequest;
@@ -14,7 +15,9 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -49,6 +52,12 @@ public class AuthController {
             User user =
                     (User) authentication.getPrincipal();
             if (user != null) {
+                List<Role> roles = user.getAuthorities();
+                if (roles!=null&&!roles.isEmpty()){
+                    for (Role role:roles){
+
+                    }
+                }
                 responseData.setData(user);
                 responseData.setSuccess();
             }
@@ -58,8 +67,12 @@ public class AuthController {
     }
 
     @PostMapping(value = "/user/logout")
-    public ResponseData logout() throws Exception {
+    public ResponseData logout(HttpServletRequest request) throws Exception {
         ResponseData responseData = ResponseData.newInstance();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, null, authentication);
+        }
         responseData.setSuccess();
         return responseData;
     }

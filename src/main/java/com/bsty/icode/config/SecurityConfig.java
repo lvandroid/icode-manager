@@ -1,6 +1,7 @@
 package com.bsty.icode.config;
 
 import com.bsty.icode.filter.JwtTokenFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -26,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.DigestInputStream;
 
 @Configuration
+@Slf4j
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -67,7 +71,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addLogoutHandler(new LogoutHandler() {
                     @Override
                     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-
                     }
                 });
 

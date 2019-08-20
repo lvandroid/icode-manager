@@ -18,6 +18,8 @@ public class User implements UserDetails, Serializable {
 
     private String password;
 
+    private long rootRoleId;
+
     private List<Role> authorities;
 
     @Override
