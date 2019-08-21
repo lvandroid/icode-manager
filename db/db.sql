@@ -606,3 +606,5 @@ where name = 'admin';
 # select r.*
 # from role_router rr left join router r on rr.router_id = r.id where rr.role_id=2;
 
+select role_id
+from user_role where user_id =2 and root_role = true;

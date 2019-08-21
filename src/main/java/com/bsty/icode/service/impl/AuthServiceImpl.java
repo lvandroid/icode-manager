@@ -1,5 +1,6 @@
 package com.bsty.icode.service.impl;
 
+import com.bsty.icode.dao.UserDao;
 import com.bsty.icode.service.AuthService;
 import com.bsty.icode.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private UserDao userDao;
+
     @Override
     public String login(String username, String password) {
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
@@ -28,5 +32,10 @@ public class AuthServiceImpl implements AuthService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         String token = jwtTokenUtil.generateToken(userDetails);
         return token;
+    }
+
+    @Override
+    public long findRoleByUserId(long userId) {
+        return userDao.findRoleRootId(userId);
     }
 }

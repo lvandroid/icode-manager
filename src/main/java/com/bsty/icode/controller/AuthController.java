@@ -52,12 +52,7 @@ public class AuthController {
             User user =
                     (User) authentication.getPrincipal();
             if (user != null) {
-                List<Role> roles = user.getAuthorities();
-                if (roles!=null&&!roles.isEmpty()){
-                    for (Role role:roles){
-
-                    }
-                }
+                user.setRootRoleId(authService.findRoleByUserId(user.getId()));
                 responseData.setData(user);
                 responseData.setSuccess();
             }

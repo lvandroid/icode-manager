@@ -9,4 +9,5 @@ import org.apache.ibatis.annotations.Select;
 public interface UserDao {
 //    @Select("SELECT * FROM user WHERE username= #{username}")
     User findUserByName(@Param("username") String username);
+    long findRoleRootId(long userId);
 }
