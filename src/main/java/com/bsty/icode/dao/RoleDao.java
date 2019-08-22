@@ -10,4 +10,5 @@ import java.util.List;
 @Mapper
 public interface RoleDao extends TkMapper<Role> {
     List<Role> getRolesByUserId(@Param("userId") Long userId);
+    long addRole(Role role);
 }

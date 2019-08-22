@@ -7,4 +7,9 @@
                  LEFT JOIN user_role B ON A.id = B.role_id
         WHERE B.user_id = #{userId}
     </select>
+
+    <insert id="addRole" parameterType="com.bsty.icode.bean.Role" useGeneratedKeys="true" keyProperty="id">
+        insert into role(name,description)
+        values (#{name},#{description})
+    </insert>
 </mapper>
