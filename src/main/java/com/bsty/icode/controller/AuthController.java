@@ -52,7 +52,11 @@ public class AuthController {
             User user =
                     (User) authentication.getPrincipal();
             if (user != null) {
-                user.setRootRoleId(authService.findRoleByUserId(user.getId()));
+                try {
+                    user.setRootRoleId(authService.findRoleByUserId(user.getId()));
+                }catch (Exception e){
+                    log.error(e.getMessage());
+                }
                 responseData.setData(user);
                 responseData.setSuccess();
             }

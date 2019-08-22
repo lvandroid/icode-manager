@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class Role implements GrantedAuthority {
     private Long id;
     private String name;
+    private String description;
     private boolean rootRole;
 
     @Override

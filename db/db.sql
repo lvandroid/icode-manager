@@ -30,16 +30,17 @@ CREATE TABLE IF NOT EXISTS `user`
   DEFAULT CHARSET = utf8;
 CREATE TABLE IF NOT EXISTS `role`
 (
-    `id`   BIGINT(11)   NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
+    `id`          BIGINT(11)   NOT NULL AUTO_INCREMENT,
+    `name`        VARCHAR(255) NOT NULL,
+    `description` VARCHAR(255),
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
 CREATE TABLE IF NOT EXISTS `user_role`
 (
-    `user_id` BIGINT(11) NOT NULL,
-    `role_id` BIGINT(11) NOT NULL,
+    `user_id`   BIGINT(11) NOT NULL,
+    `role_id`   BIGINT(11) NOT NULL,
     `root_role` boolean default false comment '是否是最高权限的角色'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
@@ -607,4 +608,9 @@ where name = 'admin';
 # from role_router rr left join router r on rr.router_id = r.id where rr.role_id=2;
 
 select role_id
-from user_role where user_id =2 and root_role = true;
+from user_role
+where user_id = 2
+  and root_role = true;
+
+select component, meta
+from router;
