@@ -9,4 +9,5 @@ public interface RoleService {
     List<RoleDTO> findAll();
     void addRole(RoleDTO dto,List<Long> routerIds);
     void delRole(long roleId);
+    void updateRole(RoleDTO dto);
 }

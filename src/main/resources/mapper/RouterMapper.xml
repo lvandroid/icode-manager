@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.RouterDao">
-    <insert id="addRoleId">
+    <insert id="addRouters">
         insert into role_router(role_id, router_id) values
         <foreach collection="routeIds" index="index" item="id" separator=",">
             (#{roleId},#{id})
@@ -11,6 +11,15 @@
         delete
         from role_router
         where role_id = #{roleId}
+    </delete>
+    <delete id="deleteRouters">
+        delete
+        from role_router
+        where role_id = #{roleId}
+        and router_id in
+        <foreach collection="routeIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
     <select id="findByType" resultType="com.bsty.icode.bean.Router">

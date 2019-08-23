@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class RoleVO {
     private RoleDTO role;
-    private List<Long> routeIds;
+    private List<Long> routerIds;
 }

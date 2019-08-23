@@ -10,4 +10,6 @@ public interface RouterService {
     List<Router> findByRoleId(long roleId);
     List<Long> findAllIdsByByRoleId(long roleId);
     void deleteByRoleId(long roleId);
+    void addRouters(long roleId, List<Long> routerIds);
+    void deleteRouters(long roleId, List<Long> routerIds);
 }

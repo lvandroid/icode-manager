@@ -14,4 +14,5 @@ public interface RoleDao extends TkMapper<Role> {
     long addRole(Role role);
     void delById(long id);
     List<RoleDTO> findAll();
+    void updateRole(Role role);
 }

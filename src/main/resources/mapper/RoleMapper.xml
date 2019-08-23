@@ -7,9 +7,14 @@
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <collection property="routers" ofType="com.bsty.icode.bean.Router">
             <id column="router_id" property="id" jdbcType="BIGINT"/>
-<!--            <result column="router_id" jdbcType="BIGINT"/>-->
+            <!--            <result column="router_id" jdbcType="BIGINT"/>-->
         </collection>
     </resultMap>
+    <update id="updateRole" parameterType="com.bsty.icode.bean.Role">
+        update role
+        set name=#{name},
+            description =#{description} where id=#{id}
+    </update>
     <delete id="delById" parameterType="long">
         delete
         from role

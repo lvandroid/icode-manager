@@ -17,8 +17,9 @@ public interface RouterDao extends TkMapper<Router> {
 
     List<Long> findIdsByRoleId(long roleId);
 
-    void addRoleId(@Param("roleId") long roleId, @Param("routeIds") List<Long> routeIds);
+    void addRouters(@Param("roleId") long roleId, @Param("routeIds") List<Long> routeIds);
 
     void deleteByRoleId(long roleId);
 
+    void deleteRouters(@Param("roleId") long roleId, @Param("routeIds") List<Long> routeIds);
 }

@@ -627,3 +627,5 @@ select r.id          AS id,
        rr.router_id  AS router_id
 from role r
          left join role_router rr on rr.role_id = r.id;
+
+

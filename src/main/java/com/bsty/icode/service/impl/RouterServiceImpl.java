@@ -38,4 +38,14 @@ public class RouterServiceImpl implements RouterService {
         routerDao.deleteByRoleId(roleId);
     }
 
+    @Override
+    public void addRouters(long roleId, List<Long> routerIds) {
+        routerDao.addRouters(roleId, routerIds);
+    }
+
+    @Override
+    public void deleteRouters(long roleId, List<Long> routerIds) {
+        routerDao.deleteRouters(roleId, routerIds);
+    }
+
 }
