@@ -59,7 +59,7 @@ public class TreeBuilder {
     public List<Node> getChildNodes(Node pnode) {
         List<Node> childNodes = new ArrayList<>();
         for (Node n : nodes) {
-            if (pnode.getId().equals(n.getPid())) {
+            if (pnode.getId()==(n.getPid())) {
                 childNodes.add(n);
             }
         }
@@ -70,7 +70,7 @@ public class TreeBuilder {
     public boolean rootNode(Node node) {
         boolean isRootNode = true;
         for (Node n : nodes) {
-            if (node.getPid().equals(n.getId())) {
+            if (node.getPid()==(n.getId())) {
                 isRootNode = false;
                 break;
             }
@@ -92,15 +92,15 @@ public class TreeBuilder {
     @Data
     public static class Node {
 
-        protected String id;
-        protected String pid;
+        protected long id;
+        protected long pid;
         protected String name;
         protected List<Node> children;
 
         public Node() {
         }
 
-        public Node(String id, String pid, String name) {
+        public Node(long id, long pid, String name) {
             super();
             this.id = id;
             this.pid = pid;

@@ -6,8 +6,8 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <collection property="routers" ofType="com.bsty.icode.bean.Router">
-            <id column="rr_id" jdbcType="BIGINT"/>
-            <result column="router_id" jdbcType="BIGINT"/>
+            <id column="router_id" property="id" jdbcType="BIGINT"/>
+<!--            <result column="router_id" jdbcType="BIGINT"/>-->
         </collection>
     </resultMap>
     <delete id="delById" parameterType="long">
