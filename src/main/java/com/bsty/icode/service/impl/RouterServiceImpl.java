@@ -12,6 +12,7 @@ import java.util.List;
 public class RouterServiceImpl implements RouterService {
     @Autowired
     private RouterDao routerDao;
+
     @Override
     public List<Router> getRouterList() {
         return routerDao.selectAll();
@@ -25,6 +26,16 @@ public class RouterServiceImpl implements RouterService {
     @Override
     public List<Router> findByRoleId(long roleId) {
         return routerDao.findByRoleId(roleId);
+    }
+
+    @Override
+    public List<Long> findAllIdsByByRoleId(long roleId) {
+        return routerDao.findIdsByRoleId(roleId);
+    }
+
+    @Override
+    public void deleteByRoleId(long roleId) {
+        routerDao.deleteByRoleId(roleId);
     }
 
 }

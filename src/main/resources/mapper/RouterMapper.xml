@@ -7,6 +7,11 @@
             (#{roleId},#{id})
         </foreach>
     </insert>
+    <delete id="deleteByRoleId" parameterType="long">
+        delete
+        from role_router
+        where role_id = #{roleId}
+    </delete>
 
     <select id="findByType" resultType="com.bsty.icode.bean.Router">
         select *
@@ -23,5 +28,10 @@
         from role_router rr
                  left join router r on rr.router_id = r.id
         where rr.role_id = #{roleId};
+    </select>
+    <select id="findIdsByRoleId" parameterType="long" resultType="java.lang.Long">
+        select router_id
+        from role_router
+        where role_id = #{roleId};
     </select>
 </mapper>

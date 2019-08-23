@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,7 +28,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDTO> findAll() {
-        return roleMapper.from(roleDao.selectAll());
+        return roleDao.findAll();
     }
 
     @Override
@@ -36,5 +37,11 @@ public class RoleServiceImpl implements RoleService {
         roleDao.addRole(role);
         long roleId = role.getId();
         routerDao.addRoleId(roleId, routerIds);
+    }
+
+    @Override
+    public void delRole(long roleId) {
+        routerDao.deleteByRoleId(roleId);
+        roleDao.delById(roleId);
     }
 }

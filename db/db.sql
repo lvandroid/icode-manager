@@ -607,10 +607,23 @@ where name = 'admin';
 # select r.*
 # from role_router rr left join router r on rr.router_id = r.id where rr.role_id=2;
 
-select role_id
-from user_role
-where user_id = 2
-  and root_role = true;
+# select role_id
+# from user_role
+# where user_id = 2
+#   and root_role = true;
 
-select component, meta
-from router;
+# select component, meta
+# from router;
+select
+    r.id AS id, r.name AS name, r.description AS description, rr.router_id AS rr_id
+from role r
+         left join role_router rr on rr.role_id = r.id;
+
+
+select r.id          AS id,
+       r.name        AS name,
+       r.description AS description,
+       rr.id         as rr_id,
+       rr.router_id  AS router_id
+from role r
+         left join role_router rr on rr.role_id = r.id;

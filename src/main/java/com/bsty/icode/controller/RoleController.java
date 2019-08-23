@@ -44,4 +44,17 @@ public class RoleController {
         }
         return responseData;
     }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseData delRole(@PathVariable long id) {
+        ResponseData responseData = ResponseData.newInstance();
+        try {
+            roleService.delRole(id);
+            responseData.setSuccess();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setError();
+        }
+        return responseData;
+    }
 }
