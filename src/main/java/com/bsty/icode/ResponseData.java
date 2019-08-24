@@ -47,6 +47,12 @@ public class ResponseData<T> {
         return error;
     }
 
+    public static ResponseData errMsgInstance(String msg) {
+        ResponseData error = ResponseData.newInstance();
+        error.setError(msg);
+        return error;
+    }
+
     public void setError() {
         errCode = CODE_ERROR;
         errMsg = MSG_ERROR;

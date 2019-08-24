@@ -22,6 +22,14 @@ public class User implements UserDetails, Serializable {
 
     private List<Role> authorities;
 
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public List<Role> getAuthorities() {
         return authorities;

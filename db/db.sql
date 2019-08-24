@@ -540,6 +540,12 @@ VALUES (0, 'Account', '/accout', 'layout/Layout', '/account/role', '{ title: ''�
 INSERT INTO router(pid, name, path, component, meta, type)
 VALUES (26, 'AccountList', 'list', 'views/account/role', '{ title: ''角色管理'', icon: ''table'' }', 2);
 
+INSERT INTO router(pid, name, path, component, meta, type, label)
+VALUES (26, 'UserList', 'userList', 'userList', 'userList ', 2, '用户管理');
+
+insert into role_router(role_id, router_id)
+values (2, 28);
+
 create function getChildrenRouter(routerId bigint)
     returns varchar(10000)
 begin
@@ -614,8 +620,10 @@ where name = 'admin';
 
 # select component, meta
 # from router;
-select
-    r.id AS id, r.name AS name, r.description AS description, rr.router_id AS rr_id
+select r.id          AS id,
+       r.name        AS name,
+       r.description AS description,
+       rr.router_id  AS rr_id
 from role r
          left join role_router rr on rr.role_id = r.id;
 
@@ -629,3 +637,15 @@ from role r
          left join role_router rr on rr.role_id = r.id;
 
 
+select u.*, group_concat(r.name SEPARATOR ' ') as role_ids
+from user as u
+         left join user_role as ur on u.id = ur.user_id
+         left join role as r on ur.role_id = r.id
+where u.username like concat('%', 'ad', '%')
+group by u.id;
+
+select u.id as id,
+       u.username as username,
+       u.password as password,
+       ur.role_id as role_id
+from user u left join user_role ur on u.id=ur.user_id;

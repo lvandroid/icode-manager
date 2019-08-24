@@ -40,4 +40,10 @@
         insert into role(name, description)
         values (#{name}, #{description})
     </insert>
+    <insert id="addUser" parameterType="long">
+        insert into user_role (user_id, role_id) values
+        <foreach collection="roleIds" item="id" index="index" separator=",">
+            (#{userId},#{id})
+        </foreach>
+    </insert>
 </mapper>
