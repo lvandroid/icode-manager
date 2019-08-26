@@ -10,7 +10,7 @@
             <result column="role_name" property="name"/>
         </collection>
     </resultMap>
-    <insert id="addUser" parameterType="com.bsty.icode.bean.User" keyProperty="id">
+    <insert id="addUser" parameterType="com.bsty.icode.bean.User" useGeneratedKeys="true" keyProperty="id">
         insert into user(username, password) values (#{username},#{password})
     </insert>
     <select id="findUserByName" resultType="com.bsty.icode.bean.User">
@@ -30,16 +30,16 @@
         u.username as username,
         u.password as password,
         ur.role_id as role_id,
-        r.name as role_name
-        from user u left join user_role ur on u.id=ur.user_id
-        left join role r on ur.role_id=r.id
+        group_concat(r.name SEPARATOR ' ') as role_names
+        from user as u left join user_role as ur on u.id=ur.user_id
+        left join role as r on ur.role_id=r.id
         <where>
             1=1
             <if test="username !=null and username!=''">
                 u.username like concat('%',#{username},'%')
             </if>
         </where>
-        group by u.id;
+        group by u.id
         <if test="sortMap!=null">
             ORDER BY
             <foreach collection="sortMap.entrySet()" separator="," index="key" item="value">

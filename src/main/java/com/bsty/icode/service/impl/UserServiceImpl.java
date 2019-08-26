@@ -3,6 +3,8 @@ package com.bsty.icode.service.impl;
 import com.bsty.icode.bean.User;
 import com.bsty.icode.dao.RoleDao;
 import com.bsty.icode.dao.UserDao;
+import com.bsty.icode.dto.UserDTO;
+import com.bsty.icode.reqparams.UserParamDTO;
 import com.bsty.icode.request.UserVo;
 import com.bsty.icode.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +30,10 @@ public class UserServiceImpl implements UserService {
                 roleDao.addUser(userId, roleIds);
             }
         }
+    }
+
+    @Override
+    public List<UserDTO> getAll(UserParamDTO params) {
+        return userDao.selectByParams(params);
     }
 }

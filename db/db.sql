@@ -649,3 +649,20 @@ select u.id as id,
        u.password as password,
        ur.role_id as role_id
 from user u left join user_role ur on u.id=ur.user_id;
+
+select u.id as user_id,
+       u.username as username,
+       u.password as password,
+       ur.role_id as role_id,
+       group_concat(r.name SEPARATOR ' ') as role_names
+from user as u left join user_role as ur on u.id=ur.user_id
+               left join role as r on ur.role_id=r.id
+group by u.id;
+
+SELECT @@GLOBAL.sql_mode;
+SELECT @@SESSION.sql_mode;
+
+set @@GLOBAL.sql_mode='';
+
+set sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+

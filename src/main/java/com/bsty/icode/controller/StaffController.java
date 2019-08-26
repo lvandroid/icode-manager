@@ -34,7 +34,7 @@ public class StaffController {
 
     @PostMapping(value = "/list")
     public ResponseData getStaffs(@RequestBody StaffParamsDTO dto) {
-        Page page = PageHelper.startPage(1, 1);
+        Page page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         ResponseData responseData = ResponseData.newInstance();
         try {
 //            List<StaffDTO> result = staffService.orderById();
