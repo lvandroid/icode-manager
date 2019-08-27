@@ -25,15 +25,33 @@ public class UserServiceImpl implements UserService {
             User user = new User(vo.getUsername(), vo.getPassword());
             userDao.addUser(user);
             long userId = user.getId();
+            long rootRoleId = user.getRootRoleId();
             List<Long> roleIds = vo.getRoleIds();
             if (roleIds != null && !roleIds.isEmpty()) {
-                roleDao.addUser(userId, roleIds);
+                roleDao.addUser(userId, roleIds, rootRoleId);
             }
         }
     }
 
     @Override
     public List<UserDTO> getAll(UserParamDTO params) {
-        return userDao.selectByParams(params);
+        List<UserDTO> dtos = userDao.selectByParams(params);
+        if (dtos != null && !dtos.isEmpty()) {
+            for (UserDTO dto : dtos) {
+                dto.setRoleNames(userDao.findUserRoleNames(dto.getId()));
+            }
+        }
+        return dtos;
+    }
+
+    @Override
+    public void delUser(long userId) {
+        userDao.delUser(userId);
+        roleDao.delUserRole(userId);
+    }
+
+    @Override
+    public void updatePwd(long userId, String pwd) {
+        userDao.updatePwd(userId, pwd);
     }
 }

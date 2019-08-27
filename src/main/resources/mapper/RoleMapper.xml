@@ -13,12 +13,18 @@
     <update id="updateRole" parameterType="com.bsty.icode.bean.Role">
         update role
         set name=#{name},
-            description =#{description} where id=#{id}
+            description =#{description}
+        where id = #{id}
     </update>
     <delete id="delById" parameterType="long">
         delete
         from role
         where role.id = #{id}
+    </delete>
+    <delete id="delUserRole" parameterType="long">
+        delete
+        from user_role
+        where user_id = #{userId}
     </delete>
     <select id="getRolesByUserId" resultType="com.bsty.icode.bean.Role">
         SELECT A.id, A.name
@@ -41,9 +47,11 @@
         values (#{name}, #{description})
     </insert>
     <insert id="addUser" parameterType="long">
-        insert into user_role (user_id, role_id) values
+        insert into user_role (user_id, role_id, root_role) values
         <foreach collection="roleIds" item="id" index="index" separator=",">
-            (#{userId},#{id})
+            (#{userId},#{id},
+            <if test="rootRoleId=id">true</if>
+            <if test="rootRoleId!=id">false</if>)
         </foreach>
     </insert>
 </mapper>

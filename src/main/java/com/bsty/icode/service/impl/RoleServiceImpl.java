@@ -48,4 +48,9 @@ public class RoleServiceImpl implements RoleService {
     public void updateRole(RoleDTO dto) {
         roleDao.updateRole(roleMapper.from(dto));
     }
+
+    @Override
+    public void delUserRole(long userId) {
+        roleDao.delUserRole(userId);
+    }
 }

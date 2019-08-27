@@ -5,14 +5,28 @@
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="role_names" property="roleNames"/>
         <collection property="roles" ofType="com.bsty.icode.bean.Role">
             <id column="role_id" property="id"/>
             <result column="role_name" property="name"/>
+            <result column="root_role" property="rootRole"/>
+            <result column="role_description" property="description"/>
         </collection>
     </resultMap>
     <insert id="addUser" parameterType="com.bsty.icode.bean.User" useGeneratedKeys="true" keyProperty="id">
-        insert into user(username, password) values (#{username},#{password})
+        insert into user(username, password)
+        values (#{username}, #{password})
     </insert>
+    <update id="updatePwd">
+        update user as u
+        set u.password = #{pwd}
+        where u.id = #{userId}
+    </update>
+    <delete id="delUser">
+        delete
+        from user
+        where id = #{userId}
+    </delete>
     <select id="findUserByName" resultType="com.bsty.icode.bean.User">
         SELECT id, username, password
         FROM user
@@ -30,22 +44,31 @@
         u.username as username,
         u.password as password,
         ur.role_id as role_id,
-        group_concat(r.name SEPARATOR ' ') as role_names
+        r.name as role_name,
+        ur.root_role as root_role,
+        r.description as role_description
         from user as u left join user_role as ur on u.id=ur.user_id
         left join role as r on ur.role_id=r.id
         <where>
             1=1
             <if test="username !=null and username!=''">
-                u.username like concat('%',#{username},'%')
+                and u.username like concat('%',#{username},'%')
             </if>
         </where>
-        group by u.id
         <if test="sortMap!=null">
             ORDER BY
             <foreach collection="sortMap.entrySet()" separator="," index="key" item="value">
                 ${key} ${value}
             </foreach>
         </if>
+    </select>
+    <select id="findUserRoleNames" resultType="java.lang.String">
+        select group_concat(r.name separator ' ') as role_names
+        from user as u
+                 left join user_role as ur on u.id = ur.user_id
+                 left join role as r on ur.role_id = r.id
+        where u.id = #{userId}
+        group by u.id;
     </select>
 
 </mapper>

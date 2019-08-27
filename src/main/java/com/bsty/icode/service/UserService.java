@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserService {
     void addUser(UserVo vo);
     List<UserDTO> getAll(UserParamDTO params);
+    void delUser(long userId);
+    void updatePwd(long userId, String pwd);
 }
