@@ -673,3 +673,8 @@ select u.id as id,
        ur.role_id as role_id
 from user as u left join user_role as ur on u.id=ur.user_id
                left join role as r on ur.role_id=r.id
+
+select ur.role_id
+from user_role ur
+where user_id = 31
+  and ur.root_role = true

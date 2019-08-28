@@ -11,10 +11,18 @@ import java.util.List;
 @Mapper
 public interface RoleDao extends TkMapper<Role> {
     List<Role> getRolesByUserId(@Param("userId") Long userId);
+
     long addRole(Role role);
+
     void delById(long id);
+
     List<RoleDTO> findAll();
+
     void updateRole(Role role);
-    void addUser(@Param("userId") long userId, @Param("roleIds") List<Long> roleIds,@Param("rootRoleId") long rootRoleId);
+
+    void addUser(@Param("userId") long userId, @Param("roleIds") List<Long> roleIds);
+
+    void addUserRootRole(@Param("userId") long userId, @Param("rootRoleId") long rootRoleId);
+
     void delUserRole(long userId);
 }

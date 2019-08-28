@@ -25,23 +25,27 @@ public class UserServiceImpl implements UserService {
             User user = new User(vo.getUsername(), vo.getPassword());
             userDao.addUser(user);
             long userId = user.getId();
-            long rootRoleId = user.getRootRoleId();
+            long rootRoleId = vo.getRootRoleId();
             List<Long> roleIds = vo.getRoleIds();
-            if (roleIds != null && !roleIds.isEmpty()) {
-                roleDao.addUser(userId, roleIds, rootRoleId);
-            }
+            roleDao.addUserRootRole(userId, rootRoleId);
+            roleDao.addUser(userId, roleIds);
         }
     }
 
     @Override
     public List<UserDTO> getAll(UserParamDTO params) {
         List<UserDTO> dtos = userDao.selectByParams(params);
-        if (dtos != null && !dtos.isEmpty()) {
-            for (UserDTO dto : dtos) {
-                dto.setRoleNames(userDao.findUserRoleNames(dto.getId()));
-            }
-        }
         return dtos;
+    }
+
+    @Override
+    public List<Long> getRoles(long userId) {
+        return userDao.findUserRoles(userId);
+    }
+
+    @Override
+    public long getRootRole(long userId) {
+        return userDao.findUserRootId(userId);
     }
 
     @Override
@@ -53,5 +57,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePwd(long userId, String pwd) {
         userDao.updatePwd(userId, pwd);
+    }
+
+    @Override
+    public void updateUserRoles(UserVo vo) {
+        if (vo == null) return;
+        roleDao.delUserRole(vo.getId());
+        roleDao.addUserRootRole(vo.getId(), vo.getRootRoleId());
+        roleDao.addUser(vo.getId(), vo.getRoleIds());
     }
 }

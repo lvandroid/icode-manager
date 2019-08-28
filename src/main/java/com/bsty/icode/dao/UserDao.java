@@ -20,7 +20,9 @@ public interface UserDao {
 
     void delUser(long userId);
 
-    String findUserRoleNames(long userId);
+    List<Long> findUserRoles(long userId);
+
+    long findUserRootId(long userId);
 
     List<UserDTO> selectByParams(UserParamDTO params);
 

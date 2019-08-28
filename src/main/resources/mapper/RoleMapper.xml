@@ -49,9 +49,11 @@
     <insert id="addUser" parameterType="long">
         insert into user_role (user_id, role_id, root_role) values
         <foreach collection="roleIds" item="id" index="index" separator=",">
-            (#{userId},#{id},
-            <if test="rootRoleId=id">true</if>
-            <if test="rootRoleId!=id">false</if>)
+            (#{userId},#{id},false)
         </foreach>
+    </insert>
+    <insert id="addUserRootRole">
+        insert into user_role (user_id, role_id,root_role) values
+        (#{userId},#{rootRoleId},true)
     </insert>
 </mapper>

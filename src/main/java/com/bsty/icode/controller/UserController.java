@@ -55,8 +55,21 @@ public class UserController {
 
         try {
             ListResultData<UserDTO> result = new ListResultData<>();
-            result.setList(userService.getAll(params));
+            List<UserDTO> dtos = userService.getAll(params);
             result.setPage(page);
+            responseData.setTotal(page.getTotal());
+            if (dtos != null && !dtos.isEmpty()) {
+//                dtos.forEach(dto -> {
+//                    dto.setRootRoleId(userService.getRootRole(dto.getId()));
+//                    dto.setRoleIds(userService.getRoles(dto.getId()));
+//                });
+                for (int i = 0; i < dtos.size(); i++) {
+                    UserDTO dto = dtos.get(i);
+                    dtos.get(i).setRoleIds(userService.getRoles(dto.getId()));
+                    dtos.get(i).setRootRoleId(userService.getRootRole(dto.getId()));
+                }
+            }
+            result.setList(dtos);
             responseData.setData(result);
         } catch (Exception e) {
             responseData.setError();
@@ -92,6 +105,22 @@ public class UserController {
         try {
             userService.updatePwd(userId,
                     DigestUtils.md5DigestAsHex(pwd.getBytes()));
+            responseData.setSuccess();
+        } catch (Exception e) {
+            responseData.setError();
+            log.error(e.getMessage());
+        }
+        return responseData;
+    }
+
+    @PutMapping("/updateRoles/{userId}")
+    public ResponseData updateUserRoles(@PathVariable long userId, @RequestBody UserVo vo) {
+        if (vo == null) {
+            return ResponseData.errMsgInstance("参数传入不正确");
+        }
+        ResponseData responseData = ResponseData.newInstance();
+        try {
+            userService.updateUserRoles(vo);
             responseData.setSuccess();
         } catch (Exception e) {
             responseData.setError();

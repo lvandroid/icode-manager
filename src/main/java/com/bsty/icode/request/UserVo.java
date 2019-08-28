@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class UserVo {
+    private long id;
     private String username;
     private String password;
     private long rootRoleId;

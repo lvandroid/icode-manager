@@ -6,12 +6,12 @@
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="role_names" property="roleNames"/>
-        <collection property="roles" ofType="com.bsty.icode.bean.Role">
-            <id column="role_id" property="id"/>
-            <result column="role_name" property="name"/>
-            <result column="root_role" property="rootRole"/>
-            <result column="role_description" property="description"/>
-        </collection>
+<!--        <collection property="roles" ofType="com.bsty.icode.bean.Role">-->
+<!--            <id column="role_id" property="id"/>-->
+<!--            <result column="role_name" property="name"/>-->
+<!--            <result column="root_role" property="rootRole"/>-->
+<!--            <result column="role_description" property="description"/>-->
+<!--        </collection>-->
     </resultMap>
     <insert id="addUser" parameterType="com.bsty.icode.bean.User" useGeneratedKeys="true" keyProperty="id">
         insert into user(username, password)
@@ -46,7 +46,8 @@
         ur.role_id as role_id,
         r.name as role_name,
         ur.root_role as root_role,
-        r.description as role_description
+        r.description as role_description,
+        group_concat(r.name separator ' ') as role_names
         from user as u left join user_role as ur on u.id=ur.user_id
         left join role as r on ur.role_id=r.id
         <where>
@@ -55,6 +56,7 @@
                 and u.username like concat('%',#{username},'%')
             </if>
         </where>
+        group by u.id
         <if test="sortMap!=null">
             ORDER BY
             <foreach collection="sortMap.entrySet()" separator="," index="key" item="value">
@@ -62,13 +64,17 @@
             </foreach>
         </if>
     </select>
-    <select id="findUserRoleNames" resultType="java.lang.String">
-        select group_concat(r.name separator ' ') as role_names
-        from user as u
-                 left join user_role as ur on u.id = ur.user_id
-                 left join role as r on ur.role_id = r.id
-        where u.id = #{userId}
-        group by u.id;
+    <select id="findUserRoles" resultType="java.lang.Long">
+        select ur.role_id
+        from user_role ur
+        where user_id = #{userId}
+          and ur.root_role = false
+    </select>
+    <select id="findUserRootId" resultType="java.lang.Long">
+        select ur.role_id
+        from user_role ur
+        where user_id = #{userId}
+          and ur.root_role = true;
     </select>
 
 </mapper>
