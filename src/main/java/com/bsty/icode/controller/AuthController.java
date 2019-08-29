@@ -53,8 +53,10 @@ public class AuthController {
                     (User) authentication.getPrincipal();
             if (user != null) {
                 try {
-                    user.setRootRoleId(authService.findRoleByUserId(user.getId()));
-                }catch (Exception e){
+                    long rootRoleId = authService.findRoleByUserId(user.getId());
+                    user.setRootRoleId(rootRoleId);
+                    user.setPermissions(authService.findUserPermission(rootRoleId));
+                } catch (Exception e) {
                     log.error(e.getMessage());
                 }
                 responseData.setData(user);

@@ -1,5 +1,8 @@
 package com.bsty.icode.service.impl;
 
+import com.bsty.icode.bean.Permission;
+import com.bsty.icode.dao.PermissionDao;
+import com.bsty.icode.dao.RoleDao;
 import com.bsty.icode.dao.UserDao;
 import com.bsty.icode.service.AuthService;
 import com.bsty.icode.utils.JwtTokenUtil;
@@ -12,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthServiceImpl implements AuthService {
     @Autowired
@@ -20,7 +25,8 @@ public class AuthServiceImpl implements AuthService {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
+    @Autowired
+    private PermissionDao permissionDao;
     @Autowired
     private UserDao userDao;
 
@@ -37,5 +43,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public long findRoleByUserId(long userId) {
         return userDao.findRoleRootId(userId);
+    }
+
+    @Override
+    public List<String> findUserPermission(long rootRoleId) {
+        return permissionDao.findNamesByRoleId(rootRoleId);
     }
 }

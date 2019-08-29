@@ -3,6 +3,7 @@ package com.bsty.icode.controller;
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.dto.RoleDTO;
 import com.bsty.icode.request.RoleVO;
+import com.bsty.icode.service.PermissionService;
 import com.bsty.icode.service.RoleService;
 import com.bsty.icode.service.RouterService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,8 @@ public class RoleController {
     private RoleService roleService;
     @Autowired
     private RouterService routerService;
-
+    @Autowired
+    private PermissionService permissionService;
 
     @GetMapping(value = "/list")
     public ResponseData<List<RoleDTO>> findAllRole() {
@@ -41,7 +43,7 @@ public class RoleController {
                 responseData.setError();
                 return responseData;
             }
-            roleService.addRole(dto, vo.getRouterIds());
+            roleService.addRole(dto, vo.getRouterIds(), vo.getPermissionIds());
         } catch (Exception e) {
             log.error(e.getMessage());
             responseData.setError();
@@ -71,37 +73,15 @@ public class RoleController {
         }
         RoleDTO role = vo.getRole();
         List<Long> routerIds = vo.getRouterIds();
+        List<Long> permissionIds = vo.getPermissionIds();
         if (role == null) {
             responseData.setError("没有传入角色参数");
             return responseData;
         }
-        List<Long> dbRouterIds = routerService.findAllIdsByByRoleId(role.getId());
+        long roleId = role.getId();
         try {
             roleService.updateRole(role);
-            if (routerIds != null) {
-                if (dbRouterIds == null || dbRouterIds.isEmpty()) {
-                    routerService.addRouters(role.getId(), routerIds);
-                } else {
-                    List<Long> retainIds = new ArrayList<>();
-                    retainIds.addAll(dbRouterIds);//数据库中routers和请求参数中的交集
-                    retainIds.retainAll(routerIds);
-                    /**
-                     * 取到需要新插入的router_id
-                     */
-                    routerIds.removeAll(retainIds);
-                    if (!routerIds.isEmpty()) {
-                        routerService.addRouters(role.getId(), routerIds);
-                    }
-                    /**
-                     * 取需要删除的router_id
-                     */
-                    dbRouterIds.removeAll(retainIds);
-                    if (!dbRouterIds.isEmpty()) {
-                        routerService.deleteRouters(role.getId(), dbRouterIds);
-                    }
-                }
-
-            }
+            parseRouterPermissions(roleId, routerIds, permissionIds);
             responseData.setSuccess();
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -109,4 +89,60 @@ public class RoleController {
         }
         return responseData;
     }
+
+    private void parseRouterPermissions(long roleId, List<Long> routerIds, List<Long> permissionIds) {
+        List<Long> dbRouterIds = routerService.findAllIdsByByRoleId(roleId);
+        List<Long> dbPermissionIds = permissionService.findAllIdsByByRoleId(roleId);
+        /**
+         * 更新动态路由
+         */
+        if (routerIds != null) {
+            if (dbRouterIds == null || dbRouterIds.isEmpty()) {
+                routerService.addRouters(roleId, routerIds);
+            } else {
+                List<Long> retainIds = new ArrayList<>();
+                retainIds.addAll(dbRouterIds);//数据库中routers和请求参数中的交集
+                retainIds.retainAll(routerIds);
+                /**
+                 * 取到需要新插入的router_id
+                 */
+                routerIds.removeAll(retainIds);
+                if (!routerIds.isEmpty()) {
+                    routerService.addRouters(roleId, routerIds);
+                }
+                /**
+                 * 取需要删除的router_id
+                 */
+                dbRouterIds.removeAll(retainIds);
+                if (!dbRouterIds.isEmpty()) {
+                    routerService.deleteRouters(roleId, dbRouterIds);
+                }
+            }
+        }
+        /**
+         * 更新权限
+         */
+        if (dbPermissionIds == null || dbPermissionIds.isEmpty()) {
+            permissionService.addPermissions(roleId, permissionIds);
+        } else {
+            List<Long> retainIds = new ArrayList<>();
+            retainIds.addAll(dbPermissionIds);
+            retainIds.retainAll(permissionIds);
+            /**
+             * 取到需要新插入的permission_id
+             */
+            permissionIds.removeAll(retainIds);
+            if (!permissionIds.isEmpty()) {
+                permissionService.addPermissions(roleId, permissionIds);
+            }
+            /**
+             * 取需要删除的permission_id
+             */
+            dbPermissionIds.removeAll(retainIds);
+            if (!dbPermissionIds.isEmpty()) {
+                permissionService.deletePermissions(roleId, dbPermissionIds);
+            }
+        }
+    }
+
 }

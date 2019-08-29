@@ -644,37 +644,86 @@ from user as u
 where u.username like concat('%', 'ad', '%')
 group by u.id;
 
-select u.id as id,
+select u.id       as id,
        u.username as username,
        u.password as password,
        ur.role_id as role_id
-from user u left join user_role ur on u.id=ur.user_id;
+from user u
+         left join user_role ur on u.id = ur.user_id;
 
-select u.id as user_id,
+select u.id       as user_id,
        u.username as username,
        u.password as password,
        ur.role_id as role_id
 #        group_concat(r.name SEPARATOR ' ') as role_names
-from user as u left join user_role as ur on u.id=ur.user_id
-               left join role as r on ur.role_id=r.id;
+from user as u
+         left join user_role as ur on u.id = ur.user_id
+         left join role as r on ur.role_id = r.id;
 # where ur.root_role = true;
 # group by u.id;
 
 SELECT @@GLOBAL.sql_mode;
 SELECT @@SESSION.sql_mode;
 
-set @@GLOBAL.sql_mode='';
+set @@GLOBAL.sql_mode = '';
 
-set sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+set sql_mode =
+        'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 
-select u.id as id,
-       u.username as username,
-       u.password as password,
-       ur.role_id as role_id
-from user as u left join user_role as ur on u.id=ur.user_id
-               left join role as r on ur.role_id=r.id
+# select u.id as id,
+#        u.username as username,
+#        u.password as password,
+#        ur.role_id as role_id
+# from user as u left join user_role as ur on u.id=ur.user_id
+#                left join role as r on ur.role_id=r.id
+#
+# select ur.role_id
+# from user_role ur
+# where user_id = 31
+#   and ur.root_role = true
 
-select ur.role_id
-from user_role ur
-where user_id = 31
-  and ur.root_role = true
+insert into permission(name, description, pid)
+VALUES ('admin', '所有权限', 0);
+insert into permission(name, description, pid)
+VALUES ('staff', '员工', 3);
+insert into permission(name, description, pid)
+VALUES ('staffNew', '新建员工', 4);
+insert into permission(name, description, pid)
+VALUES ('staffEdit', '编辑员工', 4);
+insert into permission(name, description, pid)
+VALUES ('staffImport', '导出员工', 4);
+insert into permission(name, description, pid)
+VALUES ('staffDel', '删除员工', 4);
+
+insert into permission(name, description, pid)
+VALUES ('student', '学员', 3);
+insert into permission(name, description, pid)
+VALUES ('studentNew', '新建学员', 8);
+insert into permission(name, description, pid)
+VALUES ('studentEdit', '编辑学员', 8);
+insert into permission(name, description, pid)
+VALUES ('studentImport', '导出学员', 8);
+insert into permission(name, description, pid)
+VALUES ('studentDel', '删除学员', 8);
+
+insert into permission(name, description, pid)
+VALUES ('teacher', '教师', 3);
+insert into permission(name, description, pid)
+VALUES ('teacherNew', '新建教师', 12);
+insert into permission(name, description, pid)
+VALUES ('teacherEdit', '编辑教师', 12);
+insert into permission(name, description, pid)
+VALUES ('teacherImport', '导出教师', 12);
+insert into permission(name, description, pid)
+VALUES ('teacherDel', '删除教师', 12);
+
+insert into permission(name, description, pid)
+VALUES ('class', '班级', 3);
+insert into permission(name, description, pid)
+VALUES ('classNew', '新建班级', 16);
+insert into permission(name, description, pid)
+VALUES ('classEdit', '编辑班级', 16);
+insert into permission(name, description, pid)
+VALUES ('classImport', '导出班级', 16);
+insert into permission(name, description, pid)
+VALUES ('classDel', '删除班级', 16);

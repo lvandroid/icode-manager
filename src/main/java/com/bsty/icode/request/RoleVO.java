@@ -9,4 +9,5 @@ import java.util.List;
 public class RoleVO {
     private RoleDTO role;
     private List<Long> routerIds;
+    private List<Long> permissionIds;
 }

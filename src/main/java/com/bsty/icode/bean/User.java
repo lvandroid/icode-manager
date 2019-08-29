@@ -20,6 +20,8 @@ public class User implements UserDetails, Serializable {
 
     private long rootRoleId;
 
+    private List<String> permissions;
+    
     private List<Role> authorities;
 
     public User() {

@@ -14,6 +14,8 @@ public class RoleDTO {
     private String description;
     private boolean rootRole;
     private List<TreeBuilder.Node> routers;
+    private List<TreeBuilder.Node> permissions;
+    private List<Long> permissionIds;
     private List<Long> routerIds;
 
     public List<Long> getRouterIds() {
@@ -24,5 +26,15 @@ public class RoleDTO {
             });
         }
         return routerIds;
+    }
+
+    public List<Long> getPermissionIds() {
+        if (permissions != null && !permissions.isEmpty()) {
+            permissionIds = new ArrayList<>();
+            permissions.forEach(p -> {
+                permissionIds.add(p.getId());
+            });
+        }
+        return permissionIds;
     }
 }

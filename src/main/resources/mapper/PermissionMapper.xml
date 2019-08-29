@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.PermissionDao">
+    <insert id="addPermissions">
+        insert into role_permission(role_id, permission_id) values
+        <foreach collection="permissionIds" index="index" item="id" separator=",">
+            (#{roleId},#{id})
+        </foreach>
+    </insert>
+    <delete id="deleteByRoleId">
+        delete
+        from role_permission
+        where role_id = #{roleId}
+    </delete>
+    <delete id="deletePermissions">
+        delete
+        from role_permission
+        where role_id = #{roleId}
+        and permission_id in
+        <foreach collection="permissionIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
     <select id="getRolePermissions" resultType="com.bsty.icode.bean.RolePermission">
         SELECT A.name AS roleName, C.url
         FROM role AS A
                  LEFT JOIN role_permission B ON A.id = B.role_id
                  LEFT JOIN permission AS C ON B.permission_id = c.id
+    </select>
+    <select id="findAll" resultType="com.bsty.icode.bean.Permission">
+        select *
+        from permission
+        where id > 2
+    </select>
+    <select id="findByRoleId" resultType="com.bsty.icode.bean.Permission">
+        select permission_id
+        from permission p
+                 left join role_permission rp on p.id = rp.permission_id
+                 left join role r on r.id = rp.role_id
+        where r.id = #{roleId}
+          and p.id > 2
+    </select>
+    <select id="findIdsByRoleId" resultType="java.lang.Long">
+        select permission_id
+        from role_permission
+        where role_id = #{roleId}
+    </select>
+    <select id="findNamesByRoleId" resultType="java.lang.String">
+        select p.name
+        from permission p
+                 left join role_permission rp on p.id = rp.permission_id
+                 left join role r on r.id = rp.role_id
+        where r.id = #{roleId}
     </select>
 </mapper>

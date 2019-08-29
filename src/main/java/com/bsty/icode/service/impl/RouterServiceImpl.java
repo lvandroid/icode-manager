@@ -40,7 +40,9 @@ public class RouterServiceImpl implements RouterService {
 
     @Override
     public void addRouters(long roleId, List<Long> routerIds) {
-        routerDao.addRouters(roleId, routerIds);
+        if (routerIds!=null&&!routerIds.isEmpty()) {
+            routerDao.addRouters(roleId, routerIds);
+        }
     }
 
     @Override

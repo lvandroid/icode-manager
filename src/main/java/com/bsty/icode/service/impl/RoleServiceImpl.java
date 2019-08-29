@@ -1,6 +1,7 @@
 package com.bsty.icode.service.impl;
 
 import com.bsty.icode.bean.Role;
+import com.bsty.icode.dao.PermissionDao;
 import com.bsty.icode.dao.RoleDao;
 import com.bsty.icode.dao.RouterDao;
 import com.bsty.icode.dto.RoleDTO;
@@ -20,6 +21,8 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RouterDao routerDao;
     @Autowired
+    private PermissionDao permissionDao;
+    @Autowired
     private RoleMapper roleMapper;
 
     public RoleServiceImpl() {
@@ -31,16 +34,22 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void addRole(RoleDTO dto, List<Long> routerIds) {
+    public void addRole(RoleDTO dto, List<Long> routerIds, List<Long> permissionIds) {
         Role role = roleMapper.from(dto);
         roleDao.addRole(role);
         long roleId = role.getId();
-        routerDao.addRouters(roleId, routerIds);
+        if (routerIds != null && !routerIds.isEmpty()) {
+            routerDao.addRouters(roleId, routerIds);
+        }
+        if (permissionIds != null && !permissionIds.isEmpty()) {
+            permissionDao.addPermissions(roleId, permissionIds);
+        }
     }
 
     @Override
     public void delRole(long roleId) {
         routerDao.deleteByRoleId(roleId);
+        permissionDao.deleteByRoleId(roleId);
         roleDao.delById(roleId);
     }
 
