@@ -4,6 +4,7 @@ import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.bean.Student;
 import com.bsty.icode.dto.StudentDTO;
+import com.bsty.icode.dto.StudentSchoolDTO;
 import com.bsty.icode.reqparams.StudentParamDTO;
 import com.bsty.icode.service.StudentService;
 import com.bsty.icode.smapper.StudentMapper;
@@ -30,7 +31,7 @@ public class StudentController {
         if (dto == null) {
             responseData.setErrMsg("传入参数有误");
         }
-        Student student =studentMapper.from(dto);
+        Student student = studentMapper.from(dto);
         try {
             if (studentService.isExist(dto.getId())) {
                 responseData.setError("手机号已经存在");
@@ -58,6 +59,18 @@ public class StudentController {
             }
             result.setPage(page);
             responseData.setSuccess(result, page.getTotal());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseData.setError();
+        }
+        return responseData;
+    }
+
+    @GetMapping(value = "/studentSchoolInfos")
+    public ResponseData<StudentSchoolDTO> getStudentSchoolInfos() {
+        ResponseData responseData = ResponseData.newInstance();
+        try {
+            responseData.setSuccess(studentService.findAllStudentSchoolInfo());
         } catch (Exception e) {
             log.error(e.getMessage());
             responseData.setError();

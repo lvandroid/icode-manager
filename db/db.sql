@@ -98,19 +98,50 @@ CREATE TABLE IF NOT EXISTS `teacher`
 
 CREATE TABLE IF NOT EXISTS `student`
 (
-    `id`          VARCHAR(11) UNIQUE PRIMARY KEY,
-    `phone`       VARCHAR(11)  NOT NULL UNIQUE,
-    `name`        VARCHAR(255) NOT NULL, # 学员姓名
-    `sex`         INT          NOT NULL, # 学员性别
-    `grade`       VARCHAR(16)  NOT NULL, # 学员年级
-    `genearch_id` VARCHAR(11)  NOT NULL, # 学员家长姓名
-    `mark`        VARCHAR(255),          # 备注
-    `refer_id`    VARCHAR(11),
-    `enable`      BOOL DEFAULT FALSE COMMENT '是否激活',
-    FOREIGN KEY (genearch_id) REFERENCES genearch (id)
-
+    `id`             BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `name`           VARCHAR(255) NOT NULL COMMENT '学员姓名',
+    `phone`          VARCHAR(11)  NOT NULL COMMENT '联系电话',
+    `genearch`       VARCHAR(16)  NOT NULL COMMENT '联系电话人关系',
+    `phone_sec`      VARCHAR(11) COMMENT '次要联系人',
+    `genearch_sec`   VARCHAR(16) COMMENT '次要联系人关系',
+    `phone_other`    VARCHAR(11) COMMENT '其他联系人',
+    `genearch_other` VARCHAR(16) COMMENT '其他联系人关系',
+    `sex`            VARCHAR(16)  NOT NULL COMMENT '学员性别',
+    `id_card`        VARCHAR(18) COMMENT '身份证号码',
+    `wechat`         VARCHAR(64) COMMENT '微信号',
+    `birthday`       BIGINT COMMENT '生日',
+    `school`         VARCHAR(64) COMMENT '学校',
+    `grade`          VARCHAR(16) COMMENT '学员年级',
+    `class_num`      VARCHAR(16) COMMENT '班级',
+    `home_address`   VARCHAR(64) COMMENT '居住地址',
+    `refer_phone`    VARCHAR(11) COMMENT '推荐人电话',
+    `mark`           VARCHAR(255) COMMENT '备注',
+    `create_time`    BIGINT NOT NULL COMMENT '录入时间',
+    `update_time`    BIGINT COMMENT '更新时间',
+    `enable`         BOOL DEFAULT FALSE COMMENT '是否激活'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+create table if not exists `school`
+(
+    `id`   BIGINT AUTO_INCREMENT primary key,
+    `name` VARCHAR(32) NOT NULL COMMENT '学校名称'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+create table if not exists `class_name`
+(
+    `id`   BIGINT AUTO_INCREMENT primary key,
+    `name` VARCHAR(32) NOT NULL COMMENT '班级名称'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+create table if not exists `home_address`
+(
+    `id`   BIGINT auto_increment primary key,
+    `name` VARCHAR(128) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT '居住地址';
 
 # 课程
 CREATE TABLE IF NOT EXISTS `course`
@@ -452,47 +483,47 @@ CREATE TABLE IF NOT EXISTS `router`
   DEFAULT CHARSET = utf8
     COMMENT '路由表';
 
-select *
-from router;
-
-INSERT INTO router(pid, path, component, hidden)
-VALUES (0, '/redirect', 'layout/Layout', true);
-
-INSERT INTO router(pid, path, component)
-VALUES (1, '/redirect/:path*', 'views/redirect/index');
-
-INSERT INTO router(pid, path, component, hidden)
-values (0, '/login', 'views/login/index', true);
-
-INSERT INTO router(pid, path, component, hidden)
-values (0, '/auth-redirect', 'views/login/auth-redirect', true);
-
-INSERT INTO router(pid, path, component, hidden)
-values (0, '/404', 'views/error-page/404', true);
-
-INSERT INTO router(pid, path, component, hidden)
-values (0, '/401', 'views/error-page/401', true);
-
-INSERT INTO router(pid, component, redirect)
-values (0, 'layout/Layout', 'dashboard');
-
-INSERT INTO router(pid, path, component, name, meta)
-values (7, 'dashboard', 'views/dashboard/index', 'Dashboard',
-        '{ title: ''Dashboard'', icon: ''dashboard'', affix: true }');
-
-INSERT INTO router(pid, path, component)
-values (0, '/documentation', 'layout/Layout');
-
-INSERT INTO router(pid, path, component, name, meta)
-values (9, 'index', 'views/documentation/index', 'Documentation',
-        '{ title: ''Documentation'', icon: ''documentation'', affix: true }');
-
-INSERT INTO router(pid, path, component, redirect)
-values (0, '/guide', 'layout/Layout', '/guide/index');
-
-INSERT INTO router(pid, path, component, name, meta)
-values (11, 'index', 'views/guide/index', 'Guide', '{ title: ''Guide'', icon: ''guide'', noCache: true }');
-
+# select *
+# from router;
+#
+# INSERT INTO router(pid, path, component, hidden)
+# VALUES (0, '/redirect', 'layout/Layout', true);
+#
+# INSERT INTO router(pid, path, component)
+# VALUES (1, '/redirect/:path*', 'views/redirect/index');
+#
+# INSERT INTO router(pid, path, component, hidden)
+# values (0, '/login', 'views/login/index', true);
+#
+# INSERT INTO router(pid, path, component, hidden)
+# values (0, '/auth-redirect', 'views/login/auth-redirect', true);
+#
+# INSERT INTO router(pid, path, component, hidden)
+# values (0, '/404', 'views/error-page/404', true);
+#
+# INSERT INTO router(pid, path, component, hidden)
+# values (0, '/401', 'views/error-page/401', true);
+#
+# INSERT INTO router(pid, component, redirect)
+# values (0, 'layout/Layout', 'dashboard');
+#
+# INSERT INTO router(pid, path, component, name, meta)
+# values (7, 'dashboard', 'views/dashboard/index', 'Dashboard',
+#         '{ title: ''Dashboard'', icon: ''dashboard'', affix: true }');
+#
+# INSERT INTO router(pid, path, component)
+# values (0, '/documentation', 'layout/Layout');
+#
+# INSERT INTO router(pid, path, component, name, meta)
+# values (9, 'index', 'views/documentation/index', 'Documentation',
+#         '{ title: ''Documentation'', icon: ''documentation'', affix: true }');
+#
+# INSERT INTO router(pid, path, component, redirect)
+# values (0, '/guide', 'layout/Layout', '/guide/index');
+#
+# INSERT INTO router(pid, path, component, name, meta)
+# values (11, 'index', 'views/guide/index', 'Guide', '{ title: ''Guide'', icon: ''guide'', noCache: true }');
+#
 
 INSERT INTO router(pid, name, path, component, redirect, meta, type)
 VALUES (0, 'Student', '/student', 'layout/Layout', '/student/list', '{ title: ''学员'', icon: ''example'' }', 2);
@@ -563,9 +594,9 @@ begin
     return otemp;
 end;
 
-select *
-from router
-where find_in_set(id, getChildrenRouter(23));
+# select *
+# from router
+# where find_in_set(id, getChildrenRouter(23));
 
 # 角色路由表
 create table if not exists `role_router`
@@ -578,14 +609,14 @@ create table if not exists `role_router`
 ) engine = InnoDB
   default charset = utf8;
 
-select 1
-from router
-where id = 30
-limit 1;
+# select 1
+# from router
+# where id = 30
+# limit 1;
 
-delete
-from role_router
-where id > 0;
+# delete
+# from role_router
+# where id > 0;
 
 # 批量插入admin 角色路由 存储过程
 
@@ -603,9 +634,9 @@ begin
     end while;
 end;
 
-select id
-from role
-where name = 'admin';
+# select id
+# from role
+# where name = 'admin';
 
 # call add_all_router(2);
 # select count(1) from role_router;
@@ -620,45 +651,45 @@ where name = 'admin';
 
 # select component, meta
 # from router;
-select r.id          AS id,
-       r.name        AS name,
-       r.description AS description,
-       rr.router_id  AS rr_id
-from role r
-         left join role_router rr on rr.role_id = r.id;
+# select r.id          AS id,
+#        r.name        AS name,
+#        r.description AS description,
+#        rr.router_id  AS rr_id
+# from role r
+#          left join role_router rr on rr.role_id = r.id;
+#
+#
+# select r.id          AS id,
+#        r.name        AS name,
+#        r.description AS description,
+#        rr.id         as rr_id,
+#        rr.router_id  AS router_id
+# from role r
+#          left join role_router rr on rr.role_id = r.id;
 
 
-select r.id          AS id,
-       r.name        AS name,
-       r.description AS description,
-       rr.id         as rr_id,
-       rr.router_id  AS router_id
-from role r
-         left join role_router rr on rr.role_id = r.id;
+# select u.*, group_concat(r.name SEPARATOR ' ') as role_ids
+# from user as u
+#          left join user_role as ur on u.id = ur.user_id
+#          left join role as r on ur.role_id = r.id
+# where u.username like concat('%', 'ad', '%')
+# group by u.id;
+#
+# select u.id       as id,
+#        u.username as username,
+#        u.password as password,
+#        ur.role_id as role_id
+# from user u
+#          left join user_role ur on u.id = ur.user_id;
 
-
-select u.*, group_concat(r.name SEPARATOR ' ') as role_ids
-from user as u
-         left join user_role as ur on u.id = ur.user_id
-         left join role as r on ur.role_id = r.id
-where u.username like concat('%', 'ad', '%')
-group by u.id;
-
-select u.id       as id,
-       u.username as username,
-       u.password as password,
-       ur.role_id as role_id
-from user u
-         left join user_role ur on u.id = ur.user_id;
-
-select u.id       as user_id,
-       u.username as username,
-       u.password as password,
-       ur.role_id as role_id
+# select u.id       as user_id,
+#        u.username as username,
+#        u.password as password,
+#        ur.role_id as role_id
 #        group_concat(r.name SEPARATOR ' ') as role_names
-from user as u
-         left join user_role as ur on u.id = ur.user_id
-         left join role as r on ur.role_id = r.id;
+# from user as u
+#          left join user_role as ur on u.id = ur.user_id
+#          left join role as r on ur.role_id = r.id;
 # where ur.root_role = true;
 # group by u.id;
 

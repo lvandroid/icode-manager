@@ -24,6 +24,10 @@ public class ResponseData<T> {
         errMsg = MSG_SUCCESS;
     }
 
+    public void setSuccess(T data) {
+        this.data = data;
+    }
+
     public void setSuccess(T data, long total) {
         this.data = data;
         this.total = total;
