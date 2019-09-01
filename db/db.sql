@@ -761,16 +761,28 @@ insert into permission(name, description, pid)
 VALUES ('classDel', '删除班级', 16);
 
 
-insert into school(name)
-values ('邗江实验学校');
-insert into school(name)
-values ('外国语学校');
-insert into school(name)
-values ('施桥一小');
-insert into school(name)
-values ('求实实验小学');
-insert into school(name)
-values ('花园一小');
+# insert into school(name)
+# values ('邗江实验学校');
+# insert into school(name)
+# values ('外国语学校');
+# insert into school(name)
+# values ('施桥一小');
+# insert into school(name)
+# values ('求实实验小学');
+# insert into school(name)
+# values ('花园一小');
+#
+# show variables like "%time_zone%";
+# SET global time_zone = "+8:00";
 
-show variables like "%time_zone%";
-SET global time_zone = "+8:00";
+insert into class_name(name)
+    value ('1班');
+insert into class_name(name)
+    value ('2班');
+insert into class_name(name)
+    value ('3班');
+insert into class_name(name)
+    value ('4班');
+
+# 跟进信息表
+
