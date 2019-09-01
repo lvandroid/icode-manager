@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,10 +34,10 @@ public class StudentController {
         }
         Student student = studentMapper.from(dto);
         try {
-            if (studentService.isExist(dto.getId())) {
-                responseData.setError("手机号已经存在");
-                return responseData;
-            }
+//            if (studentService.isExist(dto.getId())) {
+//                responseData.setError("手机号已经存在");
+//                return responseData;
+//            }
             studentService.addStudent(student);
             responseData.setSuccess();
         } catch (Exception e) {

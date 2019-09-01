@@ -3,6 +3,8 @@ package com.bsty.icode.bean;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class Student {
 
@@ -24,8 +26,9 @@ public class Student {
     private String homeAddress;
     private String referPhone;
     private String mark;
-    private long createTime;
-    private long updateTime;
+    private long entryTime;
+    private Date createTime;
+    private Date updateTime;
     private long enable;
 
 }

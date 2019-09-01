@@ -1,6 +1,5 @@
 package com.bsty.icode.service.impl;
 
-import com.bsty.icode.bean.HomeAddress;
 import com.bsty.icode.bean.Student;
 import com.bsty.icode.dao.ClassNameDao;
 import com.bsty.icode.dao.HomeAddressDao;
@@ -29,30 +28,35 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addStudent(Student student) throws Exception {
         if (student != null) {
-            student.setId(student.getId());
+//            student.setId(student.getId());
+//            studentDao.insert(student);
             studentDao.insert(student);
         }
     }
 
     @Override
-    public boolean isExist(String id) throws Exception {
-        if (studentDao.selectCount(id) > 0) {
-            return true;
-        }
+    public boolean isExist(long id) throws Exception {
+//        if (studentDao.selectCount(id) > 0) {
+//            return true;
+//        }
         return false;
     }
 
     @Override
     public List<StudentDTO> findByParams(StudentParamDTO param) throws Exception {
-        return studentDao.selectByParams(param);
+        List<StudentDTO> dtos = studentDao.selectByParams(param);
+        for (StudentDTO dto : dtos) {
+            dto.setEntryTime(dto.getCreateTime().getTime()/1000);
+        }
+        return dtos;
     }
 
     @Override
     public StudentSchoolDTO findAllStudentSchoolInfo() throws Exception {
         StudentSchoolDTO dto = new StudentSchoolDTO();
-        dto.setSchools(schoolDao.selectAllName());
-        dto.setClassNames(classNameDao.selectAllName());
-        dto.setHomeAddresses(homeAddressDao.selectAllName());
+        dto.setSchools(schoolDao.selectAll());
+        dto.setClassNames(classNameDao.selectAll());
+        dto.setHomeAddresses(homeAddressDao.selectAll());
         return dto;
     }
 }

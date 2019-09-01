@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.StudentDao">
-    <insert id="insert" parameterType="com.bsty.icode.bean.Student">
-        INSERT INTO student(id, name, sex,update_date, grade, mark, phone, refer_id)
-        VALUES (#{id}, #{name}, #{sex}, #{updateDate},#{grade}, #{mark}, #{phone}, #{referId})
-    </insert>
-    <select id="selectCount" parameterType="java.lang.String" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM student
-        WHERE id = #{id}
-    </select>
+<!--    <insert id="insert" parameterType="com.bsty.icode.bean.Student">-->
+<!--        INSERT INTO student(id, name, sex,update_date, grade, mark, phone, refer_id)-->
+<!--        VALUES (#{id}, #{name}, #{sex}, #{updateDate},#{grade}, #{mark}, #{phone}, #{referId})-->
+<!--    </insert>-->
+<!--    <select id="selectCount" resultType="java.lang.Integer">-->
+<!--        SELECT COUNT(1)-->
+<!--        FROM student-->
+<!--        WHERE id = #{id}-->
+<!--    </select>-->
     <select id="selectByParams" resultType="com.bsty.icode.dto.StudentDTO"
             parameterType="com.bsty.icode.reqparams.StudentParamDTO">
-        SELECT s.*, g.name AS genearch_name, g.phone as genearch_phone
+        SELECT s.*
         FROM student AS s
-        LEFT JOIN genearch AS g on s.refer_id = g.id
         <where>
             1=1
             <if test="id!=null and id!=''">
@@ -32,23 +31,11 @@
             <if test="grade!=null and grade!=''">
                 AND s.grade = #{grade}
             </if>
-            <if test="genearchId!=null and genearchId!=''">
-                AND s.genearch_id = #{genearchId}
-            </if>
-            <if test="genearchName!=null and genearchName!=''">
-                AND genearch_name = #{genearchName}
-            </if>
-            <if test="genearchPhone!=null and genearchPhone!=''">
-                AND genearch_phone = #{genearchPhone}
-            </if>
-            <if test="genearchRelation!=null and genearchRelation!=''">
-                AND genearch_relation = #{genearchRelation}
-            </if>
             <if test="enable!=null and enable!=''">
                 AND s.enable = #{enable}
             </if>
-            <if test="referId!=null and referId!=''">
-                AND s.refer_id = #{referId}
+            <if test="referPhone!=null and referPhone!=''">
+                AND s.refer_phone= #{referPhone}
             </if>
         </where>
         <if test="sortMap!=null">
@@ -57,5 +44,8 @@
                 ${key} ${value}
             </foreach>
         </if>
+    </select>
+    <select id="selectAll" resultType="com.bsty.icode.bean.Student">
+        select * from student
     </select>
 </mapper>

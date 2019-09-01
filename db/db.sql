@@ -116,9 +116,10 @@ CREATE TABLE IF NOT EXISTS `student`
     `home_address`   VARCHAR(64) COMMENT '居住地址',
     `refer_phone`    VARCHAR(11) COMMENT '推荐人电话',
     `mark`           VARCHAR(255) COMMENT '备注',
-    `create_time`    BIGINT NOT NULL COMMENT '录入时间',
-    `update_time`    BIGINT COMMENT '更新时间',
-    `enable`         BOOL DEFAULT FALSE COMMENT '是否激活'
+    `entry_time`     BIGINT COMMENT '录入时间',
+    `create_time`    timestamp    null                             DEFAULT CURRENT_TIMESTAMP COMMENT '录入时间',
+    `update_time`    timestamp    null on update CURRENT_TIMESTAMP default CURRENT_TIMESTAMP COMMENT '更新时间',
+    `enable`         BOOL                                          DEFAULT FALSE COMMENT '是否激活'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -758,3 +759,18 @@ insert into permission(name, description, pid)
 VALUES ('classImport', '导出班级', 16);
 insert into permission(name, description, pid)
 VALUES ('classDel', '删除班级', 16);
+
+
+insert into school(name)
+values ('邗江实验学校');
+insert into school(name)
+values ('外国语学校');
+insert into school(name)
+values ('施桥一小');
+insert into school(name)
+values ('求实实验小学');
+insert into school(name)
+values ('花园一小');
+
+show variables like "%time_zone%";
+SET global time_zone = "+8:00";

@@ -10,7 +10,7 @@ import java.util.List;
 public interface StudentService {
     void addStudent(Student student) throws Exception;
 
-    boolean isExist(String id) throws Exception;//是否已经存在
+    boolean isExist(long id) throws Exception;//是否已经存在
 
     List<StudentDTO> findByParams(StudentParamDTO param) throws Exception;
 
