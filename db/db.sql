@@ -65,21 +65,71 @@ CREATE TABLE IF NOT EXISTS `permission`
 # 学员家长表
 CREATE TABLE IF NOT EXISTS `genearch`
 (
-    `id`         VARCHAR(11),
-    `name`       VARCHAR(255) NOT NULL, # 家长姓名
-    `sex`        INT          NOT NULL, # 家长性别
-    `profession` VARCHAR(255),          # 家长职业
-    `phone`      VARCHAR(11)  NOT NULL, # 家长电话号码
-    `wechat`     VARCHAR(255),          # 家长微信号
-    `qq`         VARCHAR(255),          # 家长qq号码
-    `email`      VARCHAR(255),          # 家长邮箱
-    `mark`       VARCHAR(255),          # 备注
+    `id`   BIGINT AUTO_INCREMENT,
+    `name` VARCHAR(32) NOT NULL, # 家长姓名
+#     `sex`        INT          NOT NULL, # 家长性别
+#     `profession` VARCHAR(255),          # 家长职业
+#     `phone`      VARCHAR(11)  NOT NULL, # 家长电话号码
+#     `wechat`     VARCHAR(255),          # 家长微信号
+#     `qq`         VARCHAR(255),          # 家长qq号码
+#     `email`      VARCHAR(255),          # 家长邮箱
+#     `mark`       VARCHAR(255),          # 备注
     PRIMARY KEY
         (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+create table if not exists `grade`
+(
+    `id`   BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(32) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT '年级';
 
+create table if not exists `consult_type`
+(
+    `id`   BIGINT auto_increment PRIMARY KEY,
+    `name` VARCHAR(32) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT '咨询方式';
+create table if not exists `intention`
+(
+    `id`   BIGINT auto_increment primary key,
+    `name` VARCHAR(32)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8 COMMENT '意向度';
 
+create table if not exists `follow_status`
+(
+    `id`   BIGINT AUTO_INCREMENT primary key,
+    `name` VARCHAR(32)
+)
+    ENGINE = InnoDB
+    default CHARSET = utf8 COMMENT '跟进状态';
+
+create table if not exists `keyword`
+(
+    `id`   BIGINT AUTO_INCREMENT primary key,
+    `name` VARCHAR(32)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8 COMMENT '关键词';
+
+create table if not exists `campus`
+(
+    `id`   BIGINT auto_increment primary key,
+    `name` VARCHAR(32)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8 COMMENT '校区';
+
+create table if not exists `channel`
+(
+    `id` bigint auto_increment primary key ,
+    `name` varchar(32)
+)
+ENGINE = InnoDB
+DEFAULT charset = utf8 COMMENT '渠道';
 # 老师
 CREATE TABLE IF NOT EXISTS `teacher`
 (

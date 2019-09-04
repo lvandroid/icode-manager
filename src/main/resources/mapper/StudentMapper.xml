@@ -1,15 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.StudentDao">
-<!--    <insert id="insert" parameterType="com.bsty.icode.bean.Student">-->
-<!--        INSERT INTO student(id, name, sex,update_date, grade, mark, phone, refer_id)-->
-<!--        VALUES (#{id}, #{name}, #{sex}, #{updateDate},#{grade}, #{mark}, #{phone}, #{referId})-->
-<!--    </insert>-->
-<!--    <select id="selectCount" resultType="java.lang.Integer">-->
-<!--        SELECT COUNT(1)-->
-<!--        FROM student-->
-<!--        WHERE id = #{id}-->
-<!--    </select>-->
+    <insert id="addGenearch">
+        insert into genearch(name)
+        values (#{name})
+    </insert>
+    <insert id="addCampus">
+        insert into campus(name)
+        values (#{name})
+    </insert>
+    <insert id="addChannel">
+        insert into channel(name)
+        values (#{name})
+    </insert>
+    <insert id="addConsultType">
+        insert into consult_type(name)
+        values (#{name})
+    </insert>
+    <insert id="addFollowStatus">
+        insert into follow_status(name)
+        values (#{name})
+    </insert>
+    <insert id="addGrade">
+        insert into grade(name)
+            value (#{name})
+    </insert>
+    <insert id="addIntention">
+        insert into intention(name)
+        values (#{name})
+    </insert>
+    <insert id="addkeyword">
+        insert into keyword(name)
+        values (#{name})
+    </insert>
+    <!--    <insert id="insert" parameterType="com.bsty.icode.bean.Student">-->
+    <!--        INSERT INTO student(id, name, sex,update_date, grade, mark, phone, refer_id)-->
+    <!--        VALUES (#{id}, #{name}, #{sex}, #{updateDate},#{grade}, #{mark}, #{phone}, #{referId})-->
+    <!--    </insert>-->
+    <!--    <select id="selectCount" resultType="java.lang.Integer">-->
+    <!--        SELECT COUNT(1)-->
+    <!--        FROM student-->
+    <!--        WHERE id = #{id}-->
+    <!--    </select>-->
     <select id="selectByParams" resultType="com.bsty.icode.dto.StudentDTO"
             parameterType="com.bsty.icode.reqparams.StudentParamDTO">
         SELECT s.*
@@ -46,6 +78,39 @@
         </if>
     </select>
     <select id="selectAll" resultType="com.bsty.icode.bean.Student">
-        select * from student
+        select *
+        from student
+    </select>
+    <select id="allGenearch" resultType="com.bsty.icode.bean.Genearch">
+        select *
+        from genearch;
+    </select>
+    <select id="allCampus" resultType="com.bsty.icode.bean.Campus">
+        select *
+        from campus;
+    </select>
+    <select id="allChannel" resultType="com.bsty.icode.bean.Channel">
+        select *
+        from channel;
+    </select>
+    <select id="allConsultType" resultType="com.bsty.icode.bean.ConsultType">
+        select *
+        from consult_type;
+    </select>
+    <select id="allFollowStatus" resultType="com.bsty.icode.bean.FollowStatus">
+        select *
+        from follow_status;
+    </select>
+    <select id="allGrade" resultType="com.bsty.icode.bean.Grade">
+        select *
+        from grade;
+    </select>
+    <select id="allIntention" resultType="com.bsty.icode.bean.Intention">
+        select *
+        from intention;
+    </select>
+    <select id="allKeyword" resultType="com.bsty.icode.bean.Keyword">
+        select *
+        from keyword;
     </select>
 </mapper>
