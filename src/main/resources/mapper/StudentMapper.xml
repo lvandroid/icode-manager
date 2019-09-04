@@ -33,6 +33,10 @@
         insert into keyword(name)
         values (#{name})
     </insert>
+    <insert id="addCourseType">
+        insert into course_type(name)
+        values (#{name})
+    </insert>
     <!--    <insert id="insert" parameterType="com.bsty.icode.bean.Student">-->
     <!--        INSERT INTO student(id, name, sex,update_date, grade, mark, phone, refer_id)-->
     <!--        VALUES (#{id}, #{name}, #{sex}, #{updateDate},#{grade}, #{mark}, #{phone}, #{referId})-->
@@ -112,5 +116,9 @@
     <select id="allKeyword" resultType="com.bsty.icode.bean.Keyword">
         select *
         from keyword;
+    </select>
+    <select id="allCourseType" resultType="com.bsty.icode.bean.CourseType">
+        select *
+        from course_type;
     </select>
 </mapper>

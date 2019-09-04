@@ -8,6 +8,6 @@ import lombok.Data;
  */
 @Data
 public class Genearch {
-    private String id; //11位手机号码
+    private long id;
     private String name;
 }

@@ -7,7 +7,6 @@ import lombok.Data;
 public class CourseType {
     private long id;
     private String name;
-    private int type;
 
     public CourseType() {
     }
@@ -16,7 +15,6 @@ public class CourseType {
         if (dto != null) {
             this.id = dto.getId();
             this.name = dto.getName();
-            this.type = dto.getType();
         }
     }
 }

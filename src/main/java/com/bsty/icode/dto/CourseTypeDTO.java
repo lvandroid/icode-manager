@@ -17,7 +17,7 @@ public class CourseTypeDTO {
         if (courseType != null) {
             this.id = courseType.getId();
             this.name = courseType.getName();
-            this.type = courseType.getType();
+//            this.type = courseType.getType();
         }
     }
 }

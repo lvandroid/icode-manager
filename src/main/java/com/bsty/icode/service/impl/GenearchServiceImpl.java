@@ -18,7 +18,7 @@ public class GenearchServiceImpl implements GenearchService {
     @Override
     public void addGenearch(Genearch genearch) throws Exception {
         if (genearch != null) {
-            genearch.setId(genearch.getPhone());
+//            genearch.setId(genearch.getPhone());
             genearchDao.insert(genearch);
         }
     }

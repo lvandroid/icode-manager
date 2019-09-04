@@ -34,4 +34,6 @@ public interface StudentDao extends TkMapper<Student> {
     List<Intention> allIntention();
     void addkeyword(String name);
     List<Keyword> allKeyword();
+    void addCourseType(String name);
+    List<CourseType> allCourseType();
 }

@@ -30,13 +30,13 @@ public class GenearchController {
         if (dto == null) {
             responseData.setErrMsg("传入参数有误");
         }
-        Genearch genearch = new Genearch(dto);
+        Genearch genearch = new Genearch();
 
         try {
-            if (genearchService.isExist(genearch.getId())) {
-                responseData.setError("手机号已经存在");
-                return responseData;
-            }
+//            if (genearchService.isExist(genearch.getId())) {
+//                responseData.setError("手机号已经存在");
+//                return responseData;
+//            }
             genearchService.addGenearch(genearch);
             responseData.setSuccess();
         } catch (Exception e) {

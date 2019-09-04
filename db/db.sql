@@ -125,11 +125,12 @@ create table if not exists `campus`
 
 create table if not exists `channel`
 (
-    `id` bigint auto_increment primary key ,
+    `id`   bigint auto_increment primary key,
     `name` varchar(32)
 )
-ENGINE = InnoDB
-DEFAULT charset = utf8 COMMENT '渠道';
+    ENGINE = InnoDB
+    DEFAULT charset = utf8 COMMENT '渠道';
+
 # 老师
 CREATE TABLE IF NOT EXISTS `teacher`
 (
@@ -834,5 +835,102 @@ insert into class_name(name)
 insert into class_name(name)
     value ('4班');
 
+insert into genearch(name)
+values ('母亲');
+insert into genearch(name)
+values ('父亲');
+insert into genearch(name)
+values ('自己');
+insert into genearch(name)
+values ('其他');
+
+insert into grade(name)
+values ('小班');
+insert into grade(name)
+values ('中班');
+insert into grade(name)
+values ('大班');
+insert into grade(name)
+values ('一年级');
+insert into grade(name)
+values ('二年级');
+insert into grade(name)
+values ('三年级');
+insert into grade(name)
+values ('四年级');
+insert into grade(name)
+values ('五年级');
+insert into grade(name)
+values ('六年级');
+insert into grade(name)
+values ('七年级');
+insert into grade(name)
+values ('八年级');
+insert into grade(name)
+values ('九年级');
+insert into grade(name)
+values ('高一');
+insert into grade(name)
+values ('高二');
+insert into grade(name)
+values ('高三');
+
+
+insert into consult_type(name)
+values ('来电');
+insert into consult_type(name)
+values ('来访');
+insert into consult_type(name)
+values ('网络');
+insert into consult_type(name)
+values ('其他');
+
+
+insert into intention(name)
+values ('高');
+insert into intention(name)
+values ('中');
+insert into intention(name)
+values ('低');
+insert into intention(name)
+values ('?');
+
+insert into follow_status(name)
+values ('待跟进');
+insert into follow_status(name)
+values ('跟进中');
+insert into follow_status(name)
+values ('已邀约');
+insert into follow_status(name)
+values ('已试听');
+insert into follow_status(name)
+values ('已到访');
+insert into follow_status(name)
+values ('已试听');
+
+insert into keyword(name)
+values ('第一名');
+insert into keyword(name)
+values ('数学较好');
+
+insert into campus(name)
+values ('扬州星耀天地校区');
+insert into campus(name)
+values ('杭州九堡校区');
+insert into campus(name)
+values ('杭州市民中心校区');
+
+insert into channel(name)
+values ('地推');
+insert into channel(name)
+values ('新口碑');
+insert into channel(name)
+values ('口碑');
+insert into channel(name)
+values ('直访');
+insert into channel(name)
+values ('社团课');
+insert into channel(name)
+values ('朋友推荐');
 # 跟进信息表
 

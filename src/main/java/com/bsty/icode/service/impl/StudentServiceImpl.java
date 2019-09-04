@@ -46,7 +46,7 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDTO> findByParams(StudentParamDTO param) throws Exception {
         List<StudentDTO> dtos = studentDao.selectByParams(param);
         for (StudentDTO dto : dtos) {
-            dto.setEntryTime(dto.getCreateTime().getTime()/1000);
+            dto.setEntryTime(dto.getCreateTime().getTime() / 1000);
         }
         return dtos;
     }
@@ -56,7 +56,16 @@ public class StudentServiceImpl implements StudentService {
         StudentSchoolDTO dto = new StudentSchoolDTO();
         dto.setSchools(schoolDao.selectAll());
         dto.setClassNames(classNameDao.selectAll());
+        dto.setGrades(studentDao.allGrade());
+        dto.setGenearches(studentDao.allGenearch());
         dto.setHomeAddresses(homeAddressDao.selectAll());
+        dto.setCampuses(studentDao.allCampus());
+        dto.setChannels(studentDao.allChannel());
+        dto.setConMethods(studentDao.allConsultType());
+        dto.setCourses(studentDao.allCourseType());
+        dto.setIntentions(studentDao.allIntention());
+        dto.setKeywords(studentDao.allKeyword());
+        dto.setFollowStatuses(studentDao.allFollowStatus());
         return dto;
     }
 }
