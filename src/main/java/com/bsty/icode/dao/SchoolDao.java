@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface SchoolDao extends TkMapper<School> {
     List<String> selectAllName();
+    void addSchool(String name);
+    int countSchool(String name);
 }

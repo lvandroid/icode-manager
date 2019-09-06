@@ -20,20 +20,29 @@ public interface StudentDao extends TkMapper<Student> {
 
     void addGenearch(String name);
     List<Genearch> allGenearch();
+    int countGenearch(String name);
     void addCampus(String name);
     List<Campus> allCampus();
+    int countCampus(String name);
     void addChannel(String name);
     List<Channel> allChannel();
+    int countChannel(String name);
     void addConsultType(String name);
     List<ConsultType> allConsultType();
+    int countConsultType(String name);
     void addFollowStatus(String name);
     List<FollowStatus> allFollowStatus();
+    int countFollowStatus(String name);
     void addGrade(String name);
     List<Grade> allGrade();
+    int countGrade(String name);
     void addIntention(String name);
     List<Intention> allIntention();
+    int countIntention(String name);
     void addkeyword(String name);
     List<Keyword> allKeyword();
+    int countKeyword(String name);
     void addCourseType(String name);
     List<CourseType> allCourseType();
+    int countCourseType(String name);
 }

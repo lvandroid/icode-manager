@@ -121,4 +121,49 @@
         select *
         from course_type;
     </select>
+    <select id="countGenearch" resultType="java.lang.Integer">
+        select count(1)
+        from genearch g
+        where g.name = #{name}
+    </select>
+    <select id="countCampus" resultType="java.lang.Integer">
+        select count(1)
+        from genearch g
+        where g.name = #{name}
+    </select>
+    <select id="countChannel" resultType="java.lang.Integer">
+        select count(1)
+        from channel c
+        where c.name = #{name}
+    </select>
+    <select id="countConsultType" resultType="java.lang.Integer">
+        select count(1)
+        from consult_type ct
+        where ct.name = #{name}
+    </select>
+    <select id="countFollowStatus" resultType="java.lang.Integer">
+        select count(1)
+        from follow_status fs
+        where fs.name = #{name}
+    </select>
+    <select id="countGrade" resultType="java.lang.Integer">
+        select count(1)
+        from grade g
+        where g.name = #{name}
+    </select>
+    <select id="countIntention" resultType="java.lang.Integer">
+        select count(1)
+        from intention i
+        where i.name = #{name}
+    </select>
+    <select id="countKeyword" resultType="java.lang.Integer">
+        select count(1)
+        from keyword k
+        where k.name = #{name}
+    </select>
+    <select id="countCourseType" resultType="java.lang.Integer">
+        select count(1)
+        from course_type ct
+        where ct.name = #{name}
+    </select>
 </mapper>

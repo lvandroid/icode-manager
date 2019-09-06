@@ -8,4 +8,8 @@ import java.util.List;
 public interface ClassNameDao extends TkMapper<ClassName> {
     List<String> selectAllName();
 
+    void addClassName(String name);
+
+    int countClassName(String name);
+
 }
