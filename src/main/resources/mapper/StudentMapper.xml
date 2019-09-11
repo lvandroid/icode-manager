@@ -37,15 +37,14 @@
         insert into course_type(name)
         values (#{name})
     </insert>
-    <!--    <insert id="insert" parameterType="com.bsty.icode.bean.Student">-->
-    <!--        INSERT INTO student(id, name, sex,update_date, grade, mark, phone, refer_id)-->
-    <!--        VALUES (#{id}, #{name}, #{sex}, #{updateDate},#{grade}, #{mark}, #{phone}, #{referId})-->
-    <!--    </insert>-->
-    <!--    <select id="selectCount" resultType="java.lang.Integer">-->
-    <!--        SELECT COUNT(1)-->
-    <!--        FROM student-->
-    <!--        WHERE id = #{id}-->
-    <!--    </select>-->
+    <insert id="add" parameterType="com.bsty.icode.bean.Student" keyProperty="id" useGeneratedKeys="true">
+        insert into icode.student(name, phone, genearch, phone_sec, genearch_sec, phone_other, genearch_other, sex,
+                                  id_card, wechat, birthday, school, grade, class_name, home_address, refer_phone, mark,
+                                  entry_time, create_time, update_time)
+        values (#{name}, #{phone}, #{genearch}, #{phoneSec}, #{genearchSec}, #{phoneOther}, #{genearchOther}, #{sex},
+                #{idCard}, #{wechat}, #{birthday}, #{school}, #{grade}, #{className}, #{homeAddress}, #{referPhone},
+                #{mark}, #{entryTime}, #{createTime}, #{updateTime})
+    </insert>
     <select id="selectByParams" resultType="com.bsty.icode.dto.StudentDTO"
             parameterType="com.bsty.icode.reqparams.StudentParamDTO">
         SELECT s.*

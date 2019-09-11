@@ -32,13 +32,12 @@ public class StudentController {
         if (dto == null) {
             responseData.setErrMsg("传入参数有误");
         }
-        Student student = studentMapper.from(dto);
         try {
 //            if (studentService.isExist(dto.getId())) {
 //                responseData.setError("手机号已经存在");
 //                return responseData;
 //            }
-            studentService.addStudent(student);
+            studentService.addStudent(dto);
             responseData.setSuccess();
         } catch (Exception e) {
             responseData.setError();

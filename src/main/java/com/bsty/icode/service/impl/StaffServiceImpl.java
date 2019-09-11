@@ -8,7 +8,6 @@ import com.bsty.icode.service.StaffService;
 import com.bsty.icode.smapper.StaffMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -31,6 +30,11 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public List<StaffDTO> orderById() {
         return staffMapper.from(staffDao.orderById());
+    }
+
+    @Override
+    public List<StaffDTO> getAll() {
+        return staffMapper.from(staffDao.getAll());
     }
 
     @Override

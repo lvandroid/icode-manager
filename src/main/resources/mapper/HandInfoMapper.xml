@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bsty.icode.dao.HandInfoDao">
+    <insert id="addCampus">
+        insert into campus (name)
+        values (#{name});
+    </insert>
+    <insert id="addChannel">
+        insert into channel (name)
+        values (#{name});
+    </insert>
+    <insert id="add" parameterType="com.bsty.icode.bean.HandInfo">
+        insert into hand_info (student_id, campus, create_time, channel, clerk_id, salesman_id, telemarketer_id)
+        values (#{studentId}, #{campus}, #{createTime}, #{channel}, #{clerkId}, #{salesmanId}, #{telemarketerId});
+    </insert>
+    <select id="countCampus" resultType="java.lang.Integer">
+        select count(1)
+        from hand_info
+        where campus = #{name}
+    </select>
+    <select id="countChannel" resultType="java.lang.Integer">
+        select count(1)
+        from channel
+        where name = #{name}
+    </select>
+</mapper>

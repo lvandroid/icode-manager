@@ -49,4 +49,16 @@ public class StaffController {
         return responseData;
     }
 
+    @GetMapping(value = "/getAll")
+    public ResponseData getAllStaffs() {
+        ResponseData responseData = ResponseData.newInstance();
+        try {
+            responseData.setSuccess(staffService.getAll());
+        } catch (Exception e) {
+            responseData.setError();
+            log.error(e.getMessage());
+        }
+        return responseData;
+    }
+
 }

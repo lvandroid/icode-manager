@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bsty.icode.dao.FollowInfoDao">
+    <insert id="addConsultMethod">
+        insert into consult_type (name)
+        values (#{name});
+    </insert>
+    <insert id="addIntention">
+        insert into intention(name)
+        values (#{name});
+    </insert>
+    <insert id="addStatus">
+        insert into follow_status(name)
+        values (#{name})
+    </insert>
+    <insert id="addKeyword">
+        insert into keyword(name)
+        values (#{name});
+    </insert>
+    <insert id="add" parameterType="com.bsty.icode.bean.FollowInfo">
+        insert into follow_info(student_id, consult_method, intention, courses, status, keyword, update_time)
+        VALUES (#{studentId}, #{consultMethod}, #{intention}, #{courses}, #{status}, #{keyword}, #{updateTime})
+    </insert>
+    <select id="countConsultMethod" resultType="java.lang.Integer">
+        select count(1)
+        from consult_type
+        where name = #{name};
+    </select>
+    <select id="countIntention" resultType="java.lang.Integer">
+        select COUNT(1)
+        from intention
+        where name = #{name};
+    </select>
+    <select id="countStatus" resultType="java.lang.Integer">
+        select COUNT(1)
+        from follow_status
+        where name = #{name};
+    </select>
+    <select id="countKeyword" resultType="java.lang.Integer">
+        select COUNT(1)
+        from keyword
+        where name = #{name};
+    </select>
+</mapper>

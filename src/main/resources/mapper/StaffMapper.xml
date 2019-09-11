@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.StaffDao">
-    <select id="orderById"  resultType="com.bsty.icode.bean.Staff">
-        SELECT * FROM
-        icode.staff
-        ORDER BY
-        id DESC
+    <select id="orderById" resultType="com.bsty.icode.bean.Staff">
+        SELECT *
+        FROM icode.staff
+        ORDER BY id DESC
+    </select>
+    <select id="getAll" resultType="com.bsty.icode.bean.Staff">
+        select *
+        from staff
+        order by id desc;
     </select>
 </mapper>

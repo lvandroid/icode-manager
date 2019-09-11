@@ -1,14 +1,15 @@
 package com.bsty.icode.service.impl;
 
+import com.bsty.icode.bean.CommunicateInfo;
+import com.bsty.icode.bean.FollowInfo;
+import com.bsty.icode.bean.HandInfo;
 import com.bsty.icode.bean.Student;
-import com.bsty.icode.dao.ClassNameDao;
-import com.bsty.icode.dao.HomeAddressDao;
-import com.bsty.icode.dao.SchoolDao;
-import com.bsty.icode.dao.StudentDao;
+import com.bsty.icode.dao.*;
 import com.bsty.icode.dto.StudentDTO;
 import com.bsty.icode.dto.StudentSchoolDTO;
 import com.bsty.icode.reqparams.StudentParamDTO;
 import com.bsty.icode.service.StudentService;
+import com.bsty.icode.smapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,40 +25,110 @@ public class StudentServiceImpl implements StudentService {
     private HomeAddressDao homeAddressDao;
     @Autowired
     private ClassNameDao classNameDao;
+    @Autowired
+    private CommunicateDao communicateDao;
+    @Autowired
+    private FollowInfoDao followInfoDao;
+    @Autowired
+    private HandInfoDao handInfoDao;
+    @Autowired
+    StudentMapper studentMapper;
 
     @Override
-    public void addStudent(Student student) throws Exception {
-        if (student != null) {
-//            student.setId(student.getId());
-//            studentDao.insert(student);
-            studentDao.insert(student);
+    public void addStudent(StudentDTO dto) throws Exception {
+        if (dto != null) {
+            Student student = studentMapper.from(dto);
+            studentDao.add(student);
             long id = student.getId();
-            String className = student.getClassNum();
-            String school = student.getSchool();
-            String genearch = student.getGenearch();
-            String genearchSec = student.getGenearchSec();
-            String genearchOther = student.getGenearchOther();
-            String grade = student.getGrade();
-            if (studentDao.countGenearch(genearch) < 1) {
-                studentDao.addGenearch(genearch);
+            addExtras(dto);
+            CommunicateInfo communicateInfo = dto.getCommunicate(id);
+            if (communicateInfo != null) {
+                communicateDao.add(communicateInfo);
             }
-            if (studentDao.countGenearch(genearchSec) < 1) {
-                studentDao.addGenearch(genearchSec);
+            FollowInfo followInfo = dto.getFollowInfo(id);
+            if (followInfo != null) {
+                followInfoDao.add(followInfo);
             }
-            if (studentDao.countGenearch(genearchOther) < 1) {
-                studentDao.addGenearch(genearchOther);
-            }
-            if (schoolDao.countSchool(school) < 1) {
-                schoolDao.addSchool(school);
-            }
-            if (studentDao.countGrade(grade) < 1) {
-                studentDao.addGrade(grade);
-            }
-            if (classNameDao.countClassName(className) < 1) {
-                classNameDao.addClassName(className);
+            HandInfo handInfo = dto.getHandInfo(id);
+            if (handInfo != null) {
+                handInfoDao.add(handInfo);
             }
         }
     }
+
+    private void addExtras(StudentDTO student) {
+        if (student == null) return;
+        String className = student.getClassName();
+        String school = student.getSchool();
+        String genearch = student.getGenearch();
+        String genearchSec = student.getGenearchSec();
+        String genearchOther = student.getGenearchOther();
+        String grade = student.getGrade();
+        String consultMethod = student.getConsultMethod();
+        String intent = student.getIntention();
+        String followStatus = student.getFollowStatus();
+        String keyword = student.getKeyword();
+        String campus = student.getCampus();
+        String channel = student.getChannel();
+        if (genearch != null && !genearch.isEmpty() && studentDao.countGenearch(genearch) < 1) {
+            studentDao.addGenearch(genearch);
+        }
+        if (genearchSec != null && !genearchSec.isEmpty() && studentDao.countGenearch(genearchSec) < 1) {
+            studentDao.addGenearch(genearchSec);
+        }
+        if (genearchOther != null && !genearchOther.isEmpty() && studentDao.countGenearch(genearchOther) < 1) {
+            studentDao.addGenearch(genearchOther);
+        }
+        if (school != null && !school.isEmpty() && schoolDao.countSchool(school) < 1) {
+            schoolDao.addSchool(school);
+        }
+        if (grade != null && !grade.isEmpty() && studentDao.countGrade(grade) < 1) {
+            studentDao.addGrade(grade);
+        }
+        if (className != null && !className.isEmpty() && classNameDao.countClassName(className) < 1) {
+            classNameDao.addClassName(className);
+        }
+        if (consultMethod != null && !consultMethod.isEmpty() && followInfoDao.countConsultMethod(consultMethod) < 1) {
+            followInfoDao.addConsultMethod(consultMethod);
+        }
+        if (intent != null && !intent.isEmpty() && followInfoDao.countIntention(intent) < 1) {
+            followInfoDao.addIntention(intent);
+        }
+        if (followStatus != null && !followStatus.isEmpty() && followInfoDao.countStatus(followStatus) < 1) {
+            followInfoDao.addStatus(followStatus);
+        }
+        if (keyword != null && !keyword.isEmpty() && followInfoDao.countKeyword(keyword) < 1) {
+            followInfoDao.addKeyword(keyword);
+        }
+        if (campus != null && !campus.isEmpty() && handInfoDao.countCampus(campus) < 1) {
+            handInfoDao.addCampus(campus);
+        }
+        if (channel != null && !channel.isEmpty() && handInfoDao.countChannel(channel) < 1) {
+            handInfoDao.addChannel(channel);
+        }
+    }
+
+    @Override
+    public void addCommunicateInfo(CommunicateInfo info) {
+        if (info != null) {
+            communicateDao.insert(info);
+        }
+    }
+
+    @Override
+    public void addFollowInfo(FollowInfo info) {
+        if (info != null) {
+            followInfoDao.insert(info);
+        }
+    }
+
+    @Override
+    public void addHandInfo(HandInfo info) {
+        if (info != null) {
+            handInfoDao.insert(info);
+        }
+    }
+
 
     @Override
     public boolean isExist(long id) throws Exception {
@@ -71,7 +142,7 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDTO> findByParams(StudentParamDTO param) throws Exception {
         List<StudentDTO> dtos = studentDao.selectByParams(param);
         for (StudentDTO dto : dtos) {
-            dto.setEntryTime(dto.getCreateTime().getTime() / 1000);
+            dto.setEntryTime(dto.getCreateTime());
         }
         return dtos;
     }

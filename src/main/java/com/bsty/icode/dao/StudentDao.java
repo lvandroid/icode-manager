@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface StudentDao extends TkMapper<Student> {
-//    void insert(Student student);
+    void add(Student student);
 
 //    int selectCount(long id);
 

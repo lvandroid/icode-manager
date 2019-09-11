@@ -8,5 +8,6 @@ import java.util.List;
 public interface StaffService {
     void addStaff(StaffDTO dto);
     List<StaffDTO> orderById();
+    List<StaffDTO> getAll();
     List<StaffDTO> getList(StaffParamsDTO dto);
 }

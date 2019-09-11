@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `student`
     `birthday`       BIGINT COMMENT '生日',
     `school`         VARCHAR(64) COMMENT '学校',
     `grade`          VARCHAR(16) COMMENT '学员年级',
-    `class_num`      VARCHAR(16) COMMENT '班级',
+    `class_name`      VARCHAR(16) COMMENT '班级',
     `home_address`   VARCHAR(64) COMMENT '居住地址',
     `refer_phone`    VARCHAR(11) COMMENT '推荐人电话',
     `mark`           VARCHAR(255) COMMENT '备注',
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `teacher_course_type`
 
 CREATE TABLE IF NOT EXISTS `student_course`
 (
-    `student_id`    VARCHAR(11) COMMENT '学员ID',
+    `student_id`    BIGINT COMMENT '学员ID',
     `course_id`     BIGINT(11) COMMENT '课程ID',
     `course_remain` DOUBLE COMMENT '剩余课程数',
     `remain_price`  DOUBLE COMMENT '剩余余额',
@@ -409,16 +409,16 @@ where teacher.phone = '';
 #     change class grade VARCHAR(16);
 
 #新增学员家长关系表
-CREATE TABLE IF NOT EXISTS `student_genearch`
-(
-    `student_id`  VARCHAR(11) NOT NULL,
-    `genearch_id` VARCHAR(11) NOT NULL,
-    `relation`    VARCHAR(128) COMMENT '学员家长之间的关系',
-    FOREIGN KEY (student_id) REFERENCES student (id),
-    FOREIGN KEY (genearch_id) REFERENCES genearch (id)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARSET = utf8;
+# CREATE TABLE IF NOT EXISTS `student_genearch`
+# (
+#     `student_id`  BIGINT NOT NULL,
+#     `genearch_id` VARCHAR(11) NOT NULL,
+#     `relation`    VARCHAR(128) COMMENT '学员家长之间的关系',
+#     FOREIGN KEY (student_id) REFERENCES student (id),
+#     FOREIGN KEY (genearch_id) REFERENCES genearch (id)
+# )
+#     ENGINE = InnoDB
+#     DEFAULT CHARSET = utf8;
 
 #删除student genearch_relation字段
 # ALTER TABLE student
@@ -933,4 +933,42 @@ values ('社团课');
 insert into channel(name)
 values ('朋友推荐');
 # 跟进信息表
+create table if not exists `follow_info`
+(
+    `id`             bigint auto_increment primary key,
+    `student_id`     bigint comment '学员id',
+    `consult_method` varchar(32) comment '咨询方式',
+    `intention`      varchar(32) comment '意向度',
+    `courses`        varchar(128) comment '咨询课程',
+    `status`         varchar(32) comment '跟进状态',
+    `keyword`        varchar(32) comment '关键词',
+    `update_time`    long comment '更新时间',
+    foreign key (student_id) references student (id)
+) default charset = utf8 comment '跟进信息';
 
+# 沟通记录表
+create table if not exists `communicate_info`
+(
+    `id`             bigint auto_increment primary key,
+    `student_id`     bigint comment '学员id',
+    `content`        varchar(128) comment '沟通内容',
+    `revisit_remind` long comment '回访提醒时间',
+    `create_time`    long comment '添加时间',
+    foreign key (student_id) references student (id)
+) DEFAULT CHARSET = utf8 COMMENT '沟通记录';
+
+#经办信息
+create table if not exists `hand_info`
+(
+    `id`              bigint auto_increment primary key,
+    `student_id`      bigint,
+    `campus`          varchar(32) comment '校区',
+    `create_time`     long comment '录入时间',
+    `channel`         varchar(32) comment '渠道',
+    `clerk_id`        bigint comment '采单员id',
+    `salesman_id`     bigint comment '销售员id',
+    `telemarketer_id` bigint comment '电话销售员id',
+    foreign key (clerk_id) references staff (id),
+    foreign key (salesman_id) references staff (id),
+    foreign key (telemarketer_id) references staff (id)
+) default charset = utf8 comment '经办信息';

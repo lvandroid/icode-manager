@@ -25,6 +25,7 @@ public class ResponseData<T> {
     }
 
     public void setSuccess(T data) {
+        setSuccess();
         this.data = data;
     }
 
