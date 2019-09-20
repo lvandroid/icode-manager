@@ -2,9 +2,11 @@ package com.bsty.icode.controller;
 
 import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
-import com.bsty.icode.bean.Student;
+import com.bsty.icode.bean.FollowStatus;
+import com.bsty.icode.dto.FollowStatusVO;
 import com.bsty.icode.dto.StudentDTO;
 import com.bsty.icode.dto.StudentSchoolDTO;
+import com.bsty.icode.dto.StudentVO;
 import com.bsty.icode.reqparams.StudentParamDTO;
 import com.bsty.icode.service.StudentService;
 import com.bsty.icode.smapper.StudentMapper;
@@ -14,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -47,15 +48,15 @@ public class StudentController {
     }
 
     @PostMapping(value = "/list")
-    public ResponseData<List<StudentDTO>> findStudents(@RequestBody StudentParamDTO param) {
+    public ResponseData<List<StudentVO>> findStudents(@RequestBody StudentParamDTO param) {
         Page page = PageHelper.startPage(param.getPageNum(), param.getPageSize());
         ResponseData responseData = ResponseData.newInstance();
         try {
             param.initSortMap();
-            List<StudentDTO> studentDTOS = studentService.findByParams(param);
-            ListResultData<StudentDTO> result = new ListResultData<>();
-            if (studentDTOS != null && !studentDTOS.isEmpty()) {
-                result.setList(studentDTOS);
+            List<StudentVO> studentVOS = studentService.findByParams(param);
+            ListResultData<StudentVO> result = new ListResultData<>();
+            if (studentVOS != null && !studentVOS.isEmpty()) {
+                result.setList(studentVOS);
             }
             result.setPage(page);
             responseData.setSuccess(result, page.getTotal());
@@ -74,6 +75,21 @@ public class StudentController {
         } catch (Exception e) {
             log.error(e.getMessage());
             responseData.setError();
+        }
+        return responseData;
+    }
+
+    @PutMapping(value = "/updateStatus")
+    public ResponseData updateFollowStatus(@RequestBody FollowStatusVO params) {
+        ResponseData responseData = ResponseData.newInstance();
+        try {
+            if (params != null) {
+                studentService.updateFollowStatus(params.getId(), params.getStatus());
+                responseData.setSuccess();
+            }
+        } catch (Exception e) {
+            responseData.setError();
+            log.error(e.getMessage());
         }
         return responseData;
     }

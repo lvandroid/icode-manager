@@ -45,10 +45,34 @@
                 #{idCard}, #{wechat}, #{birthday}, #{school}, #{grade}, #{className}, #{homeAddress}, #{referPhone},
                 #{mark}, #{entryTime}, #{createTime}, #{updateTime})
     </insert>
-    <select id="selectByParams" resultType="com.bsty.icode.dto.StudentDTO"
+    <insert id="addFollowInfoStatus">
+        insert into follow_info (student_id, status, update_time)
+        values (#{studentId}, #{status})
+    </insert>
+    <update id="updateFollowStatus">
+        update follow_info
+        set status=#{status}
+        where student_id = #{studentId}
+    </update>
+    <select id="selectByParams" resultType="com.bsty.icode.dto.StudentVO"
             parameterType="com.bsty.icode.reqparams.StudentParamDTO">
-        SELECT s.*
-        FROM student AS s
+        select s.*,
+        ci.content as communicate_content,
+        ci.revisit_remind,
+        fi.consult_method,
+        fi.intention,
+        fi.courses as course_str,
+        fi.status as follow_status,
+        fi.keyword,
+        hi.campus,
+        hi.channel,
+        (select staff.name from staff where staff.id = hi.clerk_id) as clerk,
+        (select staff.name from staff where staff.id = hi.salesman_id) as salesman,
+        (select staff.name from staff where staff.id = hi.telemarketer_id) as telemarketer
+        from student s
+        left join communicate_info ci on s.id = ci.student_id
+        left join follow_info fi on s.id = fi.student_id
+        left join hand_info hi on s.id = hi.student_id
         <where>
             1=1
             <if test="id!=null and id!=''">

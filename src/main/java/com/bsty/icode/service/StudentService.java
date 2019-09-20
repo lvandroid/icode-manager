@@ -6,6 +6,7 @@ import com.bsty.icode.bean.HandInfo;
 import com.bsty.icode.bean.Student;
 import com.bsty.icode.dto.StudentDTO;
 import com.bsty.icode.dto.StudentSchoolDTO;
+import com.bsty.icode.dto.StudentVO;
 import com.bsty.icode.reqparams.StudentParamDTO;
 
 import java.util.List;
@@ -21,7 +22,9 @@ public interface StudentService {
 
     boolean isExist(long id) throws Exception;//是否已经存在
 
-    List<StudentDTO> findByParams(StudentParamDTO param) throws Exception;
+    List<StudentVO> findByParams(StudentParamDTO param) throws Exception;
 
     StudentSchoolDTO findAllStudentSchoolInfo() throws Exception;
+
+    void updateFollowStatus(long studentId, String status);
 }

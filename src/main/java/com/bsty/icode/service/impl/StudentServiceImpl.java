@@ -7,6 +7,7 @@ import com.bsty.icode.bean.Student;
 import com.bsty.icode.dao.*;
 import com.bsty.icode.dto.StudentDTO;
 import com.bsty.icode.dto.StudentSchoolDTO;
+import com.bsty.icode.dto.StudentVO;
 import com.bsty.icode.reqparams.StudentParamDTO;
 import com.bsty.icode.service.StudentService;
 import com.bsty.icode.smapper.StudentMapper;
@@ -139,9 +140,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDTO> findByParams(StudentParamDTO param) throws Exception {
-        List<StudentDTO> dtos = studentDao.selectByParams(param);
-        for (StudentDTO dto : dtos) {
+    public List<StudentVO> findByParams(StudentParamDTO param) throws Exception {
+        List<StudentVO> dtos = studentDao.selectByParams(param);
+        for (StudentVO dto : dtos) {
             dto.setEntryTime(dto.getCreateTime());
         }
         return dtos;
@@ -163,5 +164,10 @@ public class StudentServiceImpl implements StudentService {
         dto.setKeywords(studentDao.allKeyword());
         dto.setFollowStatuses(studentDao.allFollowStatus());
         return dto;
+    }
+
+    @Override
+    public void updateFollowStatus(long studentId, String status) {
+        studentDao.updateFollowStatus(studentId, status);
     }
 }
