@@ -14,6 +14,8 @@ import com.bsty.icode.smapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -168,6 +170,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateFollowStatus(long studentId, String status) {
-        studentDao.updateFollowStatus(studentId, status);
+        if (followInfoDao.hasFollowInfo(studentId) > 0) {
+            studentDao.updateFollowStatus(studentId, status);
+        } else {
+            studentDao.addFollowInfoStatus(studentId, status, new Date().getTime());
+        }
     }
 }

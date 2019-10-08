@@ -17,6 +17,8 @@ public interface FollowInfoDao extends TkMapper<FollowInfo> {
 
     int countStatus(String name);
 
+    int hasFollowInfo(long studentId);
+
     void addStatus(String name);
 
     int countKeyword(String name);

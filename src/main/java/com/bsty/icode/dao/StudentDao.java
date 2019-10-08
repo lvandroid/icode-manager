@@ -21,7 +21,7 @@ public interface StudentDao extends TkMapper<Student> {
 
     void updateFollowStatus(long studentId, String status);
 
-    void addFollowInfoStatus(long studentId, String status);
+    void addFollowInfoStatus(long studentId, String status,long updateTime);
 
     void addGenearch(String name);
 

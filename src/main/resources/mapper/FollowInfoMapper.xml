@@ -41,4 +41,9 @@
         from keyword
         where name = #{name};
     </select>
+    <select id="hasFollowInfo" resultType="java.lang.Integer">
+        select COUNT(1)
+        from follow_info
+        where student_id = #{studentId};
+    </select>
 </mapper>

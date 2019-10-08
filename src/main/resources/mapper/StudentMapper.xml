@@ -47,7 +47,7 @@
     </insert>
     <insert id="addFollowInfoStatus">
         insert into follow_info (student_id, status, update_time)
-        values (#{studentId}, #{status})
+        values (#{studentId}, #{status}, #{updateTime})
     </insert>
     <update id="updateFollowStatus">
         update follow_info

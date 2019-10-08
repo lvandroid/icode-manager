@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `role_permission`
 CREATE TABLE IF NOT EXISTS `permission`
 (
     `id`          BIGINT(11)   NOT NULL AUTO_INCREMENT,
-    `url`         VARCHAR(255) NOT NULL,
+    `url`         VARCHAR(255) ,
     `name`        VARCHAR(255) NOT NULL,
     `description` VARCHAR(255) NULL,
     `pid`         BIGINT(11)   NOT NULL,
@@ -232,22 +232,7 @@ delete
 from course_type
 where id != '';
 
-INSERT INTO course_type(name, type)
-VALUES ('结构搭建', 1);
-INSERT INTO course_type(name, type)
-VALUES ('刷卡编程', 2);
-INSERT INTO course_type(name, type)
-VALUES ('Scratch', 3);
-INSERT INTO course_type(name, type)
-VALUES ('App Inventor', 4);
-INSERT INTO course_type(name, type)
-VALUES ('Python', 5);
-INSERT INTO course_type(name, type)
-VALUES ('C++', 6);
-INSERT INTO course_type(name, type)
-VALUES ('NOIP', 7);
-INSERT INTO course_type(name, type)
-VALUES ('其他', 8);
+
 
 CREATE TABLE IF NOT EXISTS `teacher_course_type`
 (
@@ -305,7 +290,22 @@ INSERT INTO role_permission (role_id, permission_id)
 VALUES (2, 1);
 INSERT INTO role_permission (role_id, permission_id)
 VALUES (2, 2);
-
+INSERT INTO course_type(name, type)
+VALUES ('结构搭建', 1);
+INSERT INTO course_type(name, type)
+VALUES ('刷卡编程', 2);
+INSERT INTO course_type(name, type)
+VALUES ('Scratch', 3);
+INSERT INTO course_type(name, type)
+VALUES ('App Inventor', 4);
+INSERT INTO course_type(name, type)
+VALUES ('Python', 5);
+INSERT INTO course_type(name, type)
+VALUES ('C++', 6);
+INSERT INTO course_type(name, type)
+VALUES ('NOIP', 7);
+INSERT INTO course_type(name, type)
+VALUES ('其他', 8);
 DELETE
 FROM role_permission
 WHERE role_id = 2;
@@ -972,3 +972,12 @@ create table if not exists `hand_info`
     foreign key (salesman_id) references staff (id),
     foreign key (telemarketer_id) references staff (id)
 ) default charset = utf8 comment '经办信息';
+
+
+# group by 报错
+select version();
+SELECT @@GLOBAL.sql_mode;
+set @@GLOBAL.sql_mode='';
+
+set @@GLOBAL.sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+set @@GLOBAL.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
