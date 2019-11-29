@@ -70,7 +70,7 @@
         (select staff.name from staff where staff.id = hi.salesman_id) as salesman,
         (select staff.name from staff where staff.id = hi.telemarketer_id) as telemarketer
         from student s
-        left join communicate_info ci on s.id = ci.student_id
+        left join (select * from communicate_info order by create_time desc limit 1) as ci on ci.student_id=s.id
         left join follow_info fi on s.id = fi.student_id
         left join hand_info hi on s.id = hi.student_id
         <where>

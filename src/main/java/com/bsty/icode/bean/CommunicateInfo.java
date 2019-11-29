@@ -6,6 +6,7 @@ import lombok.Data;
 public class CommunicateInfo {
     private long id;
     private long studentId;
+    private long staffId;
     private String content;
     private long revisitRemind;
     private long createTime;

@@ -46,6 +46,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public long findStaffIdByUserId(long userId) {
+        return userDao.findStaffById(userId);
+    }
+
+    @Override
     public List<String> findUserPermission(long rootRoleId) {
         return permissionDao.findNamesByRoleId(rootRoleId);
     }

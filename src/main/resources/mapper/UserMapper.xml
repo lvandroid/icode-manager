@@ -6,16 +6,16 @@
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="role_names" property="roleNames"/>
-<!--        <collection property="roles" ofType="com.bsty.icode.bean.Role">-->
-<!--            <id column="role_id" property="id"/>-->
-<!--            <result column="role_name" property="name"/>-->
-<!--            <result column="root_role" property="rootRole"/>-->
-<!--            <result column="role_description" property="description"/>-->
-<!--        </collection>-->
+        <!--        <collection property="roles" ofType="com.bsty.icode.bean.Role">-->
+        <!--            <id column="role_id" property="id"/>-->
+        <!--            <result column="role_name" property="name"/>-->
+        <!--            <result column="root_role" property="rootRole"/>-->
+        <!--            <result column="role_description" property="description"/>-->
+        <!--        </collection>-->
     </resultMap>
     <insert id="addUser" parameterType="com.bsty.icode.bean.User" useGeneratedKeys="true" keyProperty="id">
-        insert into user(username, password)
-        values (#{username}, #{password})
+        insert into user(username, password, staff_id)
+        values (#{username}, #{password}, #{staffId})
     </insert>
     <update id="updatePwd">
         update user as u
@@ -75,6 +75,11 @@
         from user_role ur
         where user_id = #{userId}
           and ur.root_role = true;
+    </select>
+    <select id="findStaffById" resultType="java.lang.Long">
+        select u.staff_id
+        from user u
+        where u.id = #{id}
     </select>
 
 </mapper>

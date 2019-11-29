@@ -25,7 +25,9 @@ CREATE TABLE IF NOT EXISTS `user`
     `id`       BIGINT(11) UNIQUE AUTO_INCREMENT,
     `username` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
+    `staff_id` bigint,
+    PRIMARY KEY (id),
+    foreign key (staff_id) references staff (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 CREATE TABLE IF NOT EXISTS `role`
@@ -55,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `role_permission`
 CREATE TABLE IF NOT EXISTS `permission`
 (
     `id`          BIGINT(11)   NOT NULL AUTO_INCREMENT,
-    `url`         VARCHAR(255) ,
+    `url`         VARCHAR(255),
     `name`        VARCHAR(255) NOT NULL,
     `description` VARCHAR(255) NULL,
     `pid`         BIGINT(11)   NOT NULL,
@@ -163,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `student`
     `birthday`       BIGINT COMMENT '生日',
     `school`         VARCHAR(64) COMMENT '学校',
     `grade`          VARCHAR(16) COMMENT '学员年级',
-    `class_name`      VARCHAR(16) COMMENT '班级',
+    `class_name`     VARCHAR(16) COMMENT '班级',
     `home_address`   VARCHAR(64) COMMENT '居住地址',
     `refer_phone`    VARCHAR(11) COMMENT '推荐人电话',
     `mark`           VARCHAR(255) COMMENT '备注',
@@ -639,10 +641,10 @@ begin
     set oTempChild = cast(routerId as char);
 
     while oTempChild is not null
-    do
-    set oTemp = concat(oTemp, ',', oTempChild);
-    select group_concat(id) into oTempChild from router where find_in_set(pid, oTempChild) > 0;
-    end while;
+        do
+            set oTemp = concat(oTemp, ',', oTempChild);
+            select group_concat(id) into oTempChild from router where find_in_set(pid, oTempChild) > 0;
+        end while;
     return otemp;
 end;
 
@@ -678,12 +680,13 @@ begin
     declare i bigint;
     set i = 1;
     select max(id) into maxid from router;
-    while i <= maxId do
-    if exists(select 1 from router r where r.id = i) then
-        insert into role_router(role_id, router_id) values (roleId, i);
-    end if;
-    set i = i + 1;
-    end while;
+    while i <= maxId
+        do
+            if exists(select 1 from router r where r.id = i) then
+                insert into role_router(role_id, router_id) values (roleId, i);
+            end if;
+            set i = i + 1;
+        end while;
 end;
 
 # select id
@@ -950,11 +953,13 @@ create table if not exists `follow_info`
 create table if not exists `communicate_info`
 (
     `id`             bigint auto_increment primary key,
+    `staff_id`       bigint comment '沟通人id',
     `student_id`     bigint comment '学员id',
     `content`        varchar(128) comment '沟通内容',
     `revisit_remind` long comment '回访提醒时间',
     `create_time`    long comment '添加时间',
-    foreign key (student_id) references student (id)
+    foreign key (student_id) references student (id),
+    foreign key (staff_id) references staff (id)
 ) DEFAULT CHARSET = utf8 COMMENT '沟通记录';
 
 #经办信息
@@ -977,7 +982,11 @@ create table if not exists `hand_info`
 # group by 报错
 select version();
 SELECT @@GLOBAL.sql_mode;
-set @@GLOBAL.sql_mode='';
+set @@GLOBAL.sql_mode = '';
 
-set @@GLOBAL.sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-set @@GLOBAL.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+set @@GLOBAL.sql_mode =
+        'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+set @@GLOBAL.sql_mode =
+        'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
+select * from communicate_info order by create_time desc limit 1;

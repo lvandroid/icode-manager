@@ -114,8 +114,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addCommunicateInfo(CommunicateInfo info) {
         if (info != null) {
-            communicateDao.insert(info);
+            communicateDao.add(info);
         }
+    }
+
+    @Override
+    public List<CommunicateInfo> findCommunicatesById(long studentId) {
+        return communicateDao.findCommunicatesById(studentId);
     }
 
     @Override

@@ -55,6 +55,7 @@ public class AuthController {
                 try {
                     long rootRoleId = authService.findRoleByUserId(user.getId());
                     user.setRootRoleId(rootRoleId);
+                    user.setStaffId(authService.findStaffIdByUserId(user.getId()));
                     user.setPermissions(authService.findUserPermission(rootRoleId));
                 } catch (Exception e) {
                     log.error(e.getMessage());

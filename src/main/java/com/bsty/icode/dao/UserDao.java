@@ -16,6 +16,8 @@ public interface UserDao {
 
     long findRoleRootId(long userId);
 
+    long findStaffById(long id);
+
     long addUser(User user);
 
     void delUser(long userId);

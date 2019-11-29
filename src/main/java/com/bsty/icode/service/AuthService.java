@@ -7,6 +7,8 @@ public interface AuthService {
 
     long findRoleByUserId(long userId);
 
+    long findStaffIdByUserId(long userId);
+
     /**
      * 根据主要角色查询用户拥有的权限
      *

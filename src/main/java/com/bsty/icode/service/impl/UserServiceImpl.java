@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(UserVo vo) {
         if (vo != null) {
-            User user = new User(vo.getUsername(), vo.getPassword());
+            User user = new User(vo.getUsername(), vo.getPassword(), vo.getStaffId());
             userDao.addUser(user);
             long userId = user.getId();
             long rootRoleId = vo.getRootRoleId();

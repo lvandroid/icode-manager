@@ -16,6 +16,8 @@ public interface StudentService {
 
     void addCommunicateInfo(CommunicateInfo info);
 
+    List<CommunicateInfo> findCommunicatesById(long studentId);
+
     void addFollowInfo(FollowInfo info);
 
     void addHandInfo(HandInfo info);

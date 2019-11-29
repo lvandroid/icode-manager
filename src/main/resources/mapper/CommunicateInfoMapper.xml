@@ -5,4 +5,10 @@
         insert into communicate_info(student_id, content, revisit_remind, create_time)
         values (#{studentId}, #{content}, #{revisitRemind}, #{createTime})
     </insert>
+    <select id="findCommunicatesById" resultType="com.bsty.icode.bean.CommunicateInfo">
+        select ci.*
+        from communicate_info ci
+        where student_id = #{studentId}
+        order by ci.create_time desc
+    </select>
 </mapper>

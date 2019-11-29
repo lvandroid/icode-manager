@@ -2,6 +2,7 @@ package com.bsty.icode.controller;
 
 import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
+import com.bsty.icode.bean.CommunicateInfo;
 import com.bsty.icode.bean.FollowStatus;
 import com.bsty.icode.dto.FollowStatusVO;
 import com.bsty.icode.dto.StudentDTO;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -87,6 +89,35 @@ public class StudentController {
                 studentService.updateFollowStatus(params.getId(), params.getStatus());
                 responseData.setSuccess();
             }
+        } catch (Exception e) {
+            responseData.setError();
+            log.error(e.getMessage());
+        }
+        return responseData;
+    }
+
+    @PostMapping(value = "/addCommunicate")
+    public ResponseData addCommunicate(@RequestBody CommunicateInfo params) {
+        ResponseData responseData = ResponseData.newInstance();
+        try {
+            if (params != null) {
+                params.setCreateTime(new Date().getTime());
+                studentService.addCommunicateInfo(params);
+                responseData.setSuccess();
+            }
+        } catch (Exception e) {
+            responseData.setError();
+            log.error(e.getMessage());
+        }
+        return responseData;
+    }
+
+    @GetMapping(value = "/getCommunicatesById/{studentId}")
+    public ResponseData getCommunicatesById(@PathVariable  long studentId) {
+        ResponseData responseData = ResponseData.newInstance();
+        try {
+            List<CommunicateInfo> data = studentService.findCommunicatesById(studentId);
+            responseData.setSuccess(data);
         } catch (Exception e) {
             responseData.setError();
             log.error(e.getMessage());

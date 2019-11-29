@@ -18,18 +18,21 @@ public class User implements UserDetails, Serializable {
 
     private String password;
 
+    private long staffId;
+
     private long rootRoleId;
 
     private List<String> permissions;
-    
+
     private List<Role> authorities;
 
     public User() {
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, long staffId) {
         this.username = username;
         this.password = password;
+        this.staffId = staffId;
     }
 
     @Override
