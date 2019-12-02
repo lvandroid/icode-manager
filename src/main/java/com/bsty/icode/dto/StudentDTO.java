@@ -46,6 +46,7 @@ public class StudentDTO {
     private long clerk;//采单员id
     private long salesman;//销售员id
     private long telemarketer;//电话销售员id
+    private long staffId; //员工id
 
     public CommunicateInfo getCommunicate(long id) {
         if ((consultMethod == null || consultMethod.isEmpty()) && (intention == null || intention.isEmpty()) &&
@@ -54,7 +55,7 @@ public class StudentDTO {
             return null;
         }
         return new CommunicateInfo(
-                id, communicateContent, revisitRemind, new Date().getTime()
+                id, staffId,communicateContent, revisitRemind, new Date().getTime()
         );
     }
 

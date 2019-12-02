@@ -14,10 +14,11 @@ public class CommunicateInfo {
     public CommunicateInfo() {
     }
 
-    public CommunicateInfo(long studentId, String content, long revisitRemind, long createTime) {
+    public CommunicateInfo(long studentId, long staffId, String content, long revisitRemind, long createTime) {
         this.studentId = studentId;
         this.content = content;
         this.revisitRemind = revisitRemind;
         this.createTime = createTime;
+        this.staffId = staffId;
     }
 }

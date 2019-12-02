@@ -4,6 +4,7 @@ import com.bsty.icode.bean.CommunicateInfo;
 import com.bsty.icode.bean.FollowInfo;
 import com.bsty.icode.bean.HandInfo;
 import com.bsty.icode.bean.Student;
+import com.bsty.icode.dto.CommunicateInfoDTO;
 import com.bsty.icode.dto.StudentDTO;
 import com.bsty.icode.dto.StudentSchoolDTO;
 import com.bsty.icode.dto.StudentVO;
@@ -16,7 +17,7 @@ public interface StudentService {
 
     void addCommunicateInfo(CommunicateInfo info);
 
-    List<CommunicateInfo> findCommunicatesById(long studentId);
+    List<CommunicateInfoDTO> findCommunicatesById(long studentId);
 
     void addFollowInfo(FollowInfo info);
 

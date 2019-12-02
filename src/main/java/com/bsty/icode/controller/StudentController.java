@@ -4,10 +4,7 @@ import com.bsty.icode.ListResultData;
 import com.bsty.icode.ResponseData;
 import com.bsty.icode.bean.CommunicateInfo;
 import com.bsty.icode.bean.FollowStatus;
-import com.bsty.icode.dto.FollowStatusVO;
-import com.bsty.icode.dto.StudentDTO;
-import com.bsty.icode.dto.StudentSchoolDTO;
-import com.bsty.icode.dto.StudentVO;
+import com.bsty.icode.dto.*;
 import com.bsty.icode.reqparams.StudentParamDTO;
 import com.bsty.icode.service.StudentService;
 import com.bsty.icode.smapper.StudentMapper;
@@ -116,7 +113,7 @@ public class StudentController {
     public ResponseData getCommunicatesById(@PathVariable  long studentId) {
         ResponseData responseData = ResponseData.newInstance();
         try {
-            List<CommunicateInfo> data = studentService.findCommunicatesById(studentId);
+            List<CommunicateInfoDTO> data = studentService.findCommunicatesById(studentId);
             responseData.setSuccess(data);
         } catch (Exception e) {
             responseData.setError();

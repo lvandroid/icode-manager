@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bsty.icode.dao.CommunicateDao">
     <insert id="add">
-        insert into communicate_info(student_id, content, revisit_remind, create_time)
-        values (#{studentId}, #{content}, #{revisitRemind}, #{createTime})
+        insert into communicate_info(student_id, staff_id, content, revisit_remind, create_time)
+        values (#{studentId}, #{staffId}, #{content}, #{revisitRemind}, #{createTime})
     </insert>
-    <select id="findCommunicatesById" resultType="com.bsty.icode.bean.CommunicateInfo">
-        select ci.*
+    <select id="findCommunicatesById" resultType="com.bsty.icode.dto.CommunicateInfoDTO">
+        select ci.*, s.name as staff_name
         from communicate_info ci
+                 left join staff s on ci.staff_id = s.id
         where student_id = #{studentId}
         order by ci.create_time desc
     </select>

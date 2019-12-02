@@ -5,6 +5,7 @@ import com.bsty.icode.bean.FollowInfo;
 import com.bsty.icode.bean.HandInfo;
 import com.bsty.icode.bean.Student;
 import com.bsty.icode.dao.*;
+import com.bsty.icode.dto.CommunicateInfoDTO;
 import com.bsty.icode.dto.StudentDTO;
 import com.bsty.icode.dto.StudentSchoolDTO;
 import com.bsty.icode.dto.StudentVO;
@@ -119,7 +120,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<CommunicateInfo> findCommunicatesById(long studentId) {
+    public List<CommunicateInfoDTO> findCommunicatesById(long studentId) {
         return communicateDao.findCommunicatesById(studentId);
     }
 
