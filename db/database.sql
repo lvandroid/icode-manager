@@ -180,6 +180,116 @@ create table school
 )
     charset = utf8;
 
+create table staff
+(
+    id                  bigint auto_increment comment '员工ID'
+        primary key,
+    user_id             bigint       null comment '登录系统的ID',
+    name                varchar(16)  not null comment '姓名',
+    nick_name           varchar(32)  null comment '花名',
+    name_en             varchar(128) null comment '英文名',
+    phone               varchar(11)  null comment '本人联系方式',
+    phone_company       varchar(11)  null comment '公司分配的手机号',
+    sex                 int          null comment '性别',
+    department_id       bigint       null comment '部门ID',
+    id_card_no          varchar(18)  not null comment '身份证号码',
+    id_card_address     varchar(256) not null comment '身份证地址',
+    birthday            mediumtext   null comment '生日',
+    email               varchar(128) null comment '邮箱',
+    address_now         varchar(256) null comment '现住地址',
+    famous_family       varchar(32)  null comment '名族',
+    political_status    varchar(16)  null comment '政治面貌',
+    married             int          null comment '婚姻',
+    graduated_school    varchar(128) null comment '毕业学校',
+    profession          varchar(32)  null comment '专业',
+    education           varchar(32)  null comment '学历',
+    train_experience    varchar(128) null comment '培训经历',
+    entry_date          mediumtext   null comment '入职时间',
+    turn_positive_date  mediumtext   null comment '转正时间',
+    payroll_card        varchar(32)  null comment '工资卡号',
+    pay_roll_card_bank  varchar(128) null comment '开户行',
+    emergency_one_name  varchar(16)  null comment '紧急联系人一',
+    emergency_one_phone varchar(11)  null comment '紧急联系人一号码',
+    emergency_two_name  varchar(16)  null comment '紧急联系人二',
+    emergency_two_phone varchar(11)  null comment '紧急联系人二号码',
+    parent_name         varchar(32)  null comment '父母亲姓名',
+    parent_id_card      varchar(18)  null comment '父母亲身份证号码',
+    parent_card_no      varchar(32)  null comment '父母亲银行卡号',
+    parent_card_bank    varchar(128) null comment '父母亲银行卡开户行',
+    mark                varchar(256) null comment '备注'
+)
+    comment '员工' charset = utf8;
+
+create table hand_info
+(
+    id              bigint auto_increment
+        primary key,
+    student_id      bigint      null,
+    campus          varchar(32) null comment '校区',
+    create_time     bigint      null comment '录入时间',
+    channel         varchar(32) null comment '渠道',
+    clerk_id        bigint      null comment '采单员id',
+    salesman_id     bigint      null comment '销售员id',
+    telemarketer_id bigint      null comment '电话销售员id',
+    constraint hand_info_ibfk_1
+        foreign key (clerk_id) references staff (id),
+    constraint hand_info_ibfk_2
+        foreign key (salesman_id) references staff (id),
+    constraint hand_info_ibfk_3
+        foreign key (telemarketer_id) references staff (id)
+)
+    comment '经办信息' charset = utf8;
+
+create index clerk_id
+    on hand_info (clerk_id);
+
+create index salesman_id
+    on hand_info (salesman_id);
+
+create index telemarketer_id
+    on hand_info (telemarketer_id);
+
+create index user_id
+    on staff (user_id);
+
+create table staff_personnel_status
+(
+    id                  bigint auto_increment
+        primary key,
+    staff_id            bigint null,
+    personnel_status_id bigint null,
+    constraint staff_personnel_status_ibfk_1
+        foreign key (staff_id) references staff (id),
+    constraint staff_personnel_status_ibfk_2
+        foreign key (personnel_status_id) references personnel_status (id)
+)
+    charset = utf8;
+
+create index personnel_status_id
+    on staff_personnel_status (personnel_status_id);
+
+create index staff_id
+    on staff_personnel_status (staff_id);
+
+create table staff_post
+(
+    id       bigint auto_increment
+        primary key,
+    staff_id bigint null,
+    post_id  bigint null,
+    constraint staff_post_ibfk_1
+        foreign key (staff_id) references staff (id),
+    constraint staff_post_ibfk_2
+        foreign key (post_id) references post (id)
+)
+    comment '员工岗位表' charset = utf8;
+
+create index post_id
+    on staff_post (post_id);
+
+create index staff_id
+    on staff_post (staff_id);
+
 create table student
 (
     id             bigint auto_increment
@@ -213,14 +323,20 @@ create table communicate_info
 (
     id             bigint auto_increment
         primary key,
+    staff_id       bigint       null comment '沟通人id',
     student_id     bigint       null comment '学员id',
     content        varchar(128) null comment '沟通内容',
     revisit_remind mediumtext   null comment '回访提醒时间',
-    create_time    bigint       null comment '添加时间',
+    create_time    mediumtext   null comment '添加时间',
     constraint communicate_info_ibfk_1
-        foreign key (student_id) references student (id)
+        foreign key (student_id) references student (id),
+    constraint communicate_info_ibfk_2
+        foreign key (staff_id) references staff (id)
 )
     comment '沟通记录' charset = utf8;
+
+create index staff_id
+    on communicate_info (staff_id);
 
 create index student_id
     on communicate_info (student_id);
@@ -342,125 +458,20 @@ create table user
     id       bigint(11) auto_increment,
     username varchar(255) not null,
     password varchar(255) not null,
+    staff_id bigint       null,
     constraint id
-        unique (id)
+        unique (id),
+    constraint user_staff_id_fk
+        foreign key (staff_id) references staff (id)
 )
     charset = utf8;
 
 alter table user
     add primary key (id);
 
-create table staff
-(
-    id                  bigint auto_increment comment '员工ID'
-        primary key,
-    user_id             bigint       null comment '登录系统的ID',
-    name                varchar(16)  not null comment '姓名',
-    nick_name           varchar(32)  null comment '花名',
-    name_en             varchar(128) null comment '英文名',
-    phone               varchar(11)  null comment '本人联系方式',
-    phone_company       varchar(11)  null comment '公司分配的手机号',
-    sex                 int          null comment '性别',
-    department_id       bigint       null comment '部门ID',
-    id_card_no          varchar(18)  not null comment '身份证号码',
-    id_card_address     varchar(256) not null comment '身份证地址',
-    birthday            mediumtext   null comment '生日',
-    email               varchar(128) null comment '邮箱',
-    address_now         varchar(256) null comment '现住地址',
-    famous_family       varchar(32)  null comment '名族',
-    political_status    varchar(16)  null comment '政治面貌',
-    married             int          null comment '婚姻',
-    graduated_school    varchar(128) null comment '毕业学校',
-    profession          varchar(32)  null comment '专业',
-    education           varchar(32)  null comment '学历',
-    train_experience    varchar(128) null comment '培训经历',
-    entry_date          mediumtext   null comment '入职时间',
-    turn_positive_date  mediumtext   null comment '转正时间',
-    payroll_card        varchar(32)  null comment '工资卡号',
-    pay_roll_card_bank  varchar(128) null comment '开户行',
-    emergency_one_name  varchar(16)  null comment '紧急联系人一',
-    emergency_one_phone varchar(11)  null comment '紧急联系人一号码',
-    emergency_two_name  varchar(16)  null comment '紧急联系人二',
-    emergency_two_phone varchar(11)  null comment '紧急联系人二号码',
-    parent_name         varchar(32)  null comment '父母亲姓名',
-    parent_id_card      varchar(18)  null comment '父母亲身份证号码',
-    parent_card_no      varchar(32)  null comment '父母亲银行卡号',
-    parent_card_bank    varchar(128) null comment '父母亲银行卡开户行',
-    mark                varchar(256) null comment '备注',
-    constraint staff_ibfk_1
-        foreign key (user_id) references user (id)
-)
-    comment '员工' charset = utf8;
-
-create table hand_info
-(
-    id              bigint auto_increment
-        primary key,
-    student_id      bigint      null,
-    campus          varchar(32) null comment '校区',
-    create_time     bigint      null comment '录入时间',
-    channel         varchar(32) null comment '渠道',
-    clerk_id        bigint      null comment '采单员id',
-    salesman_id     bigint      null comment '销售员id',
-    telemarketer_id bigint      null comment '电话销售员id',
-    constraint hand_info_ibfk_1
-        foreign key (clerk_id) references staff (id),
-    constraint hand_info_ibfk_2
-        foreign key (salesman_id) references staff (id),
-    constraint hand_info_ibfk_3
-        foreign key (telemarketer_id) references staff (id)
-)
-    comment '经办信息' charset = utf8;
-
-create index clerk_id
-    on hand_info (clerk_id);
-
-create index salesman_id
-    on hand_info (salesman_id);
-
-create index telemarketer_id
-    on hand_info (telemarketer_id);
-
-create index user_id
-    on staff (user_id);
-
-create table staff_personnel_status
-(
-    id                  bigint auto_increment
-        primary key,
-    staff_id            bigint null,
-    personnel_status_id bigint null,
-    constraint staff_personnel_status_ibfk_1
-        foreign key (staff_id) references staff (id),
-    constraint staff_personnel_status_ibfk_2
-        foreign key (personnel_status_id) references personnel_status (id)
-)
-    charset = utf8;
-
-create index personnel_status_id
-    on staff_personnel_status (personnel_status_id);
-
-create index staff_id
-    on staff_personnel_status (staff_id);
-
-create table staff_post
-(
-    id       bigint auto_increment
-        primary key,
-    staff_id bigint null,
-    post_id  bigint null,
-    constraint staff_post_ibfk_1
-        foreign key (staff_id) references staff (id),
-    constraint staff_post_ibfk_2
-        foreign key (post_id) references post (id)
-)
-    comment '员工岗位表' charset = utf8;
-
-create index post_id
-    on staff_post (post_id);
-
-create index staff_id
-    on staff_post (staff_id);
+alter table staff
+    add constraint staff_ibfk_1
+        foreign key (user_id) references user (id);
 
 create table user_role
 (
@@ -486,29 +497,14 @@ begin
         end while;
 end;
 
-select s.*,
-       ci.revisit_remind,
-       ci.content                                                         as communicate_content,
-       fi.consult_method,
-       fi.intention,
-       fi.courses                                                         as course_str,
-       fi.status                                                          as follow_status,
-       fi.keyword,
-       hi.campus,
-       hi.channel,
-       (select staff.name from staff where staff.id = hi.clerk_id)        as clerk,
-       (select staff.name from staff where staff.id = hi.salesman_id)     as salesman,
-       (select staff.name from staff where staff.id = hi.telemarketer_id) as telemarketer
-from student s
-         left join (select *
-                    from (select * from communicate_info c_i order by c_i.create_time desc) c_info
-                    group by c_info.student_id) ci on s.id = ci.student_id
-         left join follow_info fi on s.id = fi.student_id
-         left join hand_info hi on s.id = hi.student_id;
-# group by s.id;
+# group by 报错
+select version();
+SELECT @@GLOBAL.sql_mode;
+set @@GLOBAL.sql_mode = '';
 
+set @@GLOBAL.sql_mode =
+        'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+set @@GLOBAL.sql_mode =
+        'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
 
-select ci.content,ci.create_time
-from (select * from communicate_info order by create_time desc ) as ci group by ci.student_id;
-
-select * from communicate_info order by create_time desc;
+select * from communicate_info order by create_time desc limit 1;
